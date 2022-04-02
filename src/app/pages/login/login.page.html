@@ -1,0 +1,36 @@
+<ion-content>
+
+  <div class="heading-container">
+    <h1>Login</h1>
+    <p>Please sign in to continue</p>
+  </div>
+ 
+  <form (ngSubmit)="login()" [formGroup]="loginForm">
+    <div class="input-group">
+      <ion-item lines="none">
+        <ion-label position="floating">Email</ion-label>
+        <ion-input type="email" formControlName="email"></ion-input>
+        <ion-icon name="mail-outline" slot="start"></ion-icon>
+      </ion-item>
+      <div *ngIf="(email.dirty || email.touched) && email.errors" class="errors">
+        <span *ngIf="email.errors?.required">Email is required</span>
+        <span *ngIf="email.errors?.email">Email is invalid</span>
+      </div>
+      <ion-item lines="none">
+        <ion-label position="floating">Password</ion-label>
+        <ion-input type="password" formControlName="password"></ion-input>
+        <ion-icon name="lock-closed-outline" slot="start"></ion-icon>
+        <ion-note slot="end" color="primary" (click)="forgotPassword()">FORGOT</ion-note>
+      </ion-item>
+      <div *ngIf="(password.dirty || password.touched) && password.errors" class="errors">
+        <span *ngIf="password.errors?.required">Password is required</span>
+        <span *ngIf="password.errors?.minlength">Password needs to be 6 characters</span>
+      </div>
+    </div>
+ 
+    <ion-button type="submit" expand="block" [disabled]="!loginForm.valid">Log in</ion-button>
+    
+    <ion-button type="button" expand="block" color="light" fill="clear">Not yet a member? Sign up!
+    </ion-button>
+  </form>
+</ion-content>

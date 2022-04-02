@@ -1,0 +1,43 @@
+ion-content {
+    --padding-top: 40%;
+    --padding-start: 10%;
+    --padding-end: 10%;
+    height: 100vh;
+}
+ 
+.input-group {
+    overflow: hidden;
+    margin-bottom: 15px;
+}
+ 
+.errors {
+    font-size: small;
+    color: #fff;
+    background: var(--ion-color-danger);
+    padding-left: 15px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+div.heading-container {
+    margin-bottom: 3rem;
+}
+
+div.heading-container p {
+    color: #c1c1c1;
+}
+
+/*
+    ion item customize
+    item-has-focus
+*/
+
+:host {
+    ion-item {
+        border-bottom: 2px solid #f7f8fa;
+    }
+
+    ion-item {
+        box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px !important;
+    }
+}
