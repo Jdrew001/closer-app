@@ -15,4 +15,8 @@ export class DeviceService {
   async getDeviceId(): Promise<DeviceId> {
     return await Device.getId();
   }
+
+  async getDeviceUUID(): Promise<string> {
+    return (await this.getDeviceId()).uuid;
+  }
 }

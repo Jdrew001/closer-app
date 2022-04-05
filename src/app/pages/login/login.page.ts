@@ -5,6 +5,7 @@ import { AlertController, LoadingController } from '@ionic/angular';
 import { AuthenticationService } from 'src/app/core/services/authentication.service';
 import { DeviceService } from 'src/app/core/services/device.service';
 import { LoginDTO } from './models/login.model';
+import { TokenService } from 'src/app/core/services/token.service';
 
 @Component({
   selector: 'app-login',
@@ -14,6 +15,7 @@ import { LoginDTO } from './models/login.model';
 export class LoginPage implements OnInit {
 
   loginForm: FormGroup;
+  testvariable: string = '';
 
   get email() {
     return this.loginForm.get('email');
@@ -28,8 +30,8 @@ export class LoginPage implements OnInit {
     private authService: AuthenticationService,
     private alertController: AlertController,
     private router: Router,
-    private loadingController: LoadingController,
-    private deviceService: DeviceService
+    private deviceService: DeviceService,
+    private tokenService: TokenService
   ) { }
 
   ngOnInit() {
@@ -39,8 +41,20 @@ export class LoginPage implements OnInit {
   async login() {
     const deviceInfo = await this.deviceService.getDeviceId();
     this.authService.login(this.generateLoginDTO(this.loginForm.value, deviceInfo.uuid))
-      .subscribe((res) => {
-        // success
+      .subscribe(async (res) => {
+        if (!res.isAuthenticated && res.message) {
+          // display an error message
+          const alert = await this.alertController.create({
+            message: res.message,
+            header: 'Authetication Error',
+            buttons: ['OK']
+          });
+
+          await alert.present();
+          return;
+        }
+
+        this.successfulLogin(res.token, res.refreshToken);
     });
   }
 
@@ -61,5 +75,11 @@ export class LoginPage implements OnInit {
       password: value.password,
       deviceUUID: uuid
     }
+  }
+
+  private async successfulLogin(token, refreshToken) {
+    await this.tokenService.setAppToken(token);
+    await this.tokenService.setRefreshToken(refreshToken);
+    this.router.navigateByUrl('/tabs/tab1', { replaceUrl:true });
   }
 }

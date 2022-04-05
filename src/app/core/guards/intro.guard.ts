@@ -8,7 +8,8 @@ import { AppConstants } from 'src/app/app.constants';
 })
 export class IntroGuard implements CanLoad {
 
-  constructor(private router: Router) {}
+  constructor(
+    private router: Router) {}
 
   async canLoad(
     route: Route,

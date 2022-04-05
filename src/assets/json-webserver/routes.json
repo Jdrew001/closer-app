@@ -1,0 +1,7 @@
+{
+    "/api/*": "/$1",
+    "/testdata": "/test_data",
+    "/login": "/login",
+    "/register": "/register",
+    "/refreshToken": "/refresh_token"
+}

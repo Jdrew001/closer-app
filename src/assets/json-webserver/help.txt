@@ -1,0 +1,9 @@
+To run the json server externally so you can connect your device, update the follow
+
+1. get your ipv4 network lan 
+
+2. update package.json with ip address -- do not check in change
+package.json
+"json-server": "json-server src/assets/json-webserver/db.json --watch --routes src/assets/json-webserver/routes.json --host 192.168.50.101"
+
+3. update environment.ts file to use mock
