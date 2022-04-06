@@ -16,7 +16,6 @@ import { AuthService } from 'src/app/core/services/auth.service';
 export class LoginPage implements OnInit {
 
   loginForm: FormGroup;
-  testvariable: string = '';
 
   get email() {
     return this.loginForm.get('email');

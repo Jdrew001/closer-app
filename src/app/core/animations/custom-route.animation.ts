@@ -26,6 +26,8 @@ export const customAnimation = (_: HTMLElement, opts: any) => {
     .duration(opts.duration || 333)
     .easing("cubic-bezier(0.7,0,0.3,1)");
 
+    console.log('test!', opts.enteringEl['localName']);
+
     if (excludedURLS.includes(opts.enteringEl['localName']) || excludedURLS.includes(opts.leavingEl['localName'])) {
         fadeUp(opts, rootTransition)
     } else {

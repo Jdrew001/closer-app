@@ -1,9 +1,65 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>register</ion-title>
-  </ion-toolbar>
-</ion-header>
-
 <ion-content>
 
+  <div class="heading-container">
+    <h1>Register</h1>
+    <p>Please register to continue</p>
+  </div>
+
+  <form [formGroup]="registerForm">
+    <div class="input-group">
+      <ion-item lines="none">
+        <ion-label position="floating">First Name</ion-label>
+        <ion-input type="text" formControlName="firstName"></ion-input>
+        <ion-icon name="mail-outline" slot="start"></ion-icon>
+      </ion-item>
+      <div *ngIf="(firstName.dirty || firstName.touched) && firstName.errors" class="errors">
+        <span *ngIf="firstName.errors?.required">First Name is required</span>
+      </div>
+
+      <ion-item lines="none">
+        <ion-label position="floating">Last Name</ion-label>
+        <ion-input type="text" formControlName="lastName"></ion-input>
+        <ion-icon name="mail-outline" slot="start"></ion-icon>
+      </ion-item>
+      <div *ngIf="(lastName.dirty || lastName.touched) && lastName.errors" class="errors">
+        <span *ngIf="lastName.errors?.required">Last Name is required</span>
+      </div>
+
+      <ion-item lines="none">
+        <ion-label position="floating">Email</ion-label>
+        <ion-input type="email" formControlName="email"></ion-input>
+        <ion-icon name="mail-outline" slot="start"></ion-icon>
+      </ion-item>
+      <div *ngIf="(email.dirty || email.touched) && email.errors" class="errors">
+        <span *ngIf="email.errors?.required">Email is required</span>
+        <span *ngIf="email.errors?.email">Email is invalid</span>
+      </div>
+
+      <ion-item lines="none">
+        <ion-label position="floating">Password</ion-label>
+        <ion-input type="password" formControlName="password"></ion-input>
+        <ion-icon name="lock-closed-outline" slot="start"></ion-icon>
+      </ion-item>
+      <div *ngIf="(password.dirty || password.touched) && password.errors" class="errors">
+        <span *ngIf="password.errors?.required">Password is required</span>
+        <span *ngIf="password.errors?.minlength">Password needs to be 6 characters</span>
+      </div>
+
+      <ion-item lines="none">
+        <ion-label position="floating">Confirm Password</ion-label>
+        <ion-input type="confirmPassword" formControlName="confirmPassword"></ion-input>
+        <ion-icon name="lock-closed-outline" slot="start"></ion-icon>
+      </ion-item>
+      <div *ngIf="(confirmPassword.dirty || confirmPassword.touched) && confirmPassword.errors" class="errors">
+        <!-- <span *ngIf="password.errors?.required">Password is required</span>
+        <span *ngIf="password.errors?.minlength">Password needs to be 6 characters</span> -->
+      </div>
+    </div>
+ 
+    <ion-button type="submit" expand="block" [disabled]="!registerForm.valid" (click)="register()">Register</ion-button>
+    <br><br>
+    <ion-button type="button" expand="block" color="dark" fill="clear" (click)="back()">Back
+    </ion-button>
+  </form>
+ 
 </ion-content>
