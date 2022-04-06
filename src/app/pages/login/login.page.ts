@@ -6,6 +6,7 @@ import { AuthenticationService } from 'src/app/core/services/authentication.serv
 import { DeviceService } from 'src/app/core/services/device.service';
 import { LoginDTO } from './models/login.model';
 import { TokenService } from 'src/app/core/services/token.service';
+import { AuthService } from 'src/app/core/services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -27,7 +28,8 @@ export class LoginPage implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private authService: AuthenticationService,
+    private authenticationService: AuthenticationService,
+    private authService: AuthService,
     private alertController: AlertController,
     private router: Router,
     private deviceService: DeviceService,
@@ -40,7 +42,7 @@ export class LoginPage implements OnInit {
 
   async login() {
     const deviceInfo = await this.deviceService.getDeviceId();
-    this.authService.login(this.generateLoginDTO(this.loginForm.value, deviceInfo.uuid))
+    this.authenticationService.login(this.generateLoginDTO(this.loginForm.value, deviceInfo.uuid))
       .subscribe(async (res) => {
         if (!res.isAuthenticated && res.message) {
           // display an error message
@@ -56,6 +58,10 @@ export class LoginPage implements OnInit {
 
         this.successfulLogin(res.token, res.refreshToken);
     });
+  }
+
+  registerPage() {
+    this.router.navigateByUrl('/register');
   }
 
   forgotPassword() {
@@ -78,8 +84,9 @@ export class LoginPage implements OnInit {
   }
 
   private async successfulLogin(token, refreshToken) {
+    this.authService.isAuthenticated$.next(true);
     await this.tokenService.setAppToken(token);
     await this.tokenService.setRefreshToken(refreshToken);
-    this.router.navigateByUrl('/tabs/tab1', { replaceUrl:true });
+    setTimeout(() => {this.router.navigateByUrl('/tabs/tab1', { replaceUrl:true })}, 1000);
   }
 }

@@ -8,13 +8,18 @@ import { AuthService } from '../services/auth.service';
 })
 export class AuthGuard implements CanLoad {
 
+  isAuthenticated = false;
+
   constructor(
     private authService: AuthService
-  ) {}
+  ) {
+    this.authService.isAuthenticated$.subscribe(value => this.isAuthenticated = value);
+  }
 
   canLoad(
     route: Route,
     segments: UrlSegment[]): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    return this.authService.isAuthenticated;
+    console.log('is authenticated', this.isAuthenticated);
+    return this.isAuthenticated;
   }
 }
