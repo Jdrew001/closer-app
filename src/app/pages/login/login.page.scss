@@ -4,6 +4,10 @@ ion-content {
     --padding-end: 10%;
     height: 100vh;
 }
+
+.group {
+    margin-bottom: 2rem;
+}
  
 .input-group {
     overflow: hidden;
@@ -29,7 +33,7 @@ ion-content {
         border-bottom: 2px solid #f7f8fa;
     }
 
-    ion-item {
-        box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px !important;
-    }
+    // ion-item {
+    //     box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px !important;
+    // }
 }

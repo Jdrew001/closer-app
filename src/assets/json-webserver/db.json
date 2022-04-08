@@ -3,8 +3,8 @@
     "data": "test data!!"
   },
   "refresh_token": {
-    "token": "undefined",
-    "deviceUUID": "4d7ecfd1-6cc6-4846-9b9f-7a40a355ac39"
+    "token": "7GRkX0i3//oCo1Yk3usqw29HIEUO+tBQTc0tMv3uJ/I=",
+    "deviceUUID": "0f3c26ed36fbd3ce"
   },
   "login": {
     "isAuthenticated": true,
@@ -18,9 +18,9 @@
   },
   "register": {
     "firstName": "drew",
-    "lastName": "gnnvf",
+    "lastName": "atkis",
     "email": "dtatkison@gmail.com",
-    "password": "gbjjhgg",
+    "password": "onegskdnf",
     "deviceGuid": "0f3c26ed36fbd3ce",
     "deviceModel": "SM-G965U",
     "deviceManufacture": "samsung",
