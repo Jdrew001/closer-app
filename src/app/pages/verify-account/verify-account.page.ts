@@ -50,8 +50,15 @@ export class VerifyAccountPage implements OnInit {
     }
   }
 
-  async resendCode() {
+  async resendCode(firstElement) {
     const userId = await this.userService.getUserId();
+    const keys = Object.keys(this.verifyModel);
+    keys.forEach(key => this.verifyModel[key] = null);
+    if (firstElement == null) {
+      return;
+    } else {
+      firstElement.focus();
+    }
     this.authService.reissueCode(userId).subscribe(res => {
       this.reissue = true;
     });

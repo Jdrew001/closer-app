@@ -42,7 +42,7 @@ export class AuthService {
           return;
         }
 
-        // update refreshToken and 
+        // update refreshToken
         await this.tokenService.setAppToken(res.token);
         await this.tokenService.setRefreshToken(res.refreshToken);
 
