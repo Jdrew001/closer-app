@@ -24,18 +24,18 @@
           <ion-label position="floating">Password</ion-label>
           <ion-input type="password" formControlName="password"></ion-input>
           <ion-icon name="lock-closed-outline" slot="start"></ion-icon>
-          <ion-note slot="end" color="primary" (click)="forgotPassword()">FORGOT</ion-note>
         </ion-item>
+        <ion-note class="forgot-password" color="primary" (click)="forgotPassword()">FORGOT</ion-note>
         <div *ngIf="(password.dirty || password.touched) && password.errors" class="errors">
           <span *ngIf="password.errors?.required">Password is required</span>
           <span *ngIf="password.errors?.minlength">Password needs to be 6 characters</span>
         </div>
       </div>
     </div>
- 
-    <ion-button type="submit" expand="block" [disabled]="!loginForm.valid" (click)="login()">Sign in</ion-button>
-    <br><br>
-    <ion-button type="button" expand="block" color="dark" fill="clear" (click)="registerPage()">Not yet a member? Sign up!
-    </ion-button>
+    <div class="button-group">
+      <ion-button type="submit" expand="block" [disabled]="!loginForm.valid" (click)="login()">Sign in</ion-button>
+      <br><br>
+      <ion-button type="button" expand="block" color="dark" fill="clear" (click)="registerPage()">Not yet a member? Sign up!</ion-button>
+    </div>
   </form>
 </ion-content>
