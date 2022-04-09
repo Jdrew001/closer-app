@@ -7,7 +7,7 @@ import { RefreshDTO } from 'src/app/pages/login/models/refresh.model';
 import { RegistrationDTO } from 'src/app/pages/login/models/registration.model';
 import { environment } from 'src/environments/environment';
 import { CoreConstants } from '../core.constant';
-import { AuthModel } from '../models/auth.model';
+import { AuthModel, RegisterModel } from '../models/auth.model';
 
 @Injectable({
   providedIn: 'root'
@@ -32,17 +32,17 @@ export class AuthenticationService {
       ) as Observable<AuthModel>;
   }
 
-  register(dto: RegistrationDTO): Observable<any> {
-    return this.httpClient.post(`${this.baseUrl}${CoreConstants.REGISTER_URL}`, dto)
+  register(dto: RegistrationDTO): Observable<RegisterModel> {
+    return this.httpClient.get(`${this.baseUrl}${CoreConstants.REGISTER_URL}`)
       .pipe(
         catchError(error => {
           return observableThrowError(error.message || 'Server error');
         })
-      ) as Observable<AuthModel>;
+      ) as Observable<RegisterModel>;
   }
 
   refreshToken(dto: RefreshDTO) {
-    return this.httpClient.post(`${this.baseUrl}${CoreConstants.REFRESH_URL}`, dto)
+    return this.httpClient.get(`${this.baseUrl}${CoreConstants.REFRESH_URL}`)
     .pipe(
       catchError(error => {
         return observableThrowError(error.message || 'Server error');

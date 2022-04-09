@@ -29,7 +29,11 @@ const routes: Routes = [
   {
     path: 'register',
     loadChildren: () => import('./pages/register/register.module').then( m => m.RegisterPageModule)
+  },  {
+    path: 'verify-account',
+    loadChildren: () => import('./pages/verify-account/verify-account.module').then( m => m.VerifyAccountPageModule)
   }
+
 ];
 @NgModule({
   imports: [

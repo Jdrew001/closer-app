@@ -8,3 +8,10 @@ export interface AuthModel {
     isNewDevice: false;
     shouldRedirectToLogin: boolean;
 }
+
+export interface RegisterModel {
+    isUserCreated: boolean;
+    message?: string;
+    shouldRedirectToLogin: boolean;
+    userId: string;
+}

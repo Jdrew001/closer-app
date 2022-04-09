@@ -4,6 +4,7 @@ import { AuthenticationService } from './services/authentication.service';
 import { DeviceService } from './services/device.service';
 import { AuthService } from './services/auth.service';
 import { TokenService } from './services/token.service';
+import { UserService } from './services/user.service';
 
 
 
@@ -16,7 +17,8 @@ import { TokenService } from './services/token.service';
     AuthenticationService,
     AuthService,
     DeviceService,
-    TokenService
+    TokenService,
+    UserService
   ]
 })
 export class CoreModule { }

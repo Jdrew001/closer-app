@@ -25,11 +25,11 @@ export class RegisterPage implements OnInit {
   get lastName() {
     return this.registerForm.get('lastName');
   }
-  
+
   get email() {
     return this.registerForm.get('email');
   }
-  
+ 
   get password() {
     return this.registerForm.get('password');
   }
@@ -38,6 +38,11 @@ export class RegisterPage implements OnInit {
     return this.registerForm.get('confirmPassword');
   }
 
+  get passwordsMatch() {
+    return this.password.value === this.confirmPassword.value;
+  }
+
+  // eslint-disable-next-line @typescript-eslint/member-ordering
   constructor(
     private fb: FormBuilder,
     private navController: NavController,
@@ -54,13 +59,15 @@ export class RegisterPage implements OnInit {
 
   async register() {
     const deviceDTO = this.generateDeviceInfo((await this.deviceService.getDeviceInfo()), (await this.deviceService.getDeviceId()).uuid);
-    this.authenticationService.register(this.generateRegisterDTO(this.registerForm.value, deviceDTO))
+
+    if (this.registerForm.valid && this.passwordsMatch) {
+      this.authenticationService.register(this.generateRegisterDTO(this.registerForm.value, deviceDTO))
       .subscribe(async res => {
-        if (!res.isAuthenticated && res.message) {
+        if (!res.isUserCreated && res.message) {
           // display an error message
           const alert = await this.alertController.create({
             message: res.message,
-            header: 'Authetication Error',
+            header: 'Registration Error',
             buttons: ['OK']
           });
 
@@ -68,8 +75,18 @@ export class RegisterPage implements OnInit {
           return;
         }
 
-        this.successfulRegistration(res.token, res.refreshToken);
+        this.successfulRegistration();
       });
+    } else {
+      // display an error message
+      const alert = await this.alertController.create({
+        message: 'Please ensure form is correct',
+        header: 'Registration Error',
+        buttons: ['OK']
+      });
+
+      await alert.present();
+    }
   }
 
   back() {
@@ -105,10 +122,8 @@ export class RegisterPage implements OnInit {
     }
   }
 
-  private async successfulRegistration(token, refreshToken) {
-    this.authService.isAuthenticated$.next(true);
-    await this.tokenService.setAppToken(token);
-    await this.tokenService.setRefreshToken(refreshToken);
-    setTimeout(() => {this.navController.navigateRoot('/tabs/tab1', { replaceUrl:true })}, 1000);
+  private async successfulRegistration() {
+    //navigate to the verification screen
+    setTimeout(() => {this.navController.navigateRoot('/verify-account', { replaceUrl:true })}, 1000);
   }
 }
