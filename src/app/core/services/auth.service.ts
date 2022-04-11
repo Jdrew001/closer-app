@@ -73,6 +73,12 @@ export class AuthService {
     ) as Observable<AuthModel>; //should be post
   }
 
+  sendEmailForReset() {
+    return this.httpClient.get(`${this.baseUrl}${CoreConstants.EMAIL_FOR_RESET}`).pipe(
+      catchError(error => observableThrowError(error.message || 'Server error'))
+    ) as Observable<any>; //should be post
+  }
+
   async logoutUser() {
     await this.tokenService.removeAllTokens();
 

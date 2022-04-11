@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AlertController, LoadingController } from '@ionic/angular';
+import { AlertController, LoadingController, NavController } from '@ionic/angular';
 import { AuthenticationService } from 'src/app/core/services/authentication.service';
 import { DeviceService } from 'src/app/core/services/device.service';
 import { LoginDTO } from './models/login.model';
@@ -32,7 +32,8 @@ export class LoginPage implements OnInit {
     private alertController: AlertController,
     private router: Router,
     private deviceService: DeviceService,
-    private tokenService: TokenService
+    private tokenService: TokenService,
+    private navController: NavController
   ) { }
 
   ngOnInit() {
@@ -64,7 +65,7 @@ export class LoginPage implements OnInit {
   }
 
   forgotPassword() {
-    console.log('forgot');
+    this.navController.navigateForward('/forget-password');
   }
 
   private initForm() {
