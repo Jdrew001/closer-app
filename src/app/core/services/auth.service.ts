@@ -19,6 +19,7 @@ import { catchError } from 'rxjs/operators';
 export class AuthService {
 
   public isAuthenticated$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  public isReset: boolean = false;
   protected baseUrl: string;
 
   constructor(
@@ -37,7 +38,7 @@ export class AuthService {
     if (refreshToken) {
       this.authService.refreshToken({token: refreshToken, deviceUUID}).subscribe(async res => {
         if (res.shouldRedirectToLogin) {
-          this.navController.navigateRoot('/login', { replaceUrl:true });
+          this.navController.navigateRoot('/reset-password', { replaceUrl:true });
           this.isAuthenticated$.next(false);
           return;
         }
@@ -57,7 +58,7 @@ export class AuthService {
       return;
     }
     this.isAuthenticated$.next(false);
-    this.navController.navigateRoot('/login', { replaceUrl:true });
+    this.navController.navigateRoot('/reset-password', { replaceUrl:true });
     setTimeout(async () => {await SplashScreen.hide()}, 1000);
   }
 

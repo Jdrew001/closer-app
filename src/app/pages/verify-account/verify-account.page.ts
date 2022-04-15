@@ -11,6 +11,7 @@ import { UserService } from 'src/app/core/services/user.service';
 })
 export class VerifyAccountPage implements OnInit {
 
+  isForResetPassword = false;
   reissue = false;
   verifyModel = {
     first: null,
@@ -28,6 +29,7 @@ export class VerifyAccountPage implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.isForResetPassword = this.authService.isReset;
   }
 
   submit() {
@@ -111,7 +113,13 @@ export class VerifyAccountPage implements OnInit {
     await this.tokenService.setAppToken(token);
     await this.tokenService.setRefreshToken(refreshToken);
 
-    setTimeout(() => {this.navController.navigateRoot('/tabs/tab1', { replaceUrl:true })}, 1000);
+    if (this.isForResetPassword) {
+      setTimeout(() => {this.navController.navigateRoot('/reset-password', { replaceUrl:true })}, 1000);
+    } else {
+      setTimeout(() => {this.navController.navigateRoot('/tabs/tab1', { replaceUrl:true })}, 1000);
+    }
+
+    this.isForResetPassword = false;
   }
 
 }

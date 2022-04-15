@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NavController } from '@ionic/angular';
 import { AuthService } from 'src/app/core/services/auth.service';
+import { UserService } from 'src/app/core/services/user.service';
 
 @Component({
   selector: 'app-forget-password',
@@ -15,7 +16,8 @@ export class ForgetPasswordPage implements OnInit {
   constructor(
     private fb: FormBuilder,
     private navController: NavController,
-    private authService: AuthService
+    private authService: AuthService,
+    private userService: UserService
   ) { }
 
   get email() { return this.emailForm.get('email'); }
@@ -32,8 +34,14 @@ export class ForgetPasswordPage implements OnInit {
 
   submit() {
     if (this.emailForm.valid) {
-      this.authService.sendEmailForReset(this.email.value).subscribe(res => {
-        console.log('test', res);
+      this.authService.sendEmailForReset(this.email.value).subscribe(async res => {
+        if (res.isUser && res.userId) {
+          // set user id for reset
+          await this.userService.setUserId(res.userId);
+          this.authService.isReset = true;
+          // navigate to new page for code
+          setTimeout(() => {this.navController.navigateRoot('/verify-account', { replaceUrl:true })}, 1000);
+        }
       });
     }
   }
