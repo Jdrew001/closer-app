@@ -37,5 +37,10 @@
     "message": null,
     "isNewDevice": false,
     "shouldRedirectoToLogin": false
+  },
+  "send_email_account": {
+    "isUser": true,
+    "message": null,
+    "userId": "9a08bdef-b493-11ec-a90a-e0d55e253d93"
   }
 }

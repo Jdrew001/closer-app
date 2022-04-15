@@ -31,7 +31,11 @@ export class ForgetPasswordPage implements OnInit {
   }
 
   submit() {
-
+    if (this.emailForm.valid) {
+      this.authService.sendEmailForReset(this.email.value).subscribe(res => {
+        console.log('test', res);
+      });
+    }
   }
 
   back() {

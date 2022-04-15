@@ -15,3 +15,9 @@ export interface RegisterModel {
     shouldRedirectToLogin: boolean;
     userId: string;
 }
+
+export interface ResetEmailModel {
+    isUser: boolean;
+    message?: string;
+    userId: string;
+}

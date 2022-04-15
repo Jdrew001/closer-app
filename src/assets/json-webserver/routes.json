@@ -4,5 +4,6 @@
     "/login": "/login",
     "/register": "/register",
     "/refreshToken": "/refresh_token",
-    "/verifyAccount": "/verify_account"
+    "/verifyAccount": "/verify_account",
+    "/sendEmailForReset": "/send_email_account"
 }
