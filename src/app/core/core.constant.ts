@@ -5,4 +5,5 @@ export class CoreConstants {
     public static VERIFY_URL = 'verifyAccount';
     public static REISSUE_VERIFICATION = 'reissueVerification';
     public static EMAIL_FOR_RESET = 'sendEmailForReset';
+    public static PASSWORD_RESET = 'sendPasswordForReset';
 }

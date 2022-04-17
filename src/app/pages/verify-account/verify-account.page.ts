@@ -88,19 +88,19 @@ export class VerifyAccountPage implements OnInit {
 
   checkForEmpty(): boolean {
     let result = false;
-    if (this.verifyModel.first) {
+    if (this.verifyModel.first !== '') {
       result = true;
     }
 
-    if (this.verifyModel.second) {
+    if (this.verifyModel.second !== '') {
       result = true;
     }
 
-    if (this.verifyModel.third) {
+    if (this.verifyModel.third !== '') {
       result = true;
     }
 
-    if (this.verifyModel.fourth) {
+    if (this.verifyModel.fourth !== '') {
       result = true;
     }
 
@@ -114,12 +114,10 @@ export class VerifyAccountPage implements OnInit {
     await this.tokenService.setRefreshToken(refreshToken);
 
     if (this.isForResetPassword) {
+      this.isForResetPassword = false;
       setTimeout(() => {this.navController.navigateRoot('/reset-password', { replaceUrl:true })}, 1000);
     } else {
       setTimeout(() => {this.navController.navigateRoot('/tabs/tab1', { replaceUrl:true })}, 1000);
     }
-
-    this.isForResetPassword = false;
   }
-
 }

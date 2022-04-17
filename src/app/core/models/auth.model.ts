@@ -21,3 +21,13 @@ export interface ResetEmailModel {
     message?: string;
     userId: string;
 }
+
+export interface ResetPasswordResultModel {
+    message?: string;
+    error: boolean;
+}
+
+export interface ResetPasswordModel {
+    userId: string;
+    password: string;
+}

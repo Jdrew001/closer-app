@@ -10,7 +10,7 @@ import { NavController } from '@ionic/angular';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { CoreConstants } from '../core.constant';
-import { AuthModel, ResetEmailModel } from '../models/auth.model';
+import { AuthModel, ResetEmailModel, ResetPasswordResultModel } from '../models/auth.model';
 import { catchError } from 'rxjs/operators';
 
 @Injectable({
@@ -78,6 +78,12 @@ export class AuthService {
     return this.httpClient.get(`${this.baseUrl}${CoreConstants.EMAIL_FOR_RESET}`).pipe(
       catchError(error => observableThrowError(error.message || 'Server error'))
     ) as Observable<ResetEmailModel>; //should be post
+  }
+
+  sendPasswordForReset(password: string, userId: string) {
+    return this.httpClient.get(`${this.baseUrl}${CoreConstants.PASSWORD_RESET}`).pipe(
+      catchError(error => observableThrowError(error.message || 'Server error'))
+    ) as Observable<ResetPasswordResultModel>; //should be post
   }
 
   async logoutUser() {
