@@ -1,8 +1,9 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AlertController, NavController } from '@ionic/angular';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { TokenService } from 'src/app/core/services/token.service';
 import { UserService } from 'src/app/core/services/user.service';
+import { Keyboard } from '@capacitor/keyboard';
 
 @Component({
   selector: 'app-verify-account',
@@ -30,8 +31,18 @@ export class VerifyAccountPage implements OnInit {
   get isForResetPassword() { return this.authService.isReset}
   set isForResetPassword(val: boolean) { this.authService.isReset = val; }
 
+  get isModelValid(): boolean {
+    let result = true;
+    Object.keys(this.verifyModel).forEach(key => {
+      if (this.verifyModel[key] == null) {
+        result = false;
+      }
+    });
+
+    return result;
+  }
+
   ngOnInit() {
-    console.log('test reset password', this.isForResetPassword);
   }
 
   submit() {
@@ -76,6 +87,10 @@ export class VerifyAccountPage implements OnInit {
 
     if (e.key === 'Backspace') {
       element = prevElement;
+    }
+
+    if (nextElement == null && this.isModelValid) {
+        Keyboard.hide();
     }
 
     if (element == null)
