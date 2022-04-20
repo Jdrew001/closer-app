@@ -1,11 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';6
 import { Platform } from '@ionic/angular';
-
-import { SplashScreen } from '@capacitor/splash-screen';
-import { AuthenticationService } from './core/services/authentication.service';
-import { DeviceService } from './core/services/device.service';
-import { Router } from '@angular/router';
-import { TokenService } from './core/services/token.service';
 import { AuthService } from './core/services/auth.service';
 
 @Component({
@@ -23,5 +17,6 @@ export class AppComponent implements OnInit {
     this.platform.ready().then(async (source) => {
       await this.authService.validateRefreshToken();
     });
+    
   }
 }
