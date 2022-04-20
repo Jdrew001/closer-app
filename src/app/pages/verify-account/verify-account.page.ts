@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AlertController, NavController } from '@ionic/angular';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { TokenService } from 'src/app/core/services/token.service';
@@ -11,7 +11,6 @@ import { UserService } from 'src/app/core/services/user.service';
 })
 export class VerifyAccountPage implements OnInit {
 
-  isForResetPassword = false;
   reissue = false;
   verifyModel = {
     first: null,
@@ -28,8 +27,11 @@ export class VerifyAccountPage implements OnInit {
     private userService: UserService
   ) { }
 
+  get isForResetPassword() { return this.authService.isReset}
+  set isForResetPassword(val: boolean) { this.authService.isReset = val; }
+
   ngOnInit() {
-    this.isForResetPassword = this.authService.isReset;
+    console.log('test reset password', this.isForResetPassword);
   }
 
   submit() {
@@ -114,10 +116,17 @@ export class VerifyAccountPage implements OnInit {
     await this.tokenService.setRefreshToken(refreshToken);
 
     if (this.isForResetPassword) {
-      this.isForResetPassword = false;
-      setTimeout(() => {this.navController.navigateRoot('/reset-password', { replaceUrl:true })}, 1000);
+      setTimeout(() => {
+        this.navController.navigateRoot('/reset-password', { replaceUrl:true }).finally(() => {
+          this.isForResetPassword = false;
+        });
+      }, 1000);
     } else {
-      setTimeout(() => {this.navController.navigateRoot('/tabs/tab1', { replaceUrl:true })}, 1000);
+      setTimeout(() => {
+        this.navController.navigateRoot('/tabs/tab1', { replaceUrl:true }).finally(() => {
+          this.isForResetPassword = false;
+        });
+      }, 1000);
     }
   }
 }
