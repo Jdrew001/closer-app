@@ -48,7 +48,7 @@ export class AuthService {
         await this.tokenService.setRefreshToken(res.refreshToken);
 
         // redirect user
-        this.navController.navigateForward('/tabs/tab1', { replaceUrl:true });
+        this.navController.navigateForward('/tabs/dashboard', { replaceUrl:true });
 
         // wait and hide splash screen
         setTimeout(async () => {await SplashScreen.hide()}, 2000);

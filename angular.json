@@ -144,6 +144,37 @@
           }
         }
       }
+    },
+    "ced-widgets": {
+      "projectType": "library",
+      "root": "projects/ced-widgets",
+      "sourceRoot": "projects/ced-widgets/src",
+      "prefix": "ced",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "project": "projects/ced-widgets/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/ced-widgets/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/ced-widgets/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/ced-widgets/src/test.ts",
+            "tsConfig": "projects/ced-widgets/tsconfig.spec.json",
+            "karmaConfig": "projects/ced-widgets/karma.conf.js"
+          }
+        }
+      }
     }
   },
   "cli": {
