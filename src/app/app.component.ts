@@ -3,7 +3,6 @@ import { Router } from '@angular/router';
 import { Platform } from '@ionic/angular';
 import { AuthService } from './core/services/auth.service';
 import { TokenService } from './core/services/token.service';
-import { UserService } from './core/services/user.service';
 
 @Component({
   selector: 'app-root',
