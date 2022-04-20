@@ -1,0 +1,46 @@
+ion-content {
+    --padding-top:40%;
+    --padding-start: 10%;
+    --padding-end: 10%;
+    height: 100vh;
+}
+
+div.back-button {
+    font-size: 25px;
+    position: absolute;
+    top: 3vh;
+    left: 8vw;
+}
+
+p {
+    color: #c1c1c1;
+}
+
+.group {
+    margin-bottom: 2rem;
+}
+ 
+.input-group {
+    overflow: hidden;
+    margin-bottom: 15px;
+}
+
+.inputBox {
+    margin-top: 10px;
+    display: flex;
+    justify-content: center;
+    .input {
+        margin: 20px;
+        border-radius: 5px;
+        input {
+            outline: none;
+            border: none;
+            width: 50px;
+            height: 50px;
+            font-size: 20px;
+            background-color: #f3f3f3;
+            color: black;
+            text-align: center;
+        }
+    }
+}

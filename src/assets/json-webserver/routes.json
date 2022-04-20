@@ -1,0 +1,10 @@
+{
+    "/api/*": "/$1",
+    "/testdata": "/test_data",
+    "/login": "/login",
+    "/register": "/register",
+    "/refreshToken": "/refresh_token",
+    "/verifyAccount": "/verify_account",
+    "/sendEmailForReset": "/send_email_account",
+    "/sendPasswordForReset": "/send_password_result"
+}

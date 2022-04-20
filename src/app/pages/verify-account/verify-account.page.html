@@ -1,0 +1,43 @@
+<ion-content>
+  <div *ngIf="!isForResetPassword" class="back-button">
+    <ion-icon name="arrow-back-outline"></ion-icon>
+  </div>
+  <div class="heading-container">
+    <h1>Verification</h1>    
+    <p>Enter the code from the email we just sent you</p>
+  </div>
+
+  <div class="input-group">
+    <div class="inputBox">
+      <div class="input">
+        <input #first type="number" maxlength="1" 
+          (keyup)="onDigitInput($event, second, null)"
+          oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" 
+          [(ngModel)]="verifyModel.first"/>
+      </div>
+      <div class="input">
+        <input #second type="number" maxlength="1" 
+          (keyup)="onDigitInput($event, third, first)"
+          oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+          [(ngModel)]="verifyModel.second"/>
+      </div>
+      <div class="input">
+        <input #third type="number" maxlength="1" 
+        (keyup)="onDigitInput($event, fourth, second)"
+          oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+          [(ngModel)]="verifyModel.third"/>
+      </div>
+      <div class="input">
+        <input #fourth type="number" maxlength="1" 
+        (keyup)="onDigitInput($event, null, third)"
+          oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+          [(ngModel)]="verifyModel.fourth"/>
+      </div>
+    </div>
+  </div>
+
+  <p class="text-center">Didn't receive a code? &nbsp;&nbsp; <span (click)="resendCode(first)"><a>Resend</a></span></p>
+  <br><br>
+  <ion-button type="submit" expand="block" (click)="submit()">Verify</ion-button>
+  
+</ion-content>
