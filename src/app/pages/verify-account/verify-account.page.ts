@@ -79,8 +79,12 @@ export class VerifyAccountPage implements OnInit {
     });
   }
 
-  onDigitInput(e, nextElement, prevElement) {
+  async onDigitInput(e, nextElement, prevElement) {
     let element;
+    if (this.isModelValid) {
+      await Keyboard.hide();
+    }
+
     if (e.key !== 'Backspace') {
       element = nextElement;
     }
@@ -89,17 +93,15 @@ export class VerifyAccountPage implements OnInit {
       element = prevElement;
     }
 
-    if (nextElement == null && this.isModelValid) {
-        Keyboard.hide();
-    }
-
     if (element == null)
     {
       return;
     }
     else
     {
-      element.focus();
+      if (!this.isModelValid) {
+        element.focus();
+      }
     }
   }
 
@@ -128,7 +130,6 @@ export class VerifyAccountPage implements OnInit {
     this.authService.isAuthenticated$.next(true);
     this.userService.setUserId(userId);
     await this.tokenService.setAppToken(token);
-    await this.tokenService.setRefreshToken(refreshToken);
 
     if (this.isForResetPassword) {
       setTimeout(() => {
