@@ -68,8 +68,9 @@ jobs:
     steps:
       - name: Download Artifact
         uses: actions/download-artifact@v2
-        with: app-dev
-        path: project/apk
+        with: 
+          name: app-dev
+          path: project/apk
 
       - name: upload artifact to Firebase
         uses: wzieba/Firebase-Distribution-Github-Action@v1
