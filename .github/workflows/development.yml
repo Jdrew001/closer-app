@@ -48,16 +48,16 @@ jobs:
         working-directory: ./android/
         run: |
           chmod +x gradlew
-          ./gradlew bundle
+          ./gradlew assembleDebug
 
       - name: Upload dev APK
         uses: actions/upload-artifact@v1
         with:
           name: app-dev
-          path: apk/app-debug.apk
+          path: ./android/build/outputs/apk/debug/app-debug.apk
 
       - name: Upload release bundle
         uses: actions/upload-artifact@v1
         with:
           name: app-release
-          path: apk/app.aab
+          path: ./android/build/outputs/apk/release/app-release.apk
