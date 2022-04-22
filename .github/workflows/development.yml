@@ -7,7 +7,7 @@ on:
 jobs:
 
   build:
-    name: Build App
+    name: Build Android
     runs-on: ubuntu-latest
     steps:
       - name: Checkout source
