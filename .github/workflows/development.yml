@@ -2,7 +2,7 @@ name: Development
 
 on:
   push:
-    branches: [ test-action ]
+    branches: [ develop ]
 
 jobs:
 
@@ -79,5 +79,9 @@ jobs:
           token: ${{secrets.FIREBASE_TOKEN}}
           groups: developers-android
           file: project/apk/app-debug.apk
-          debug: true
-
+          debug: false #this will show the verbose log
+  # notification_failure:
+  #   name: Failure Notification Email
+  #   runs-on: ubuntu-latest
+  #   if: ${{ failure() }}
+  #   needs: [build, deploy]
