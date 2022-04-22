@@ -51,13 +51,15 @@ jobs:
           ./gradlew assembleDebug
 
       - name: Upload dev APK
+        working-directory: ./android/
         uses: actions/upload-artifact@v1
         with:
           name: app-dev
-          path: ./android/build/outputs/apk/debug/app-debug.apk
+          path: build/outputs/apk/debug/app-debug.apk
 
       - name: Upload release bundle
+        working-directory: ./android/
         uses: actions/upload-artifact@v1
         with:
           name: app-release
-          path: ./android/build/outputs/apk/release/app-release.apk
+          path: build/outputs/apk/release/app-release.apk
