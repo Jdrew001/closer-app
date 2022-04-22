@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1096443587534",
+    "project_id": "pc-api-9148464835074929256-626",
+    "storage_bucket": "pc-api-9148464835074929256-626.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1096443587534:android:b5d58132e3fa46a085199f",
+        "android_client_info": {
+          "package_name": "com.atkisondev.closer"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1096443587534-3v0n0i30d7ls4vrsffgf6bjgnak1cu7l.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD_WQaggOdRjDWqPBIE9wDvH9t_qJJ34Og"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1096443587534-3v0n0i30d7ls4vrsffgf6bjgnak1cu7l.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

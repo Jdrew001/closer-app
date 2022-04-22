@@ -11,7 +11,9 @@
     "lint": "ng lint",
     "e2e": "ng e2e",
     "json-server": "json-server src/assets/json-webserver/db.json --watch --routes src/assets/json-webserver/routes.json --host 192.168.50.101",
-    "start-android": "ionic cap run android -l --external"
+    "start-android": "ionic cap run android -l --external",
+    "build-lib": "ng build ced-widgets",
+    "build-lib-watch": "ng build ced-widgets --watch"
   },
   "private": true,
   "dependencies": {

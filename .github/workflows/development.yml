@@ -1,0 +1,87 @@
+name: Development
+
+on:
+  push:
+    branches: [ develop ]
+
+jobs:
+
+  build:
+    name: Build Android
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v2
+
+      - name: Setup java
+        uses: actions/setup-java@v1
+        with:
+          java-version: 11
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: 16.x
+
+      - name: Install Ionic
+        run: npm install -g @ionic/cli
+
+      - name: Install app dependencies
+        run: npm install
+
+      - name: Build Lib
+        run: npm run build-lib
+
+      - name: Build Ionic App
+        run: ionic build
+
+      - name: Copy Android
+        run: ionic capacitor copy android
+
+      - name: Build Android Dev APK
+        run: ionic capacitor build android --no-open
+
+      - name: Build Android Release APK
+        run: ionic capacitor build android --release --prod --no-open
+
+      - name: Generate the Android App Bundle
+        working-directory: ./android/
+        run: |
+          chmod +x gradlew
+          ./gradlew assembleDebug
+
+      - name: Upload dev APK
+        uses: actions/upload-artifact@v1
+        with:
+          name: app-dev
+          path: android/app/build/outputs/apk/debug/app-debug.apk
+
+      # - name: Upload release bundle
+      #   uses: actions/upload-artifact@v1
+      #   with:
+      #     name: app-release
+      #     path: android/app/build/outputs/apk/release/app-release-unsigned.apk
+  deploy:
+    name: Deploy Android App - Firebase
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download Artifact
+        uses: actions/download-artifact@v2
+        with: 
+          name: app-dev
+          path: project/apk
+
+      - name: upload artifact to Firebase
+        uses: wzieba/Firebase-Distribution-Github-Action@v1
+        with:
+          appId: ${{secrets.FIREBASE_APP_ID}}
+          token: ${{secrets.FIREBASE_TOKEN}}
+          groups: developers-android
+          file: project/apk/app-debug.apk
+          debug: false #this will show the verbose log
+  # notification_failure:
+  #   name: Failure Notification Email
+  #   runs-on: ubuntu-latest
+  #   if: ${{ failure() }}
+  #   needs: [build, deploy]
