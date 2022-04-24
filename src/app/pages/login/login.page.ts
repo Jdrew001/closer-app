@@ -87,6 +87,6 @@ export class LoginPage implements OnInit {
     this.authService.isAuthenticated$.next(true);
     await this.tokenService.setAppToken(token);
     await this.tokenService.setRefreshToken(refreshToken);
-    setTimeout(() => {this.router.navigateByUrl('/tabs/tab1', { replaceUrl:true })}, 1000);
+    setTimeout(() => {this.router.navigateByUrl('/tabs/dashboard', { replaceUrl:true })}, 1000);
   }
 }

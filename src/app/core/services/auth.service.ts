@@ -1,3 +1,4 @@
+import { UserService } from './user.service';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthenticationService } from './authentication.service';
@@ -27,7 +28,8 @@ export class AuthService {
     private deviceService: DeviceService,
     private authService: AuthenticationService,
     private navController: NavController,
-    private httpClient: HttpClient
+    private httpClient: HttpClient,
+    private userService: UserService
   ) {
     this.baseUrl = `${environment.base_url}`;
   }
@@ -62,8 +64,10 @@ export class AuthService {
     setTimeout(async () => {await SplashScreen.hide()}, 1000);
   }
 
-  verifyAccountCode(dto) {
-    return this.httpClient.get(`${this.baseUrl}${CoreConstants.VERIFY_URL}`).pipe(
+  async verifyAccountCode(code: string) {
+    const deviceUUID = await this.deviceService.getDeviceUUID();
+    const userId = await this.userService.getUserId();
+    return this.httpClient.get(`${this.baseUrl}${CoreConstants.VERIFY_URL}/${code}/${userId}${deviceUUID}`).pipe(
       catchError(error => observableThrowError(error.message || 'Server error'))
     ) as Observable<AuthModel>; //should be post
   }

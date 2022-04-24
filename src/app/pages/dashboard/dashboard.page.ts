@@ -1,3 +1,4 @@
+import { AuthService } from './../../core/services/auth.service';
 import { Component, OnInit } from '@angular/core';
 import { BarModel } from 'projects/ced-widgets/src/lib/graphs/bar-graph/bar-graph.model';
 
@@ -44,9 +45,15 @@ export class DashboardPage implements OnInit {
     animation: true
   }
 
-  constructor() { }
+  constructor(
+    private authService: AuthService
+  ) { }
 
   ngOnInit() {
+  }
+
+  async logout() {
+    await this.authService.logoutUser();
   }
 
 }

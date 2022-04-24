@@ -45,9 +45,9 @@ export class VerifyAccountPage implements OnInit {
   ngOnInit() {
   }
 
-  submit() {
+  async submit() {
     if (this.checkForEmpty()) {
-      this.authService.verifyAccountCode({}).subscribe(async res => {
+      (await this.authService.verifyAccountCode(this.extractCode())).subscribe(async res => {
         if (!res.isAuthenticated && res.message) {
           // display an error message
           const alert = await this.alertController.create({
@@ -139,10 +139,15 @@ export class VerifyAccountPage implements OnInit {
       }, 1000);
     } else {
       setTimeout(() => {
-        this.navController.navigateRoot('/tabs/tab1', { replaceUrl:true }).finally(() => {
+        this.navController.navigateRoot('/tabs/dashboard', { replaceUrl:true }).finally(async () => {
+          await this.tokenService.setRefreshToken(refreshToken);
           this.isForResetPassword = false;
         });
       }, 1000);
     }
+  }
+
+  private extractCode(): string {
+    return `${this.verifyModel.first}${this.verifyModel.second}${this.verifyModel.third}${this.verifyModel.fourth}`
   }
 }

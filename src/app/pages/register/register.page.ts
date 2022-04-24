@@ -123,6 +123,8 @@ export class RegisterPage implements OnInit {
   }
 
   private async successfulRegistration() {
+    // save the email of user for verification
+
     //navigate to the verification screen
     setTimeout(() => {this.navController.navigateRoot('/verify-account', { replaceUrl:true })}, 1000);
   }
