@@ -1,0 +1,33 @@
+<ion-grid>
+  <ion-row class="ion-justify-content-start">
+    <ion-col>
+      <p>
+        {{ configuration?.title }}
+      </p>
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col class="labels" size="1">
+      <p style="position: absolute;">100</p>
+      <p style="position: absolute; bottom: 2rem;">0</p>
+    </ion-col>
+    <ion-col>
+      <ion-grid>
+        <ion-row class="ion-justify-content-evenly ion-align-items-end bar-container">
+          <ion-col [ngStyle]="{'height': getLineValue(item) + '%'}" *ngFor="let item of configuration.keys">
+            <div class="bar">
+            </div>
+          </ion-col>
+        </ion-row>
+        <ion-row class="ion-justify-content-evenly">
+          <ion-col class="text-center" *ngFor="let item of configuration.keys">
+            {{ item }}
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-col>
+    <ion-col class="labels" size="1">
+
+    </ion-col>
+  </ion-row>
+</ion-grid>

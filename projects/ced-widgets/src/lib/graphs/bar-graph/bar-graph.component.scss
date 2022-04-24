@@ -1,0 +1,32 @@
+// .graph-container {
+//     padding: 20px 0px;
+// }
+
+
+
+.label-item {
+    display: flex;
+    align-items: stretch;
+}
+
+.bar-container {
+    height: 30vh;
+    position: relative;
+}
+
+.bar {
+    background-color: blue;
+    height: 100%;
+    padding: 0px 5px;
+    border-radius: 50px;
+}
+
+:host {
+    ion-col.labels {
+        max-width: calc(calc(1 / var(--ion-grid-columns, 12)) * 50%) !important;
+    }
+}
+
+.labels p {
+    font-size: 10px;
+}
