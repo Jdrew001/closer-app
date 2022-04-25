@@ -31,7 +31,7 @@ export class AuthService {
     private httpClient: HttpClient,
     private userService: UserService
   ) {
-    this.baseUrl = `${environment.base_url}`;
+    this.baseUrl = `${environment.base_url}Authentication/`;
   }
 
   async validateRefreshToken() {
@@ -67,15 +67,15 @@ export class AuthService {
   async verifyAccountCode(code: string) {
     const deviceUUID = await this.deviceService.getDeviceUUID();
     const userEmail = await this.userService.getUserEmail();
-    return this.httpClient.get(`${this.baseUrl}${CoreConstants.VERIFY_URL}/${code}/${userEmail}${deviceUUID}`).pipe(
+    return this.httpClient.get(`${this.baseUrl}${CoreConstants.VERIFY_URL}/${code}/${userEmail}/${deviceUUID}`).pipe(
       catchError(error => observableThrowError(error.message || 'Server error'))
-    ) as Observable<AuthModel>; //should be post
+    ) as Observable<AuthModel>;
   }
 
-  reissueCode(userId: string) {
-    return this.httpClient.get(`${this.baseUrl}${CoreConstants.REISSUE_VERIFICATION}`).pipe(
+  reissueCode(email: string) {
+    return this.httpClient.get(`${this.baseUrl}${CoreConstants.REISSUE_VERIFICATION}/${email}`).pipe(
       catchError(error => observableThrowError(error.message || 'Server error'))
-    ) as Observable<AuthModel>; //should be post
+    ) as Observable<AuthModel>;
   }
 
   sendEmailForReset(email: string) {
@@ -94,7 +94,6 @@ export class AuthService {
     await this.tokenService.removeAllTokens();
 
     setTimeout(() => {
-      // redirect user
       this.navController.navigateBack('/login', { replaceUrl:true });
     }, 500);
   }

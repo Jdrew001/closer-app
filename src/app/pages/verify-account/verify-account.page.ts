@@ -66,7 +66,7 @@ export class VerifyAccountPage implements OnInit {
   }
 
   async resendCode(firstElement) {
-    const userId = await this.userService.getUserId();
+    const email = await this.userService.getUserEmail();
     const keys = Object.keys(this.verifyModel);
     keys.forEach(key => this.verifyModel[key] = null);
     if (firstElement == null) {
@@ -74,7 +74,7 @@ export class VerifyAccountPage implements OnInit {
     } else {
       firstElement.focus();
     }
-    this.authService.reissueCode(userId).subscribe(res => {
+    this.authService.reissueCode(email).subscribe(res => {
       this.reissue = true;
     });
   }

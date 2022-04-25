@@ -4,7 +4,7 @@ export class CoreConstants {
     public static REGISTER_URL = 'register';
     public static REFRESH_URL = 'refreshToken';
     public static VERIFY_URL = 'validateCode';
-    public static REISSUE_VERIFICATION = 'reissueVerification';
+    public static REISSUE_VERIFICATION = 'resendCode';
     public static EMAIL_FOR_RESET = 'sendEmailForReset';
     public static PASSWORD_RESET = 'sendPasswordForReset';
 }
