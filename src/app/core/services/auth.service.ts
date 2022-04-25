@@ -67,27 +67,19 @@ export class AuthService {
   async verifyAccountCode(code: string) {
     const deviceUUID = await this.deviceService.getDeviceUUID();
     const userEmail = await this.userService.getUserEmail();
-    return this.httpClient.get(`${this.baseUrl}${CoreConstants.VERIFY_URL}/${code}/${userEmail}/${deviceUUID}`).pipe(
-      catchError(error => observableThrowError(error.message || 'Server error'))
-    ) as Observable<AuthModel>;
+    return this.httpClient.get(`${this.baseUrl}${CoreConstants.VERIFY_URL}/${code}/${userEmail}/${deviceUUID}`) as Observable<AuthModel>;
   }
 
   reissueCode(email: string) {
-    return this.httpClient.get(`${this.baseUrl}${CoreConstants.REISSUE_VERIFICATION}/${email}`).pipe(
-      catchError(error => observableThrowError(error.message || 'Server error'))
-    ) as Observable<AuthModel>;
+    return this.httpClient.get(`${this.baseUrl}${CoreConstants.REISSUE_VERIFICATION}/${email}`) as Observable<AuthModel>;
   }
 
   sendEmailForReset(email: string) {
-    return this.httpClient.get(`${this.baseUrl}${CoreConstants.EMAIL_FOR_RESET}`).pipe(
-      catchError(error => observableThrowError(error.message || 'Server error'))
-    ) as Observable<ResetEmailModel>; //should be post
+    return this.httpClient.get(`${this.baseUrl}${CoreConstants.EMAIL_FOR_RESET}`) as Observable<ResetEmailModel>; //should be post
   }
 
   sendPasswordForReset(password: string, userId: string) {
-    return this.httpClient.get(`${this.baseUrl}${CoreConstants.PASSWORD_RESET}`).pipe(
-      catchError(error => observableThrowError(error.message || 'Server error'))
-    ) as Observable<ResetPasswordResultModel>; //should be post
+    return this.httpClient.get(`${this.baseUrl}${CoreConstants.PASSWORD_RESET}`) as Observable<ResetPasswordResultModel>; //should be post
   }
 
   async logoutUser() {

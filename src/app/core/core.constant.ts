@@ -1,3 +1,5 @@
+import { LoadingOptions, ToastOptions } from "@ionic/angular";
+
 export class CoreConstants {
     public static AUTH_URL = 'Authentication'
     public static LOGIN_URL = 'login';
@@ -7,4 +9,32 @@ export class CoreConstants {
     public static REISSUE_VERIFICATION = 'resendCode';
     public static EMAIL_FOR_RESET = 'sendEmailForReset';
     public static PASSWORD_RESET = 'sendPasswordForReset';
+
+    // toast options
+    public static GENERIC_SUCCESS_TOAST: ToastOptions = {
+        header: 'Success',
+        icon: 'thumbs-up-outline',
+        position: 'bottom',
+        duration: 2000,
+        color: 'success'
+    };
+    public static GENERIC_ERROR_TOAST: ToastOptions = {
+        header: 'Error',
+        icon: 'alert-circle-outline',
+        position: 'bottom',
+        color: 'danger',
+        duration: 2000,
+        message: 'An error occurred.'
+    };
+
+    // spinner options
+    public static LOADING_OPTIONS: LoadingOptions = {
+        animated: true,
+        mode: "ios",
+        showBackdrop: true,
+        spinner: "crescent",
+        translucent: true
+    }
+    public static LOAD_TIME: 2000;
+    public static EXCLUDED_URLS = [CoreConstants.REFRESH_URL];
 }
