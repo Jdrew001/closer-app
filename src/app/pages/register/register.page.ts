@@ -1,3 +1,4 @@
+import { UserService } from 'src/app/core/services/user.service';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AlertController, NavController } from '@ionic/angular';
@@ -50,7 +51,8 @@ export class RegisterPage implements OnInit {
     private authenticationService: AuthenticationService,
     private alertController: AlertController,
     private authService: AuthService,
-    private tokenService: TokenService
+    private tokenService: TokenService,
+    private userService: UserService
   ) { }
 
   ngOnInit() {
@@ -124,7 +126,7 @@ export class RegisterPage implements OnInit {
 
   private async successfulRegistration() {
     // save the email of user for verification
-
+    this.userService.setUserEmail(this.email.value);
     //navigate to the verification screen
     setTimeout(() => {this.navController.navigateRoot('/verify-account', { replaceUrl:true })}, 1000);
   }

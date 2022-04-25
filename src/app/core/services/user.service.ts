@@ -18,11 +18,19 @@ export class UserService {
     return (async () => (await Storage.get({key: AppConstants.USER_ID})).value)();
   }
 
+  async getUserEmail() {
+    return (async () => (await Storage.get({key: AppConstants.USER_EMAIL})).value)();
+  }
+
   async setUserInfo(user: any) {
     await Storage.set({key: AppConstants.USER_INFORMATION, value: user});
   }
 
   async setUserId(userId: string) {
     await Storage.set({key: AppConstants.USER_ID, value: userId});
+  }
+
+  async setUserEmail(email: string) {
+    await Storage.set({key: AppConstants.USER_EMAIL, value: email});
   }
 }

@@ -66,8 +66,8 @@ export class AuthService {
 
   async verifyAccountCode(code: string) {
     const deviceUUID = await this.deviceService.getDeviceUUID();
-    const userId = await this.userService.getUserId();
-    return this.httpClient.get(`${this.baseUrl}${CoreConstants.VERIFY_URL}/${code}/${userId}${deviceUUID}`).pipe(
+    const userEmail = await this.userService.getUserEmail();
+    return this.httpClient.get(`${this.baseUrl}${CoreConstants.VERIFY_URL}/${code}/${userEmail}${deviceUUID}`).pipe(
       catchError(error => observableThrowError(error.message || 'Server error'))
     ) as Observable<AuthModel>; //should be post
   }
