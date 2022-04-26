@@ -47,7 +47,7 @@ export class LoginPage implements OnInit {
     const deviceInfo = await this.deviceService.getDeviceId();
     this.authenticationService.login(this.generateLoginDTO(this.loginForm.value, deviceInfo.uuid))
       .subscribe(async (res) => {
-        if (!res.isAuthenticated && res.message) {
+        if (res.error && res.message) {
           this.messageService.showMessage(CoreConstants.GENERIC_ERROR_TOAST);
           return;
         }

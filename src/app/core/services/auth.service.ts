@@ -1,3 +1,4 @@
+import { LoginDTO } from 'src/app/pages/login/models/login.model';
 import { UserService } from './user.service';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
@@ -67,7 +68,7 @@ export class AuthService {
   async verifyAccountCode(code: string) {
     const deviceUUID = await this.deviceService.getDeviceUUID();
     const userEmail = await this.userService.getUserEmail();
-    return this.httpClient.get(`${this.baseUrl}${CoreConstants.VERIFY_URL}/${code}/${userEmail}/${deviceUUID}`) as Observable<AuthModel>;
+    return this.httpClient.get(`${this.baseUrl}${CoreConstants.VERIFY_URL}/${code}/${userEmail}/${deviceUUID}/${this.isReset}`) as Observable<AuthModel>;
   }
 
   reissueCode(email: string) {
@@ -75,11 +76,11 @@ export class AuthService {
   }
 
   sendEmailForReset(email: string) {
-    return this.httpClient.get(`${this.baseUrl}${CoreConstants.EMAIL_FOR_RESET}`) as Observable<ResetEmailModel>; //should be post
+    return this.httpClient.get(`${this.baseUrl}${CoreConstants.EMAIL_FOR_RESET}/${email}`) as Observable<ResetEmailModel>;
   }
 
   sendPasswordForReset(password: string, userId: string) {
-    return this.httpClient.get(`${this.baseUrl}${CoreConstants.PASSWORD_RESET}`) as Observable<ResetPasswordResultModel>; //should be post
+    return this.httpClient.post(`${this.baseUrl}${CoreConstants.PASSWORD_RESET}`, { userId: userId, password: password }) as Observable<AuthModel>;
   }
 
   async logoutUser() {

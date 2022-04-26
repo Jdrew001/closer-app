@@ -48,7 +48,7 @@ export class VerifyAccountPage implements OnInit {
   async submit() {
     if (this.checkForEmpty()) {
       (await this.authService.verifyAccountCode(this.extractCode())).subscribe(async res => {
-        if (!res.isAuthenticated && res.message) {
+        if (res.error && res.message) {
           // display an error message
           const alert = await this.alertController.create({
             message: res.message,
@@ -136,14 +136,14 @@ export class VerifyAccountPage implements OnInit {
         this.navController.navigateRoot('/reset-password', { replaceUrl:true }).finally(() => {
           this.isForResetPassword = false;
         });
-      }, 1000);
+      }, 500);
     } else {
       setTimeout(() => {
         this.navController.navigateRoot('/tabs/dashboard', { replaceUrl:true }).finally(async () => {
           await this.tokenService.setRefreshToken(refreshToken);
           this.isForResetPassword = false;
         });
-      }, 1000);
+      }, 500);
     }
   }
 

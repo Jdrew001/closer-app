@@ -16,7 +16,8 @@ export class CoreConstants {
         icon: 'thumbs-up-outline',
         position: 'bottom',
         duration: 2000,
-        color: 'success'
+        color: 'success',
+        message: 'Success'
     };
     public static GENERIC_ERROR_TOAST: ToastOptions = {
         header: 'Error',
