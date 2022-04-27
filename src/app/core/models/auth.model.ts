@@ -7,6 +7,7 @@ export interface AuthModel {
     message?: string;
     isNewDevice: false;
     shouldRedirectToLogin: boolean;
+    error: boolean;
 }
 
 export interface RegisterModel {

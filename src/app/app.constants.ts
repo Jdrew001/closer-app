@@ -4,4 +4,5 @@ export class AppConstants {
     public static REFRESH_TOKEN = 'refreshToken';
     public static USER_INFORMATION = 'userInfo';
     public static USER_ID = 'userId';
+    public static USER_EMAIL = 'userEmail';
 }

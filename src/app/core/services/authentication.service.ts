@@ -19,35 +19,19 @@ export class AuthenticationService {
   constructor(
     private httpClient: HttpClient
   ) {
-    // this.baseUrl = `${environment.base_url}/Authentication`;
-    this.baseUrl = `${environment.base_url}`;
+    this.baseUrl = `${environment.base_url}Authentication/`;
   }
   
   login(dto: LoginDTO): Observable<AuthModel> {
-    return this.httpClient.get(`${this.baseUrl}${CoreConstants.LOGIN_URL}`)
-      .pipe(
-        catchError(error => {
-          return observableThrowError(error.message || 'Server error');
-        })
-      ) as Observable<AuthModel>;
+    return this.httpClient.post(`${this.baseUrl}${CoreConstants.LOGIN_URL}`, dto) as Observable<AuthModel>;
   }
 
   register(dto: RegistrationDTO): Observable<RegisterModel> {
-    return this.httpClient.get(`${this.baseUrl}${CoreConstants.REGISTER_URL}`)
-      .pipe(
-        catchError(error => {
-          return observableThrowError(error.message || 'Server error');
-        })
-      ) as Observable<RegisterModel>;
+    return this.httpClient.post(`${this.baseUrl}${CoreConstants.REGISTER_URL}`, dto) as Observable<RegisterModel>;
   }
 
   refreshToken(dto: RefreshDTO) {
-    return this.httpClient.get(`${this.baseUrl}${CoreConstants.REFRESH_URL}`)
-    .pipe(
-      catchError(error => {
-        return observableThrowError(error.message || 'Server error');
-      })
-    ) as Observable<AuthModel>;
+    return this.httpClient.post(`${this.baseUrl}${CoreConstants.REFRESH_URL}`, dto) as Observable<AuthModel>;
   }
 }
 

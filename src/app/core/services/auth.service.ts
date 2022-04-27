@@ -1,3 +1,5 @@
+import { LoginDTO } from 'src/app/pages/login/models/login.model';
+import { UserService } from './user.service';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthenticationService } from './authentication.service';
@@ -27,9 +29,10 @@ export class AuthService {
     private deviceService: DeviceService,
     private authService: AuthenticationService,
     private navController: NavController,
-    private httpClient: HttpClient
+    private httpClient: HttpClient,
+    private userService: UserService
   ) {
-    this.baseUrl = `${environment.base_url}`;
+    this.baseUrl = `${environment.base_url}Authentication/`;
   }
 
   async validateRefreshToken() {
@@ -62,35 +65,28 @@ export class AuthService {
     setTimeout(async () => {await SplashScreen.hide()}, 1000);
   }
 
-  verifyAccountCode(dto) {
-    return this.httpClient.get(`${this.baseUrl}${CoreConstants.VERIFY_URL}`).pipe(
-      catchError(error => observableThrowError(error.message || 'Server error'))
-    ) as Observable<AuthModel>; //should be post
+  async verifyAccountCode(code: string) {
+    const deviceUUID = await this.deviceService.getDeviceUUID();
+    const userEmail = await this.userService.getUserEmail();
+    return this.httpClient.get(`${this.baseUrl}${CoreConstants.VERIFY_URL}/${code}/${userEmail}/${deviceUUID}/${this.isReset}`) as Observable<AuthModel>;
   }
 
-  reissueCode(userId: string) {
-    return this.httpClient.get(`${this.baseUrl}${CoreConstants.REISSUE_VERIFICATION}`).pipe(
-      catchError(error => observableThrowError(error.message || 'Server error'))
-    ) as Observable<AuthModel>; //should be post
+  reissueCode(email: string) {
+    return this.httpClient.get(`${this.baseUrl}${CoreConstants.REISSUE_VERIFICATION}/${email}`) as Observable<AuthModel>;
   }
 
   sendEmailForReset(email: string) {
-    return this.httpClient.get(`${this.baseUrl}${CoreConstants.EMAIL_FOR_RESET}`).pipe(
-      catchError(error => observableThrowError(error.message || 'Server error'))
-    ) as Observable<ResetEmailModel>; //should be post
+    return this.httpClient.get(`${this.baseUrl}${CoreConstants.EMAIL_FOR_RESET}/${email}`) as Observable<ResetEmailModel>;
   }
 
   sendPasswordForReset(password: string, userId: string) {
-    return this.httpClient.get(`${this.baseUrl}${CoreConstants.PASSWORD_RESET}`).pipe(
-      catchError(error => observableThrowError(error.message || 'Server error'))
-    ) as Observable<ResetPasswordResultModel>; //should be post
+    return this.httpClient.post(`${this.baseUrl}${CoreConstants.PASSWORD_RESET}`, { userId: userId, password: password }) as Observable<AuthModel>;
   }
 
   async logoutUser() {
     await this.tokenService.removeAllTokens();
 
     setTimeout(() => {
-      // redirect user
       this.navController.navigateBack('/login', { replaceUrl:true });
     }, 500);
   }

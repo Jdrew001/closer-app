@@ -1,3 +1,5 @@
+import { CoreConstants } from './../../core/core.constant';
+import { MessageService } from './../../core/services/message.service';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -33,7 +35,8 @@ export class LoginPage implements OnInit {
     private router: Router,
     private deviceService: DeviceService,
     private tokenService: TokenService,
-    private navController: NavController
+    private navController: NavController,
+    private messageService: MessageService
   ) { }
 
   ngOnInit() {
@@ -44,15 +47,8 @@ export class LoginPage implements OnInit {
     const deviceInfo = await this.deviceService.getDeviceId();
     this.authenticationService.login(this.generateLoginDTO(this.loginForm.value, deviceInfo.uuid))
       .subscribe(async (res) => {
-        if (!res.isAuthenticated && res.message) {
-          // display an error message
-          const alert = await this.alertController.create({
-            message: res.message,
-            header: 'Authetication Error',
-            buttons: ['OK']
-          });
-
-          await alert.present();
+        if (res.error && res.message) {
+          this.messageService.showMessage(CoreConstants.GENERIC_ERROR_TOAST);
           return;
         }
 
@@ -85,8 +81,9 @@ export class LoginPage implements OnInit {
 
   private async successfulLogin(token, refreshToken) {
     this.authService.isAuthenticated$.next(true);
+    this.messageService.showMessage(CoreConstants.GENERIC_SUCCESS_TOAST);
     await this.tokenService.setAppToken(token);
     await this.tokenService.setRefreshToken(refreshToken);
-    setTimeout(() => {this.router.navigateByUrl('/tabs/tab1', { replaceUrl:true })}, 1000);
+    setTimeout(() => {this.router.navigateByUrl('/tabs/dashboard', { replaceUrl:true })}, 1000);
   }
 }

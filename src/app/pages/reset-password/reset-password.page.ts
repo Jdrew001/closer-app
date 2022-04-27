@@ -1,8 +1,10 @@
+import { MessageService } from './../../core/services/message.service';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NavController } from '@ionic/angular';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { UserService } from 'src/app/core/services/user.service';
+import { CoreConstants } from 'src/app/core/core.constant';
 
 @Component({
   selector: 'app-reset-password',
@@ -17,7 +19,8 @@ export class ResetPasswordPage implements OnInit {
     private fb: FormBuilder,
     private authService: AuthService,
     private navController: NavController,
-    private userService: UserService
+    private userService: UserService,
+    private messageService: MessageService
   ) { }
 
   get password() { return this.passwordForm.get('password'); }
@@ -44,13 +47,12 @@ export class ResetPasswordPage implements OnInit {
       const userId = await this.userService.getUserId();
       this.authService.sendPasswordForReset(this.password.value, userId).subscribe(res => {
         if (res.error) {
-          // error message to shows
+          this.messageService.showMessage(CoreConstants.GENERIC_ERROR_TOAST);
           return;
         }
 
+        this.messageService.showMessage(CoreConstants.GENERIC_SUCCESS_TOAST);
         setTimeout(() => {this.navController.navigateBack('/login', { replaceUrl:true })}, 1000);
-
-        //successful notification
       });
     }
   }

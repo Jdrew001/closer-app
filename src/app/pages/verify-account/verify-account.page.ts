@@ -45,10 +45,10 @@ export class VerifyAccountPage implements OnInit {
   ngOnInit() {
   }
 
-  submit() {
+  async submit() {
     if (this.checkForEmpty()) {
-      this.authService.verifyAccountCode({}).subscribe(async res => {
-        if (!res.isAuthenticated && res.message) {
+      (await this.authService.verifyAccountCode(this.extractCode())).subscribe(async res => {
+        if (res.error && res.message) {
           // display an error message
           const alert = await this.alertController.create({
             message: res.message,
@@ -66,7 +66,7 @@ export class VerifyAccountPage implements OnInit {
   }
 
   async resendCode(firstElement) {
-    const userId = await this.userService.getUserId();
+    const email = await this.userService.getUserEmail();
     const keys = Object.keys(this.verifyModel);
     keys.forEach(key => this.verifyModel[key] = null);
     if (firstElement == null) {
@@ -74,7 +74,7 @@ export class VerifyAccountPage implements OnInit {
     } else {
       firstElement.focus();
     }
-    this.authService.reissueCode(userId).subscribe(res => {
+    this.authService.reissueCode(email).subscribe(res => {
       this.reissue = true;
     });
   }
@@ -136,13 +136,18 @@ export class VerifyAccountPage implements OnInit {
         this.navController.navigateRoot('/reset-password', { replaceUrl:true }).finally(() => {
           this.isForResetPassword = false;
         });
-      }, 1000);
+      }, 500);
     } else {
       setTimeout(() => {
-        this.navController.navigateRoot('/tabs/tab1', { replaceUrl:true }).finally(() => {
+        this.navController.navigateRoot('/tabs/dashboard', { replaceUrl:true }).finally(async () => {
+          await this.tokenService.setRefreshToken(refreshToken);
           this.isForResetPassword = false;
         });
-      }, 1000);
+      }, 500);
     }
+  }
+
+  private extractCode(): string {
+    return `${this.verifyModel.first}${this.verifyModel.second}${this.verifyModel.third}${this.verifyModel.fourth}`
   }
 }
