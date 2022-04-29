@@ -10,6 +10,7 @@ import { TokenService } from './core/services/token.service';
   styleUrls: ['app.component.scss'],
 })
 export class AppComponent implements OnInit {
+  data;
   constructor(
     private platform: Platform,
     private authService: AuthService,
@@ -19,10 +20,11 @@ export class AppComponent implements OnInit {
 
   ngOnInit() {
     this.platform.ready().then(async (source) => {
+      
       await this.authService.validateRefreshToken();
 
       this.platform.pause.subscribe(val => {
-        // check the route -- if on the reset password page, then remove the user id set in storage
+        // check the route -- if on the reset password page, then remove the user id set in storages
         if (this.router.url.includes('reset-password')) {
           this.tokenService.removeAppToken();
         }

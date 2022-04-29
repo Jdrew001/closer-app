@@ -27,6 +27,7 @@ export class CoreConstants {
         message: 'An error occurred.',
         cssClass: 'message-style'
     };
+    public static GENERIC_ERROR_MESSAGE: string = 'An error occurred, please contact support.';
 
     // spinner options
     public static LOADING_OPTIONS: LoadingOptions = {

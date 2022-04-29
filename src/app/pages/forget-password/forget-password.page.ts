@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NavController } from '@ionic/angular';
+import { AppConstants } from 'src/app/app.constants';
 import { AuthService } from 'src/app/core/services/auth.service';
+import { MessageService } from 'src/app/core/services/message.service';
 import { UserService } from 'src/app/core/services/user.service';
 
 @Component({
@@ -17,7 +19,8 @@ export class ForgetPasswordPage implements OnInit {
     private fb: FormBuilder,
     private navController: NavController,
     private authService: AuthService,
-    private userService: UserService
+    private userService: UserService,
+    private messageService: MessageService
   ) { }
 
   get email() { return this.emailForm.get('email'); }
@@ -43,7 +46,11 @@ export class ForgetPasswordPage implements OnInit {
           setTimeout(() => {this.navController.navigateRoot('/verify-account', { replaceUrl:true })}, 1000);
         }
       });
+      return;
     }
+
+    this.messageService.showErrorMessage(AppConstants.FORM_VALIDATION_ERROR);
+    this.emailForm.markAllAsTouched();
   }
 
   back() {

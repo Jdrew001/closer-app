@@ -12,9 +12,33 @@ export class MessageService {
     private toastController: ToastController
   ) { }
 
-  async showMessage(opts: ToastOptions, buttons?:ToastButton[]) {
+  async showGenericMessage(opts: ToastOptions, buttons?:ToastButton[]) {
     opts.buttons = buttons;
     const toast = await this.toastController.create(opts);
+    await toast.present();
+  }
+
+  async showSuccessMessage(message: string = null, duration = 2000) {
+    const toast = await this.toastController.create({
+      icon: 'thumbs-up-outline',
+      position: 'bottom',
+      duration: 2000,
+      color: 'success',
+      message: message ? message: 'Successful Action',
+      cssClass: 'message-style'
+    });
+    await toast.present();
+  }
+
+  async showErrorMessage(message: string = null, duration = 2000) {
+    const toast = await this.toastController.create({
+      icon: 'alert-circle-outline',
+      position: 'bottom',
+      duration: duration,
+      color: 'danger',
+      message: message ? message: 'An error has occurred',
+      cssClass: 'message-style'
+    });
     await toast.present();
   }
 }

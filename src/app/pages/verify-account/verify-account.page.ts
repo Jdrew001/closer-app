@@ -4,6 +4,7 @@ import { AuthService } from 'src/app/core/services/auth.service';
 import { TokenService } from 'src/app/core/services/token.service';
 import { UserService } from 'src/app/core/services/user.service';
 import { Keyboard } from '@capacitor/keyboard';
+import { MessageService } from 'src/app/core/services/message.service';
 
 @Component({
   selector: 'app-verify-account',
@@ -23,9 +24,9 @@ export class VerifyAccountPage implements OnInit {
   constructor(
     private navController: NavController,
     private authService: AuthService,
-    private alertController: AlertController,
     private tokenService: TokenService,
-    private userService: UserService
+    private userService: UserService,
+    private messageService: MessageService
   ) { }
 
   get isForResetPassword() { return this.authService.isReset}
@@ -49,14 +50,7 @@ export class VerifyAccountPage implements OnInit {
     if (this.checkForEmpty()) {
       (await this.authService.verifyAccountCode(this.extractCode())).subscribe(async res => {
         if (res.error && res.message) {
-          // display an error message
-          const alert = await this.alertController.create({
-            message: res.message,
-            header: 'Verification Error',
-            buttons: ['OK']
-          });
-
-          await alert.present();
+          this.messageService.showErrorMessage(res.message);
           return;
         }
 
