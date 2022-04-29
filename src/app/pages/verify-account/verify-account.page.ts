@@ -147,6 +147,10 @@ export class VerifyAccountPage implements OnInit {
     }
   }
 
+  cancel() {
+    this.navController.navigateBack('/login');
+  }
+
   private extractCode(): string {
     return `${this.verifyModel.first}${this.verifyModel.second}${this.verifyModel.third}${this.verifyModel.fourth}`
   }

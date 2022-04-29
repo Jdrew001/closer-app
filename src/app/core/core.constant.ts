@@ -12,20 +12,20 @@ export class CoreConstants {
 
     // toast options
     public static GENERIC_SUCCESS_TOAST: ToastOptions = {
-        header: 'Success',
         icon: 'thumbs-up-outline',
         position: 'bottom',
         duration: 2000,
         color: 'success',
-        message: 'Success'
+        message: 'Success',
+        cssClass: 'message-style'
     };
     public static GENERIC_ERROR_TOAST: ToastOptions = {
-        header: 'Error',
         icon: 'alert-circle-outline',
         position: 'bottom',
         color: 'danger',
         duration: 2000,
-        message: 'An error occurred.'
+        message: 'An error occurred.',
+        cssClass: 'message-style'
     };
 
     // spinner options

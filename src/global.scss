@@ -35,6 +35,8 @@
     src: url(./assets/fonts/DMSans-Bold.ttf);
 }
 
+$default-shadow: 0px 4px 10px rgb(0 0 0 / 3%);
+
 .mb-1 {
     margin-bottom: 10%;
 }
@@ -122,7 +124,6 @@ span.button.activated {
     color: red;
 }
 
-
 ion-icon.correct {
     color: var(--ion-color-primary)
 }
@@ -141,7 +142,7 @@ ion-input {
     --padding-end: 10px !important;
     text-indent: 1em !important;
     font-size: 16px !important;
-    box-shadow: 0px 4px 10px rgb(0 0 0 / 3%) !important;
+    box-shadow: $default-shadow !important;
 }
 ion-button {
     text-transform: none;
@@ -164,3 +165,16 @@ ion-button {
 .group {
     margin-bottom: 2rem;
 }
+
+.shadow {
+    box-shadow: $default-shadow !important;
+}
+
+.message-style {
+    box-shadow: $default-shadow !important;
+
+    ion-icon {
+        font-size: 20px !important;
+    }
+}
+
