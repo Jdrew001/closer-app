@@ -1,5 +1,5 @@
 ion-content {
-    --padding-top: 10%;
+    --padding-top: 5%;
     --padding-start: 10%;
     --padding-end: 10%;
     height: 100vh;
@@ -14,11 +14,11 @@ ion-content {
     font-size: small;
     color: var(--ion-color-danger);
     position: absolute;
-    right: 15%;
+    right: 10%;
 }
 
 .group {
-    margin-bottom: 1.5rem;
+    margin-bottom: 2rem;
 }
 
 /*
@@ -29,10 +29,8 @@ ion-content {
 :host {
     ion-icon {
         position: absolute;
-        right: 8%;
-        top: 45%;
-        z-index: 9999;
-        font-size: 30px
+        right: 1rem;
+        font-size: 30px;
     }
     ion-icon.correct {
         color: var(--ion-color-primary)
@@ -43,14 +41,13 @@ ion-content {
     ion-item {
         border-bottom: 2px solid #f7f8fa;
         --background: transparent;
-        --padding-start: 0px;
-        --padding-end: 0px;
     }
 
     ion-input {
         --background: var(--ion-color-secondary);
-        margin-top: 12px;
+        margin-top: 2px;
         border-radius: 25px;
+        margin-bottom: 2px;
         --padding-bottom: 18px;
         --padding-top: 18px;
         --padding-start: 10px;
@@ -61,7 +58,7 @@ ion-content {
     }
 
     ion-label {
-        font-size: 19px
+        font-size: 14px
     }
     ion-button {
         text-transform: none;
