@@ -8,6 +8,8 @@ export interface AuthModel {
     isNewDevice: false;
     shouldRedirectToLogin: boolean;
     error: boolean;
+    confirmed: boolean;
+    email: string;
 }
 
 export interface RegisterModel {

@@ -10,6 +10,7 @@ import { LoginDTO } from './models/login.model';
 import { TokenService } from 'src/app/core/services/token.service';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { AppConstants } from 'src/app/app.constants';
+import { UserService } from 'src/app/core/services/user.service';
 
 @Component({
   selector: 'app-login',
@@ -36,7 +37,8 @@ export class LoginPage implements OnInit {
     private deviceService: DeviceService,
     private tokenService: TokenService,
     private navController: NavController,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private userService: UserService
   ) { }
 
   ngOnInit() {
@@ -50,6 +52,11 @@ export class LoginPage implements OnInit {
         .subscribe(async (res) => {
           if (res.error && res.message) {
             this.messageService.showErrorMessage(res.message);
+            return;
+          }
+
+          if (!res.confirmed && res.email) {
+            this.sendUserToConfirm(res.email);
             return;
           }
 
@@ -67,6 +74,11 @@ export class LoginPage implements OnInit {
 
   forgotPassword() {
     this.navController.navigateForward('/forget-password');
+  }
+
+  private async sendUserToConfirm(email: string) {
+    await this.userService.setUserEmail(email);
+    setTimeout(() => {this.navController.navigateRoot('/verify-account', { replaceUrl:true })}, 1000);
   }
 
   private initForm() {
