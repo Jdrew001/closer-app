@@ -49,7 +49,7 @@
         <div class="group">
           <ion-label position="stacked">Confirm Password</ion-label>
           <ion-input type="password" autocapitalize="on" formControlName="confirmPassword">
-            <ion-icon *ngIf="!(confirmPassword.value !== '' && !passwordsMatch) && (confirmPassword.dirty || confirmPassword.touched)" class="correct" name="checkmark-circle-outline" slot="end"></ion-icon>
+            <ion-icon *ngIf="confirmPassword.value !== '' && passwordsMatch && (confirmPassword.dirty || confirmPassword.touched)" class="correct" name="checkmark-circle-outline" slot="end"></ion-icon>
             <ion-icon *ngIf="confirmPassword.value !== '' && !passwordsMatch && (confirmPassword.dirty || confirmPassword.touched)" class="incorrect" name="close-circle-outline" slot="end"></ion-icon>
           </ion-input>
   
