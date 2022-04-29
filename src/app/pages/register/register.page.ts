@@ -19,12 +19,8 @@ export class RegisterPage implements OnInit {
 
   registerForm: FormGroup;
 
-  get firstName() {
-    return this.registerForm.get('firstName');
-  }
-
-  get lastName() {
-    return this.registerForm.get('lastName');
+  get fullName() {
+    return this.registerForm.get('fullName');
   }
 
   get email() {
@@ -97,8 +93,7 @@ export class RegisterPage implements OnInit {
 
   private initForm() {
     this.registerForm = this.fb.group({
-      firstName: ['', Validators.required],
-      lastName: ['', Validators.required],
+      fullName: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
       confirmPassword: ['', Validators.required]
@@ -106,9 +101,10 @@ export class RegisterPage implements OnInit {
   }
 
   private generateRegisterDTO(value: any, deviceInfo: DeviceInfo) {
+    console.log(value.fullName?.split(" "));
     return {
-      firstName: value.firstName,
-      lastName: value.lastName,
+      firstName: value.fullName?.split(" ")[0],
+      lastName: value.fullName?.split(" ")[1],
       email: value.email,
       password: value.password,
       ...deviceInfo

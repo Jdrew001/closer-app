@@ -1,35 +1,9 @@
-ion-content {
-    --padding-top: 10%;
-    --padding-start: 10%;
-    --padding-end: 10%;
-    height: 100vh;
+ion-label {
+    font-size: 14px
 }
 
-.input-group {
-    overflow: hidden;
-    margin-bottom: 15px;
-}
- 
-.errors {
-    font-size: small;
-    color: #fff;
-    background: var(--ion-color-danger);
-    padding-left: 15px;
-    padding-top: 5px;
-    padding-bottom: 5px;
-}
-
-.group {
-    margin-bottom: 1.5rem;
-}
-
-/*
-    ion item customize
-    item-has-focus
-*/
-
-:host {
-    ion-item {
-        border-bottom: 2px solid #f7f8fa;
-    }
+ion-icon {
+    position: absolute;
+    right: 1rem;
+    font-size: 30px;
 }
