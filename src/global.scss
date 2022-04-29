@@ -121,3 +121,46 @@ div.auth ion-content {
 span.button.activated {
     color: red;
 }
+
+
+ion-icon.correct {
+    color: var(--ion-color-primary)
+}
+ion-icon.incorrect {
+    color: var(--ion-color-danger);
+}
+
+ion-input {
+    --background: var(--ion-color-secondary) !important;
+    margin-top: 2px !important;
+    border-radius: 25px !important;
+    margin-bottom: 2px !important;
+    --padding-bottom: 18px !important;
+    --padding-top: 18px !important;
+    --padding-start: 10px !important;
+    --padding-end: 10px !important;
+    text-indent: 1em !important;
+    font-size: 16px !important;
+    box-shadow: 0px 4px 10px rgb(0 0 0 / 3%) !important;
+}
+ion-button {
+    text-transform: none;
+    font-size: 16px;
+    font-family: "dmsans-regular", Arial, Helvetica, sans-serif;
+}
+
+.input-group {
+    overflow: hidden;
+    margin-bottom: 15px;
+}
+ 
+.errors {
+    font-size: small;
+    color: var(--ion-color-danger);
+    position: absolute;
+    right: 10%;
+}
+
+.group {
+    margin-bottom: 2rem;
+}

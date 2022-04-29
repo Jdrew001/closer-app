@@ -1,65 +1,11 @@
-.group {
-    margin-bottom: 2rem;
-}
- 
-.input-group {
-    overflow: hidden;
-    margin-bottom: 15px;
-}
- 
-.errors {
-    font-size: small;
-    color: #fff;
-    background: var(--ion-color-danger);
-    padding-left: 15px;
-    padding-top: 5px;
-    padding-bottom: 5px;
+ion-icon {
+    position: absolute;
+    right: 1rem;
+    font-size: 30px;
 }
 
-/*
-    ion item customize
-    item-has-focus
-*/
-
-:host {
-    ion-icon {
-        position: absolute;
-        right: 1rem;
-        font-size: 30px;
-    }
-    ion-icon.correct {
-        color: var(--ion-color-primary)
-    }
-    ion-icon.incorrect {
-        color: var(--ion-color-danger);
-    }
-    ion-item {
-        border-bottom: 2px solid #f7f8fa;
-        --background: transparent;
-    }
-
-    ion-input {
-        --background: var(--ion-color-secondary);
-        margin-top: 2px;
-        margin-bottom: 2px;
-        border-radius: 25px;
-        --padding-bottom: 18px;
-        --padding-top: 18px;
-        --padding-start: 10px;
-        --padding-end: 10px;
-        text-indent: 1em;
-        font-size: 16px;
-        box-shadow: 0px 4px 10px rgb(0 0 0 / 3%);
-    }
-
-    ion-label {
-        font-size: 14px
-    }
-    ion-button {
-        text-transform: none;
-        font-size: 16px;
-        font-family: "dmsans-regular", Arial, Helvetica, sans-serif;
-    }
+ion-label {
+    font-size: 14px
 }
 
 .button-group {

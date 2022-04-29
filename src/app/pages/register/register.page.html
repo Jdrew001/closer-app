@@ -1,70 +1,74 @@
-<ion-content forceOverscroll="true">
-  <div class="image-container">
-    <img width="30%" src="../../../assets/images/logo-blue.png" alt="image" />
-  </div>
-
-  <div class="heading-container">
-    <h1 class="bold-text title">Hello</h1>
-    <p class="light-text subtitle">Create an account to continue</p>
-  </div>
-
-  <form [formGroup]="registerForm" class="mb-5">
-    <div class="input-group">
-      <div class="group">
-        <ion-label position="stacked">Your Name</ion-label>
-        <ion-input type="text" autocapitalize="on" formControlName="fullName">
-          <ion-icon *ngIf="(fullName.dirty || fullName.touched) && !fullName.errors" class="correct" name="checkmark-circle-outline"></ion-icon>
-          <ion-icon *ngIf="(fullName.dirty || fullName.touched) && fullName.errors" class="incorrect" name="close-circle-outline"></ion-icon>
-        </ion-input>
-        
-        <div *ngIf="(fullName.dirty || fullName.touched) && fullName.errors" class="errors">
-          <span *ngIf="fullName.errors?.required">Your name is required</span>
-        </div>
-      </div>
-      <div class="group">
-        <ion-label position="stacked">Email Address</ion-label>
-        <ion-input type="email" formControlName="email">
-          <ion-icon *ngIf="(email.dirty || email.touched) && !email.errors" class="correct" name="checkmark-circle-outline" slot="end"></ion-icon>
-          <ion-icon *ngIf="(email.dirty || email.touched) && email.errors" class="incorrect" name="close-circle-outline" slot="end"></ion-icon>
-        </ion-input>
-
-        <div *ngIf="(email.dirty || email.touched) && email.errors" class="errors">
-          <span *ngIf="email.errors?.required">Email Address is required</span>
-          <span *ngIf="email.errors?.email">Email Address is invalid</span>
-        </div>
-      </div>
-      <div class="group">
-        <ion-label position="stacked">Password</ion-label>
-        <ion-input type="password" autocapitalize="on" formControlName="password">
-          <ion-icon *ngIf="(password.dirty || password.touched) && !password.errors" class="correct" name="checkmark-circle-outline" slot="end"></ion-icon>
-          <ion-icon *ngIf="(password.dirty || password.touched) && password.errors" class="incorrect" name="close-circle-outline" slot="end"></ion-icon>
-        </ion-input>
-        
-        <div *ngIf="(password.dirty || password.touched) && password.errors" class="errors">
-          <span *ngIf="password.errors?.required">Password is required</span>
-          <span *ngIf="password.errors?.minlength">Password needs to be 6 characters</span>
-        </div>
-      </div>
-      <div class="group">
-        <ion-label position="stacked">Confirm Password</ion-label>
-        <ion-input type="password" autocapitalize="on" formControlName="confirmPassword">
-          <ion-icon *ngIf="!(confirmPassword.value !== '' && !passwordsMatch) && (confirmPassword.dirty || confirmPassword.touched)" class="correct" name="checkmark-circle-outline" slot="end"></ion-icon>
-          <ion-icon *ngIf="confirmPassword.value !== '' && !passwordsMatch && (confirmPassword.dirty || confirmPassword.touched)" class="incorrect" name="close-circle-outline" slot="end"></ion-icon>
-        </ion-input>
-
-        <div *ngIf="confirmPassword.value !== '' && !passwordsMatch && (confirmPassword.dirty || confirmPassword.touched)" class="errors">
-          <span *ngIf="!passwordsMatch">Passwords do not match</span>
-        </div>
-      </div>
+<div class="auth">
+  <ion-content forceOverscroll="true">
+    <div class="image-container">
+      <img width="30%" src="../../../assets/images/logo-blue.png" alt="image" />
     </div>
- 
-    <ion-button type="submit" expand="block" shape="round" size="large" (click)="register()">Register</ion-button>
-    <br><br>
-    <div class="text-center">
-      <span>
-        <span class="light-text">Already have an Account?</span> <span (click)="back()" class="primary bold-text button">&nbsp;&nbsp;Sign in</span>
-      </span>
+  
+    <div class="heading-container">
+      <h1 class="bold-text title">Hello</h1>
+      <p class="light-text subtitle">Create an account to continue</p>
     </div>
-  </form>
- 
-</ion-content>
+  
+    <form [formGroup]="registerForm" class="mb-5">
+      <div class="input-group">
+        <div class="group">
+          <ion-label position="stacked">Your Name</ion-label>
+          <ion-input type="text" autocapitalize="on" formControlName="fullName">
+            <ion-icon *ngIf="(fullName.dirty || fullName.touched) && !fullName.errors" class="correct" name="checkmark-circle-outline"></ion-icon>
+            <ion-icon *ngIf="(fullName.dirty || fullName.touched) && fullName.errors" class="incorrect" name="close-circle-outline"></ion-icon>
+          </ion-input>
+          
+          <div *ngIf="(fullName.dirty || fullName.touched) && fullName.errors" class="errors">
+            <span *ngIf="fullName.errors?.required">Your name is required</span>
+          </div>
+        </div>
+        <div class="group">
+          <ion-label position="stacked">Email Address</ion-label>
+          <ion-input type="email" formControlName="email">
+            <ion-icon *ngIf="(email.dirty || email.touched) && !email.errors" class="correct" name="checkmark-circle-outline" slot="end"></ion-icon>
+            <ion-icon *ngIf="(email.dirty || email.touched) && email.errors" class="incorrect" name="close-circle-outline" slot="end"></ion-icon>
+          </ion-input>
+  
+          <div *ngIf="(email.dirty || email.touched) && email.errors" class="errors">
+            <span *ngIf="email.errors?.required">Email Address is required</span>
+            <span *ngIf="email.errors?.email">Email Address is invalid</span>
+          </div>
+        </div>
+        <div class="group">
+          <ion-label position="stacked">Password</ion-label>
+          <ion-input type="password" autocapitalize="on" formControlName="password">
+            <ion-icon *ngIf="(password.dirty || password.touched) && !password.errors" class="correct" name="checkmark-circle-outline" slot="end"></ion-icon>
+            <ion-icon *ngIf="(password.dirty || password.touched) && password.errors" class="incorrect" name="close-circle-outline" slot="end"></ion-icon>
+          </ion-input>
+          
+          <div *ngIf="(password.dirty || password.touched) && password.errors" class="errors">
+            <span *ngIf="password.errors?.required">Password is required</span>
+            <span *ngIf="password.errors?.minlength">Password needs to be 6 characters</span>
+          </div>
+        </div>
+        <div class="group">
+          <ion-label position="stacked">Confirm Password</ion-label>
+          <ion-input type="password" autocapitalize="on" formControlName="confirmPassword">
+            <ion-icon *ngIf="!(confirmPassword.value !== '' && !passwordsMatch) && (confirmPassword.dirty || confirmPassword.touched)" class="correct" name="checkmark-circle-outline" slot="end"></ion-icon>
+            <ion-icon *ngIf="confirmPassword.value !== '' && !passwordsMatch && (confirmPassword.dirty || confirmPassword.touched)" class="incorrect" name="close-circle-outline" slot="end"></ion-icon>
+          </ion-input>
+  
+          <div *ngIf="confirmPassword.value !== '' && !passwordsMatch && (confirmPassword.dirty || confirmPassword.touched)" class="errors">
+            <span *ngIf="!passwordsMatch">Passwords do not match</span>
+          </div>
+        </div>
+      </div>
+   
+      <ion-button type="submit" expand="block" shape="round" size="large" (click)="register()">Register</ion-button>
+      <br><br>
+      <div class="text-center">
+        <span>
+          <span class="light-text">Already have an Account?</span> <span (click)="back()" class="primary bold-text button">&nbsp;&nbsp;Sign in</span>
+        </span>
+      </div>
+    </form>
+   
+  </ion-content>
+</div>
+
+
