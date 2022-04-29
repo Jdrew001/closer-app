@@ -1,48 +1,44 @@
-<ion-content>
-
-  <div class="heading-container">
-    <h1>Register</h1>
-    <p>Please register to continue</p>
+<ion-content forceOverscroll="true">
+  <div class="image-container">
+    <img width="30%" src="../../../assets/images/logo-blue.png" alt="image" />
   </div>
 
-  <form [formGroup]="registerForm">
+  <div class="heading-container">
+    <h1 class="bold-text title">Hello</h1>
+    <p class="light-text subtitle">Create an account to continue</p>
+  </div>
+
+  <form [formGroup]="registerForm" class="mb-2">
     <div class="input-group">
       <div class="group">
         <ion-item lines="none">
-          <ion-label position="floating">First Name</ion-label>
-          <ion-input type="text" autocapitalize="on" formControlName="firstName"></ion-input>
-          <ion-icon name="person-outline" slot="start"></ion-icon>
+          <ion-label position="stacked">Your Name</ion-label>
+          <ion-input type="text" autocapitalize="on" formControlName="fullName"></ion-input>
+          <ion-icon *ngIf="(fullName.dirty || fullName.touched) && !fullName.errors" class="correct" name="checkmark-circle-outline" slot="end"></ion-icon>
+          <ion-icon *ngIf="(fullName.dirty || fullName.touched) && fullName.errors" class="incorrect" name="close-circle-outline" slot="end"></ion-icon>
         </ion-item>
-        <div *ngIf="(firstName.dirty || firstName.touched) && firstName.errors" class="errors">
-          <span *ngIf="firstName.errors?.required">First Name is required</span>
+        <div *ngIf="(fullName.dirty || fullName.touched) && fullName.errors" class="errors">
+          <span *ngIf="fullName.errors?.required">First Name is required</span>
         </div>
       </div>
       <div class="group">
         <ion-item lines="none">
-          <ion-label position="floating">Last Name</ion-label>
-          <ion-input type="text" autocapitalize="on" formControlName="lastName"></ion-input>
-          <ion-icon name="person-outline" slot="start"></ion-icon>
-        </ion-item>
-        <div *ngIf="(lastName.dirty || lastName.touched) && lastName.errors" class="errors">
-          <span *ngIf="lastName.errors?.required">Last Name is required</span>
-        </div>
-      </div>
-      <div class="group">
-        <ion-item lines="none">
-          <ion-label position="floating">Email</ion-label>
+          <ion-label position="stacked">Email Address</ion-label>
           <ion-input type="email" formControlName="email"></ion-input>
-          <ion-icon name="mail-outline" slot="start"></ion-icon>
+          <ion-icon *ngIf="(email.dirty || email.touched) && !email.errors" class="correct" name="checkmark-circle-outline" slot="end"></ion-icon>
+          <ion-icon *ngIf="(email.dirty || email.touched) && email.errors" class="incorrect" name="close-circle-outline" slot="end"></ion-icon>
         </ion-item>
         <div *ngIf="(email.dirty || email.touched) && email.errors" class="errors">
-          <span *ngIf="email.errors?.required">Email is required</span>
-          <span *ngIf="email.errors?.email">Email is invalid</span>
+          <span *ngIf="email.errors?.required">Email Address is required</span>
+          <span *ngIf="email.errors?.email">Email Address is invalid</span>
         </div>
       </div>
       <div class="group">
         <ion-item lines="none">
-          <ion-label position="floating">Password</ion-label>
+          <ion-label position="stacked">Password</ion-label>
           <ion-input type="password" autocapitalize="on" formControlName="password"></ion-input>
-          <ion-icon name="lock-closed-outline" slot="start"></ion-icon>
+          <ion-icon *ngIf="(password.dirty || password.touched) && !password.errors" class="correct" name="checkmark-circle-outline" slot="end"></ion-icon>
+          <ion-icon *ngIf="(password.dirty || password.touched) && password.errors" class="incorrect" name="close-circle-outline" slot="end"></ion-icon>
         </ion-item>
         <div *ngIf="(password.dirty || password.touched) && password.errors" class="errors">
           <span *ngIf="password.errors?.required">Password is required</span>
@@ -51,9 +47,10 @@
       </div>
       <div class="group">
         <ion-item lines="none">
-          <ion-label position="floating">Confirm Password</ion-label>
+          <ion-label position="stacked">Confirm Password</ion-label>
           <ion-input type="password" autocapitalize="on" formControlName="confirmPassword"></ion-input>
-          <ion-icon name="lock-closed-outline" slot="start"></ion-icon>
+          <ion-icon *ngIf="!(confirmPassword.value !== '' && !passwordsMatch) && (confirmPassword.dirty || confirmPassword.touched)" class="correct" name="checkmark-circle-outline" slot="end"></ion-icon>
+          <ion-icon *ngIf="confirmPassword.value !== '' && !passwordsMatch && (confirmPassword.dirty || confirmPassword.touched)" class="incorrect" name="close-circle-outline" slot="end"></ion-icon>
         </ion-item>
         <div *ngIf="confirmPassword.value !== '' && !passwordsMatch && (confirmPassword.dirty || confirmPassword.touched)" class="errors">
           <span *ngIf="!passwordsMatch">Passwords do not match</span>
@@ -61,10 +58,13 @@
       </div>
     </div>
  
-    <ion-button type="submit" expand="block" [disabled]="!registerForm.valid" (click)="register()">Register</ion-button>
+    <ion-button type="submit" expand="block" shape="round" size="large" (click)="register()">Register</ion-button>
     <br><br>
-    <ion-button type="button" expand="block" color="dark" fill="clear" (click)="back()">Back
-    </ion-button>
+    <div class="text-center">
+      <span>
+        <span class="light-text">Already have an Account?</span> <span (click)="back()" class="primary bold-text button">&nbsp;&nbsp;Sign in</span>
+      </span>
+    </div>
   </form>
  
 </ion-content>
