@@ -25,15 +25,79 @@
 @import "~@ionic/angular/css/text-transformation.css";
 @import "~@ionic/angular/css/flex-utils.css";
 
+@font-face {
+    font-family: "dmsans-regular";
+    src: url(./assets/fonts/DMSans-Regular.ttf);
+}
+
+@font-face {
+    font-family: "dmsans-bold";
+    src: url(./assets/fonts/DMSans-Bold.ttf);
+}
+
+h1, h2, h3, h4, h5, span, p {
+    font-family: "dmsans-regular", Arial, Helvetica, sans-serif;
+}
+
+h1.bold-text, h2.bold-text, h3.bold-text, h4.bold-text, h5.bold-text, span.bold-text, p.bold-text {
+    font-family: "dmsans-bold", Arial, Helvetica, sans-serif;
+}
+
+h1.light-text, h2.light-text, h3.light-text, h4.light-text, h5.light-text, span.light-text, p.light-text {
+    color: var(--ion-color-medium);
+}
+
+h1.title, h2.title, h3.title, h4.title, h5.title, span.title, p.title {
+    padding: 0px;
+    margin: 0px;
+}
+
+p.subtitle {
+    padding: 0px;
+    margin: 0px;
+    margin-top: 5px;
+}
 
 div.heading-container {
     margin-bottom: 3rem;
 }
 
-div.heading-container p {
-    color: #c1c1c1;
-}
-
 .text-center {
     text-align: center;
+}
+.image-container {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+ion-content {
+    --background: var(--ion-color-light);
+}
+
+ion-label {
+    font-size: 19px
+}
+
+div.auth ion-content {
+    --padding-top: 10%;
+    --padding-start: 8%;
+    --padding-end: 8%;
+    height: 100vh;
+}
+
+.primary {
+    color: var(--ion-color-primary);
+}
+.secondary {
+    color: var(--ion-color-secondary);
+}
+.medium {
+    color: var(--ion-color-medium);
+}
+.light {
+    color: var(--ion-color-light);
+}
+
+span.button.activated {
+    color: red;
 }
