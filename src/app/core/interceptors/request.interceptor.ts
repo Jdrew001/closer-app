@@ -38,7 +38,7 @@ export class RequestInterceptor implements HttpInterceptor {
 
     private handleError(error: HttpErrorResponse) {
         this.loaderService.toggleLoader(false);
-        this.messageService.showMessage(CoreConstants.GENERIC_ERROR_TOAST);
+        this.messageService.showErrorMessage(error.message);
         return throwError(error);
     }
 

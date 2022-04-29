@@ -47,11 +47,11 @@ export class ResetPasswordPage implements OnInit {
       const userId = await this.userService.getUserId();
       this.authService.sendPasswordForReset(this.password.value, userId).subscribe(res => {
         if (res.error) {
-          this.messageService.showMessage(CoreConstants.GENERIC_ERROR_TOAST);
+          this.messageService.showErrorMessage(res.message);
           return;
         }
 
-        this.messageService.showMessage(CoreConstants.GENERIC_SUCCESS_TOAST);
+        this.messageService.showSuccessMessage(res.message);
         setTimeout(() => {this.navController.navigateBack('/login', { replaceUrl:true })}, 1000);
       });
     }

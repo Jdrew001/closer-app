@@ -3,12 +3,13 @@ import { MessageService } from './../../core/services/message.service';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AlertController, LoadingController, NavController } from '@ionic/angular';
+import { NavController } from '@ionic/angular';
 import { AuthenticationService } from 'src/app/core/services/authentication.service';
 import { DeviceService } from 'src/app/core/services/device.service';
 import { LoginDTO } from './models/login.model';
 import { TokenService } from 'src/app/core/services/token.service';
 import { AuthService } from 'src/app/core/services/auth.service';
+import { AppConstants } from 'src/app/app.constants';
 
 @Component({
   selector: 'app-login',
@@ -31,7 +32,6 @@ export class LoginPage implements OnInit {
     private fb: FormBuilder,
     private authenticationService: AuthenticationService,
     private authService: AuthService,
-    private alertController: AlertController,
     private router: Router,
     private deviceService: DeviceService,
     private tokenService: TokenService,
@@ -44,16 +44,21 @@ export class LoginPage implements OnInit {
   }
 
   async login() {
-    const deviceInfo = await this.deviceService.getDeviceId();
-    this.authenticationService.login(this.generateLoginDTO(this.loginForm.value, deviceInfo.uuid))
-      .subscribe(async (res) => {
-        if (res.error && res.message) {
-          this.messageService.showMessage(CoreConstants.GENERIC_ERROR_TOAST);
-          return;
-        }
+    if (this.loginForm.valid) {
+      const deviceInfo = await this.deviceService.getDeviceId();
+      this.authenticationService.login(this.generateLoginDTO(this.loginForm.value, deviceInfo.uuid))
+        .subscribe(async (res) => {
+          if (res.error && res.message) {
+            this.messageService.showErrorMessage(res.message);
+            return;
+          }
 
-        this.successfulLogin(res.token, res.refreshToken);
-    });
+          this.successfulLogin(res.token, res.refreshToken, res.message);
+      });
+      return;
+    }
+    
+    this.formValidationError();
   }
 
   registerPage() {
@@ -79,11 +84,16 @@ export class LoginPage implements OnInit {
     }
   }
 
-  private async successfulLogin(token, refreshToken) {
+  private async successfulLogin(token, refreshToken, message) {
     this.authService.isAuthenticated$.next(true);
-    this.messageService.showMessage(CoreConstants.GENERIC_SUCCESS_TOAST);
+    this.messageService.showSuccessMessage(message);
     await this.tokenService.setAppToken(token);
     await this.tokenService.setRefreshToken(refreshToken);
     setTimeout(() => {this.router.navigateByUrl('/tabs/dashboard', { replaceUrl:true })}, 1000);
+  }
+
+  private formValidationError() {
+    this.loginForm.markAllAsTouched();
+    this.messageService.showErrorMessage(AppConstants.FORM_VALIDATION_ERROR);
   }
 }

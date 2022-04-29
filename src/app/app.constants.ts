@@ -5,4 +5,6 @@ export class AppConstants {
     public static USER_INFORMATION = 'userInfo';
     public static USER_ID = 'userId';
     public static USER_EMAIL = 'userEmail';
+
+    public static FORM_VALIDATION_ERROR = 'Please ensure form is valid';
 }

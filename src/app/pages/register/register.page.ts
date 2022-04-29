@@ -9,6 +9,8 @@ import { AuthenticationService } from 'src/app/core/services/authentication.serv
 import { AuthService } from 'src/app/core/services/auth.service';
 import { TokenService } from 'src/app/core/services/token.service';
 import { Router } from '@angular/router';
+import { MessageService } from 'src/app/core/services/message.service';
+import { AppConstants } from 'src/app/app.constants';
 
 @Component({
   selector: 'app-register',
@@ -36,19 +38,17 @@ export class RegisterPage implements OnInit {
   }
 
   get passwordsMatch() {
-    return this.password.value === this.confirmPassword.value;
+    return this.password.value == '' || this.confirmPassword.value == '' ? false: this.password.value === this.confirmPassword.value;
   }
 
-  // eslint-disable-next-line @typescript-eslint/member-ordering
   constructor(
     private fb: FormBuilder,
     private navController: NavController,
     private deviceService: DeviceService,
     private authenticationService: AuthenticationService,
     private alertController: AlertController,
-    private authService: AuthService,
-    private tokenService: TokenService,
-    private userService: UserService
+    private userService: UserService,
+    private messageService: MessageService
   ) { }
 
   ngOnInit() {
@@ -77,13 +77,8 @@ export class RegisterPage implements OnInit {
       });
     } else {
       // display an error message
-      const alert = await this.alertController.create({
-        message: 'Please ensure form is correct',
-        header: 'Registration Error',
-        buttons: ['OK']
-      });
-
-      await alert.present();
+      this.messageService.showErrorMessage(AppConstants.FORM_VALIDATION_ERROR);
+      this.registerForm.markAllAsTouched();
     }
   }
 
@@ -101,10 +96,12 @@ export class RegisterPage implements OnInit {
   }
 
   private generateRegisterDTO(value: any, deviceInfo: DeviceInfo) {
-    console.log(value.fullName?.split(" "));
+    let fullName = value.fullName?.split(" ");
+    let firstName = fullName[0];
+    let lastName = fullName.splice(-(fullName.length - 1));
     return {
-      firstName: value.fullName?.split(" ")[0],
-      lastName: value.fullName?.split(" ")[1],
+      firstName: firstName,
+      lastName: lastName.join(" "),
       email: value.email,
       password: value.password,
       ...deviceInfo
