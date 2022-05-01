@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  base_url: 'http://atkisondevserver.me:8080/closer-everyday-service/api/'
+  base_url: 'https://atkisondevserver.me:8080/closer-everyday-service/api/'
 };
