@@ -12,8 +12,7 @@ import { NavController } from '@ionic/angular';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { CoreConstants } from '../core.constant';
-import { AuthModel, ResetEmailModel, ResetPasswordResultModel } from '../models/auth.model';
-import { catchError } from 'rxjs/operators';
+import { AuthModel, ResetEmailModel } from '../models/auth.model';
 
 @Injectable({
   providedIn: 'root'

@@ -23,6 +23,7 @@ export interface ResetEmailModel {
     isUser: boolean;
     message?: string;
     userId: string;
+    email: string;
 }
 
 export interface ResetPasswordResultModel {
