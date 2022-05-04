@@ -40,7 +40,7 @@ export class ForgetPasswordPage implements OnInit {
       this.authService.sendEmailForReset(this.email.value).subscribe(async res => {
         if (res.isUser && res.userId) {
           // set user id for reset
-          await this.userService.setUserId(res.userId);
+          await this.userService.setUserEmail(res.email);
           this.authService.isReset = true;
           // navigate to new page for code
           setTimeout(() => {this.navController.navigateRoot('/verify-account', { replaceUrl:true })}, 1000);
