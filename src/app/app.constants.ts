@@ -6,5 +6,5 @@ export class AppConstants {
     public static USER_ID = 'userId';
     public static USER_EMAIL = 'userEmail';
 
-    public static FORM_VALIDATION_ERROR = 'Please ensure form is valid';
+    public static FORM_VALIDATION_ERROR = 'The form is incorrect';
 }

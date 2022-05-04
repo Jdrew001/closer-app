@@ -15,16 +15,16 @@
         <div class="group">
           <ion-label position="stacked">Email Address</ion-label>
             <ion-input type="email" formControlName="email">
-              <ion-icon *ngIf="(email.dirty || email.touched) && !email.errors" class="correct" name="checkmark-circle-outline" item-right></ion-icon>
-              <ion-icon *ngIf="(email.dirty || email.touched) && email.errors" class="incorrect" name="close-circle-outline" item-right></ion-icon>
+              <ion-icon *ngIf="(email.dirty || email.touched) && !email.errors" class="correct" name="checkmark-circle" item-right></ion-icon>
+              <ion-icon *ngIf="(email.dirty || email.touched) && email.errors" class="incorrect" name="close-circle" item-right></ion-icon>
             </ion-input>
         </div>
   
         <div class="group">
           <ion-label position="stacked">Password</ion-label>
             <ion-input type="password" formControlName="password">
-              <ion-icon *ngIf="(password.dirty || password.touched) && !password.errors" class="correct" name="checkmark-circle-outline"></ion-icon>
-              <ion-icon *ngIf="(password.dirty || password.touched) && password.errors" class="incorrect" name="close-circle-outline"></ion-icon>
+              <ion-icon *ngIf="(password.dirty || password.touched) && !password.errors" class="correct" name="checkmark-circle"></ion-icon>
+              <ion-icon *ngIf="(password.dirty || password.touched) && password.errors" class="incorrect" name="close-circle"></ion-icon>
             </ion-input>
           <ion-note class="forgot-password" color="primary" (click)="forgotPassword()">
             <p class="bold-text">Forgot Password?</p>

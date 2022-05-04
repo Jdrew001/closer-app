@@ -18,26 +18,28 @@ export class MessageService {
     await toast.present();
   }
 
-  async showSuccessMessage(message: string = null, duration = 2000) {
+  async showSuccessMessage(header: string = null, message: string = null, duration = 2000) {
     const toast = await this.toastController.create({
-      icon: 'thumbs-up-outline',
+      icon: 'checkmark-circle',
       position: 'bottom',
-      duration: 2000,
-      color: 'success',
+      duration: duration,
+      color: 'secondary',
+      header: header ? header: 'Success',
       message: message ? message: 'Successful Action',
-      cssClass: 'message-style'
+      cssClass: 'success-message-style'
     });
     await toast.present();
   }
 
-  async showErrorMessage(message: string = null, duration = 2000) {
+  async showErrorMessage(header: string = null, message: string = null, duration = 2000) {
     const toast = await this.toastController.create({
-      icon: 'alert-circle-outline',
+      icon: 'alert-circle',
       position: 'bottom',
       duration: duration,
-      color: 'danger',
+      color: 'secondary',
+      header: header ? header: 'Error',
       message: message ? message: 'An error has occurred',
-      cssClass: 'message-style'
+      cssClass: 'error-message-style'
     });
     await toast.present();
   }

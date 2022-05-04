@@ -170,11 +170,51 @@ ion-button {
     box-shadow: $default-shadow !important;
 }
 
-.message-style {
-    box-shadow: $default-shadow !important;
 
-    ion-icon {
-        font-size: 20px !important;
-    }
+/*Toast styles*/
+.success-message-style::part(container) {
+    border-left: solid;
+    border-left-color: var(--ion-color-success);
+    border-left-width: 5px;
 }
+
+.success-message-style::part(icon) {
+    color: var(--ion-color-success);
+    font-size: 1.5rem;
+}
+
+.success-message-style::part(header) {
+    font-weight: 600;
+    font-size: 15px;
+    color: var(--ion-color-success);
+}
+
+.success-message-style::part(message) {
+    color: var(--ion-color-medium);
+    font-size: 12px
+}
+
+.error-message-style::part(container) {
+    border-left: solid;
+    border-left-color: var(--ion-color-danger);
+    border-left-width: 5px;
+}
+.error-message-style::part(icon) {
+    color: var(--ion-color-danger);
+    font-size: 1.5rem;
+}
+
+.error-message-style::part(header) {
+    font-weight: 600;
+    font-size: 15px;
+    color: var(--ion-color-danger);
+}
+
+.error-message-style::part(message) {
+    color: var(--ion-color-medium);
+    font-size: 12px
+}
+
+
+
 

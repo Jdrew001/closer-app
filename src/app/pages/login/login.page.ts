@@ -106,6 +106,6 @@ export class LoginPage implements OnInit {
 
   private formValidationError() {
     this.loginForm.markAllAsTouched();
-    this.messageService.showErrorMessage(AppConstants.FORM_VALIDATION_ERROR);
+    this.messageService.showErrorMessage("Validation Error", AppConstants.FORM_VALIDATION_ERROR);
   }
 }

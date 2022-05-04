@@ -14,8 +14,8 @@
         <div class="group">
           <ion-label position="stacked">Your Name</ion-label>
           <ion-input type="text" autocapitalize="on" formControlName="fullName">
-            <ion-icon *ngIf="(fullName.dirty || fullName.touched) && !fullName.errors" class="correct" name="checkmark-circle-outline"></ion-icon>
-            <ion-icon *ngIf="(fullName.dirty || fullName.touched) && fullName.errors" class="incorrect" name="close-circle-outline"></ion-icon>
+            <ion-icon *ngIf="(fullName.dirty || fullName.touched) && !fullName.errors" class="correct" name="checkmark-circle"></ion-icon>
+            <ion-icon *ngIf="(fullName.dirty || fullName.touched) && fullName.errors" class="incorrect" name="close-circle"></ion-icon>
           </ion-input>
           
           <div *ngIf="(fullName.dirty || fullName.touched) && fullName.errors" class="errors">
@@ -25,8 +25,8 @@
         <div class="group">
           <ion-label position="stacked">Email Address</ion-label>
           <ion-input type="email" formControlName="email">
-            <ion-icon *ngIf="(email.dirty || email.touched) && !email.errors" class="correct" name="checkmark-circle-outline" slot="end"></ion-icon>
-            <ion-icon *ngIf="(email.dirty || email.touched) && email.errors" class="incorrect" name="close-circle-outline" slot="end"></ion-icon>
+            <ion-icon *ngIf="(email.dirty || email.touched) && !email.errors" class="correct" name="checkmark-circle" slot="end"></ion-icon>
+            <ion-icon *ngIf="(email.dirty || email.touched) && email.errors" class="incorrect" name="close-circle" slot="end"></ion-icon>
           </ion-input>
   
           <div *ngIf="(email.dirty || email.touched) && email.errors" class="errors">
@@ -37,8 +37,8 @@
         <div class="group">
           <ion-label position="stacked">Password</ion-label>
           <ion-input type="password" autocapitalize="on" formControlName="password">
-            <ion-icon *ngIf="(password.dirty || password.touched) && !password.errors" class="correct" name="checkmark-circle-outline" slot="end"></ion-icon>
-            <ion-icon *ngIf="(password.dirty || password.touched) && password.errors" class="incorrect" name="close-circle-outline" slot="end"></ion-icon>
+            <ion-icon *ngIf="(password.dirty || password.touched) && !password.errors" class="correct" name="checkmark-circle" slot="end"></ion-icon>
+            <ion-icon *ngIf="(password.dirty || password.touched) && password.errors" class="incorrect" name="close-circle" slot="end"></ion-icon>
           </ion-input>
           
           <div *ngIf="(password.dirty || password.touched) && password.errors" class="errors">
@@ -49,8 +49,8 @@
         <div class="group">
           <ion-label position="stacked">Confirm Password</ion-label>
           <ion-input type="password" autocapitalize="on" formControlName="confirmPassword">
-            <ion-icon *ngIf="confirmPassword.value !== '' && passwordsMatch && (confirmPassword.dirty || confirmPassword.touched)" class="correct" name="checkmark-circle-outline" slot="end"></ion-icon>
-            <ion-icon *ngIf="confirmPassword.value == '' && !passwordsMatch && (confirmPassword.dirty || confirmPassword.touched)" class="incorrect" name="close-circle-outline" slot="end"></ion-icon>
+            <ion-icon *ngIf="confirmPassword.value !== '' && passwordsMatch && (confirmPassword.dirty || confirmPassword.touched)" class="correct" name="checkmark-circle" slot="end"></ion-icon>
+            <ion-icon *ngIf="confirmPassword.value == '' && !passwordsMatch && (confirmPassword.dirty || confirmPassword.touched)" class="incorrect" name="close-circle" slot="end"></ion-icon>
           </ion-input>
   
           <div *ngIf="confirmPassword.value !== '' && !passwordsMatch && (confirmPassword.dirty || confirmPassword.touched)" class="errors">
