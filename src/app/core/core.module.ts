@@ -10,8 +10,8 @@ import { UserService } from './services/user.service';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { RequestInterceptor } from './interceptors/request.interceptor';
 import { LoaderComponent } from './components/loader/loader.component';
-
-
+import { RequestHeaderInterceptor } from './interceptors/request-header.interceptor';
+import { Request200ErrorInterceptor } from './interceptors/request-200-error.interceptor';
 
 @NgModule({
   declarations: [
@@ -28,11 +28,9 @@ import { LoaderComponent } from './components/loader/loader.component';
     UserService,
     LoaderService,
     MessageService,
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: RequestInterceptor,
-      multi: true
-    }
+    { provide: HTTP_INTERCEPTORS, useClass: RequestHeaderInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: RequestInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: Request200ErrorInterceptor, multi: true }
   ],
   exports: [LoaderComponent]
 })

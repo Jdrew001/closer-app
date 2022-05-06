@@ -16,7 +16,7 @@ export class RequestInterceptor implements HttpInterceptor {
 
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         const timeout = this.createTimeout();
-        if (!this.urlMatchesExcluded(req.url)) {
+        if (!this.urlMatchesExcludedForSpinner(req.url)) {
             return next.handle(req).pipe(
                 tap((event: HttpEvent<any>) => {
                     if (event instanceof HttpResponse) {
@@ -48,7 +48,7 @@ export class RequestInterceptor implements HttpInterceptor {
         }, 800);
     }
 
-    private urlMatchesExcluded(routeURL: string) {
+    private urlMatchesExcludedForSpinner(routeURL: string) {
         let result = false;
         CoreConstants.EXCLUDED_URLS.forEach(url => {result = routeURL.includes(url)});
         return result;

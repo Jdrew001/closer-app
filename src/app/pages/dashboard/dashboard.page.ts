@@ -1,6 +1,8 @@
 import { AuthService } from './../../core/services/auth.service';
 import { Component, OnInit } from '@angular/core';
 import { BarModel } from 'projects/ced-widgets/src/lib/graphs/bar-graph/bar-graph.model';
+import { AuthenticationService } from 'src/app/core/services/authentication.service';
+import { MessageService } from 'src/app/core/services/message.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -46,14 +48,21 @@ export class DashboardPage implements OnInit {
   }
 
   constructor(
-    private authService: AuthService
+    private authService: AuthService,
+    private authenticationService: AuthenticationService,
+    private messageService: MessageService
   ) { }
 
   ngOnInit() {
   }
 
   async logout() {
-    await this.authService.logoutUser();
+    (await this.authenticationService.logout()).subscribe(async res => {
+      if (res.error) return;
+      await this.authService.logoutUser();
+      this.messageService.showSuccessMessage(null, res.message);
+    });
+    
   }
 
 }

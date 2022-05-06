@@ -9,6 +9,7 @@ export class CoreConstants {
     public static REISSUE_VERIFICATION = 'resendCode';
     public static EMAIL_FOR_RESET = 'sendEmailForReset';
     public static PASSWORD_RESET = 'sendPasswordForReset';
+    public static LOGOUT_URL = 'logout';
 
     // toast options
     public static GENERIC_SUCCESS_TOAST: ToastOptions = {
@@ -39,4 +40,14 @@ export class CoreConstants {
     }
     public static LOAD_TIME: 2000;
     public static EXCLUDED_URLS = [CoreConstants.REFRESH_URL];
+
+    public static PUBLIC_URLS = [
+        this.LOGIN_URL,
+        this.REGISTER_URL,
+        this.REFRESH_URL,
+        this.VERIFY_URL,
+        this.REISSUE_VERIFICATION,
+        this.EMAIL_FOR_RESET,
+        this.PASSWORD_RESET
+    ];
 }
