@@ -11,6 +11,7 @@ import { TokenService } from 'src/app/core/services/token.service';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { AppConstants } from 'src/app/app.constants';
 import { UserService } from 'src/app/core/services/user.service';
+import { AuthModel } from 'src/app/core/models/auth.model';
 
 @Component({
   selector: 'app-login',
@@ -45,7 +46,7 @@ export class LoginPage implements OnInit {
     this.initForm();
   }
 
-  async login() {
+  async login() {//
     if (this.loginForm.valid) {
       const deviceInfo = await this.deviceService.getDeviceId();
       this.authenticationService.login(this.generateLoginDTO(this.loginForm.value, deviceInfo.uuid))
@@ -55,12 +56,12 @@ export class LoginPage implements OnInit {
             return;
           }
 
-          if (!res.confirmed && res.email) {
-            this.sendUserToConfirm(res.email);
+          if (!res.data.confirmed && res.data.email) {
+            this.sendUserToConfirm(res.data.email);
             return;
           }
 
-          this.successfulLogin(res.token, res.refreshToken, res.message);
+          this.successfulLogin(res.data);
       });
       return;
     }
@@ -77,7 +78,7 @@ export class LoginPage implements OnInit {
   }
 
   private async sendUserToConfirm(email: string) {
-    await this.userService.setUserEmail(email);
+    await this.userService.setUserInfo({email: email, userId: null, firstName: null, lastName: null});
     setTimeout(() => {this.navController.navigateRoot('/verify-account', { replaceUrl:true })}, 1000);
   }
 
@@ -96,11 +97,12 @@ export class LoginPage implements OnInit {
     }
   }
 
-  private async successfulLogin(token, refreshToken, message) {
+  private async successfulLogin(data: AuthModel) {
     this.authService.isAuthenticated$.next(true);
-    this.messageService.showSuccessMessage(message);
-    await this.tokenService.setAppToken(token);
-    await this.tokenService.setRefreshToken(refreshToken);
+    this.messageService.showSuccessMessage(data.message);
+    await this.tokenService.setAppToken(data.token);
+    await this.tokenService.setRefreshToken(data.refreshToken);
+    await this.userService.setUserInfo({email: data?.email, userId: data?.userId, firstName: data?.firstName, lastName: data?.lastName});
     setTimeout(() => {this.router.navigateByUrl('/tabs/dashboard', { replaceUrl:true })}, 1000);
   }
 

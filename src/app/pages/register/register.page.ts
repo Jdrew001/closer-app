@@ -61,7 +61,7 @@ export class RegisterPage implements OnInit {
     if (this.registerForm.valid && this.passwordsMatch) {
       this.authenticationService.register(this.generateRegisterDTO(this.registerForm.value, deviceDTO))
       .subscribe(async res => {
-        if (!res.isUserCreated && res.message) {
+        if (!res.data.isUserCreated && res.message && res.error) {
           // display an error message
           const alert = await this.alertController.create({
             message: res.message,
@@ -119,7 +119,7 @@ export class RegisterPage implements OnInit {
 
   private async successfulRegistration() {
     // save the email of user for verification
-    this.userService.setUserEmail(this.email.value);
+    this.userService.setUserInfo({email: this.email.value, userId: null, firstName: null, lastName: null});
     //navigate to the verification screen
     setTimeout(() => {this.navController.navigateRoot('/verify-account', { replaceUrl:true })}, 1000);
   }

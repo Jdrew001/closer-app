@@ -10,6 +10,8 @@ export interface AuthModel {
     error: boolean;
     confirmed: boolean;
     email: string;
+    firstName: string;
+    lastName: string;
 }
 
 export interface RegisterModel {

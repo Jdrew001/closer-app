@@ -29,21 +29,21 @@ export class AuthenticationService extends BaseService  {
     this.baseUrl = `${environment.base_url}Authentication/`;
   }
   
-  login(dto: LoginDTO): Observable<AuthModel> {
-    return this.httpClient.post(`${this.baseUrl}${CoreConstants.LOGIN_URL}`, dto) as Observable<AuthModel>;
+  login(dto: LoginDTO): Observable<GenericReponse<AuthModel>> {
+    return this.httpClient.post(`${this.baseUrl}${CoreConstants.LOGIN_URL}`, dto) as Observable<GenericReponse<AuthModel>>;
   }
 
-  register(dto: RegistrationDTO): Observable<RegisterModel> {
-    return this.httpClient.post(`${this.baseUrl}${CoreConstants.REGISTER_URL}`, dto) as Observable<RegisterModel>;
+  register(dto: RegistrationDTO): Observable<GenericReponse<RegisterModel>> {
+    return this.httpClient.post(`${this.baseUrl}${CoreConstants.REGISTER_URL}`, dto) as Observable<GenericReponse<RegisterModel>>;
   }
 
-  refreshToken(dto: RefreshDTO) {
-    return this.httpClient.post(`${this.baseUrl}${CoreConstants.REFRESH_URL}`, dto) as Observable<AuthModel>;
+  refreshToken(dto: RefreshDTO): Observable<GenericReponse<AuthModel>> {
+    return this.httpClient.post(`${this.baseUrl}${CoreConstants.REFRESH_URL}`, dto) as Observable<GenericReponse<AuthModel>>;
   }
 
   async logout() {
-    const userId = await this.userService.getUserId();
-    return (this.httpClient.get(`${this.baseUrl}${CoreConstants.LOGOUT_URL}/bef5173d-cbc6-11ec-9d39-e0d55e253d93`).pipe(tap((res: GenericReponse<any>) => {
+    const userInfo = await this.userService.getUserInfo();
+    return (this.httpClient.get(`${this.baseUrl}${CoreConstants.LOGOUT_URL}/${userInfo.userId}`).pipe(tap((res: GenericReponse<any>) => {
       return res;
     })));
   }

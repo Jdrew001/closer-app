@@ -9,28 +9,12 @@ export class UserService {
 
   constructor() { }
 
-  async getUserInfo() {
+  async getUserInfo(): Promise<{ email: string; userId: string; firstName: string; lastName: string; }> {
     const info = await Storage.get({key: AppConstants.USER_INFORMATION});
-    return info.value;
+    return JSON.parse(info.value) as {email: string, userId: string, firstName: string, lastName: string};
   }
 
-  getUserId(): Promise<string> {
-    return (async () => (await Storage.get({key: AppConstants.USER_ID})).value)();
-  }
-
-  async getUserEmail() {
-    return (async () => (await Storage.get({key: AppConstants.USER_EMAIL})).value)();
-  }
-
-  async setUserInfo(user: any) {
-    await Storage.set({key: AppConstants.USER_INFORMATION, value: user});
-  }
-
-  async setUserId(userId: string) {
-    await Storage.set({key: AppConstants.USER_ID, value: userId});
-  }
-
-  async setUserEmail(email: string) {
-    await Storage.set({key: AppConstants.USER_EMAIL, value: email});
+  async setUserInfo(user: {email: string, userId: string, firstName: string, lastName: string}) {
+    await Storage.set({key: AppConstants.USER_INFORMATION, value: JSON.stringify(user)});
   }
 }

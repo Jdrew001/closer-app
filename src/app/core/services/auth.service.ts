@@ -13,6 +13,7 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { CoreConstants } from '../core.constant';
 import { AuthModel, ResetEmailModel } from '../models/auth.model';
+import { GenericReponse } from '../models/generic-response.model';
 
 @Injectable({
   providedIn: 'root'
@@ -39,15 +40,15 @@ export class AuthService {
     const deviceUUID = await this.deviceService.getDeviceUUID();
     if (refreshToken) {
       this.authService.refreshToken({token: refreshToken, deviceUUID}).subscribe(async res => {
-        if (res.shouldRedirectToLogin) {
+        if (res.data.shouldRedirectToLogin) {
           this.navController.navigateRoot('/login', { replaceUrl:true });
           this.isAuthenticated$.next(false);
           return;
         }
 
         // update refreshToken
-        await this.tokenService.setAppToken(res.token);
-        await this.tokenService.setRefreshToken(res.refreshToken);
+        await this.tokenService.setAppToken(res.data.token);
+        await this.tokenService.setRefreshToken(res.data.refreshToken);
 
         // redirect user
         this.navController.navigateForward('/tabs/dashboard', { replaceUrl:true });
@@ -64,22 +65,22 @@ export class AuthService {
     setTimeout(async () => {await SplashScreen.hide()}, 1000);
   }
 
-  async verifyAccountCode(code: string) {
+  async verifyAccountCode(code: string): Promise<Observable<GenericReponse<AuthModel>>> {
     const deviceUUID = await this.deviceService.getDeviceUUID();
-    const userEmail = await this.userService.getUserEmail();
-    return this.httpClient.get(`${this.baseUrl}${CoreConstants.VERIFY_URL}/${code}/${userEmail}/${deviceUUID}/${this.isReset}`) as Observable<AuthModel>;
+    const userInfo = await this.userService.getUserInfo();
+    return this.httpClient.get(`${this.baseUrl}${CoreConstants.VERIFY_URL}/${code}/${userInfo.email}/${deviceUUID}/${this.isReset}`) as Observable<GenericReponse<AuthModel>>;
   }
 
-  reissueCode(email: string) {
-    return this.httpClient.get(`${this.baseUrl}${CoreConstants.REISSUE_VERIFICATION}/${email}`) as Observable<AuthModel>;
+  reissueCode(email: string): Observable<GenericReponse<AuthModel>> {
+    return this.httpClient.get(`${this.baseUrl}${CoreConstants.REISSUE_VERIFICATION}/${email}`) as Observable<GenericReponse<AuthModel>>;
   }
 
-  sendEmailForReset(email: string) {
-    return this.httpClient.get(`${this.baseUrl}${CoreConstants.EMAIL_FOR_RESET}/${email}`) as Observable<ResetEmailModel>;
+  sendEmailForReset(email: string): Observable<GenericReponse<ResetEmailModel>> {
+    return this.httpClient.get(`${this.baseUrl}${CoreConstants.EMAIL_FOR_RESET}/${email}`) as Observable<GenericReponse<ResetEmailModel>>;
   }
 
-  sendPasswordForReset(password: string, userId: string) {
-    return this.httpClient.post(`${this.baseUrl}${CoreConstants.PASSWORD_RESET}`, { userId: userId, password: password }) as Observable<AuthModel>;
+  sendPasswordForReset(password: string, userId: string): Observable<GenericReponse<AuthModel>> {
+    return this.httpClient.post(`${this.baseUrl}${CoreConstants.PASSWORD_RESET}`, { userId: userId, password: password }) as Observable<GenericReponse<AuthModel>>;
   }
 
   async logoutUser() {

@@ -5,6 +5,7 @@ import { TokenService } from 'src/app/core/services/token.service';
 import { UserService } from 'src/app/core/services/user.service';
 import { Keyboard } from '@capacitor/keyboard';
 import { MessageService } from 'src/app/core/services/message.service';
+import { AuthModel } from 'src/app/core/models/auth.model';
 
 @Component({
   selector: 'app-verify-account',
@@ -54,13 +55,13 @@ export class VerifyAccountPage implements OnInit {
           return;
         }
 
-        this.successfulVerification(res.token, res.refreshToken, res.userId);
+        this.successfulVerification(res.data);
       });
     }
   }
 
   async resendCode(firstElement) {
-    const email = await this.userService.getUserEmail();
+    const email = await this.userService.getUserInfo();
     const keys = Object.keys(this.verifyModel);
     keys.forEach(key => this.verifyModel[key] = null);
     if (firstElement == null) {
@@ -68,7 +69,7 @@ export class VerifyAccountPage implements OnInit {
     } else {
       firstElement.focus();
     }
-    this.authService.reissueCode(email).subscribe(res => {
+    this.authService.reissueCode(email.email).subscribe(res => {
       this.reissue = true;
     });
   }
@@ -120,21 +121,23 @@ export class VerifyAccountPage implements OnInit {
     return result;
   }
 
-  async successfulVerification(token, refreshToken, userId: string) {
+  async successfulVerification(data: AuthModel) {
     this.authService.isAuthenticated$.next(true);
-    this.userService.setUserId(userId);
-    await this.tokenService.setAppToken(token);
+    this.userService.setUserInfo({email: data?.email, userId: data?.userId, firstName: data?.firstName, lastName: data?.lastName});
+    await this.tokenService.setAppToken(data.token);
 
     if (this.isForResetPassword) {
       setTimeout(() => {
         this.navController.navigateRoot('/reset-password', { replaceUrl:true }).finally(() => {
+          this.userService.setUserInfo({email: data?.email, userId: data?.userId, firstName: data?.firstName, lastName: data?.lastName});
           this.isForResetPassword = false;
         });
       }, 500);
     } else {
       setTimeout(() => {
         this.navController.navigateRoot('/tabs/dashboard', { replaceUrl:true }).finally(async () => {
-          await this.tokenService.setRefreshToken(refreshToken);
+          this.userService.setUserInfo({email: data?.email, userId: data?.userId, firstName: data?.firstName, lastName: data?.lastName});
+          await this.tokenService.setRefreshToken(data.refreshToken);
           this.isForResetPassword = false;
         });
       }, 500);

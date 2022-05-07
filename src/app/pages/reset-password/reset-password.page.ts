@@ -44,8 +44,8 @@ export class ResetPasswordPage implements OnInit {
   async submit() {
     if (this.passwordForm.valid && this.passwordsMatch) {
       // call service to update password
-      const userId = await this.userService.getUserId();
-      this.authService.sendPasswordForReset(this.password.value, userId).subscribe(res => {
+      const userId = await this.userService.getUserInfo();
+      this.authService.sendPasswordForReset(this.password.value, userId?.userId).subscribe(res => {
         if (res.error) {
           this.messageService.showErrorMessage(res.message);
           return;
