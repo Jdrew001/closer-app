@@ -46,7 +46,7 @@ export class LoginPage implements OnInit {
     this.initForm();
   }
 
-  async login() {//
+  async login() {
     if (this.loginForm.valid) {
       const deviceInfo = await this.deviceService.getDeviceId();
       this.authenticationService.login(this.generateLoginDTO(this.loginForm.value, deviceInfo.uuid))
@@ -61,7 +61,7 @@ export class LoginPage implements OnInit {
             return;
           }
 
-          this.successfulLogin(res.data);
+          this.successfulLogin(res);
       });
       return;
     }
@@ -97,12 +97,12 @@ export class LoginPage implements OnInit {
     }
   }
 
-  private async successfulLogin(data: AuthModel) {
+  private async successfulLogin(res) {
     this.authService.isAuthenticated$.next(true);
-    this.messageService.showSuccessMessage(data.message);
-    await this.tokenService.setAppToken(data.token);
-    await this.tokenService.setRefreshToken(data.refreshToken);
-    await this.userService.setUserInfo({email: data?.email, userId: data?.userId, firstName: data?.firstName, lastName: data?.lastName});
+    this.messageService.showSuccessMessage(res.message);
+    await this.tokenService.setAppToken(res.data.token);
+    await this.tokenService.setRefreshToken(res.data.refreshToken);
+    await this.userService.setUserInfo({email: res.data?.email, userId: res.data?.userId, firstName: res.data?.firstName, lastName: res.data?.lastName});
     setTimeout(() => {this.router.navigateByUrl('/tabs/dashboard', { replaceUrl:true })}, 1000);
   }
 

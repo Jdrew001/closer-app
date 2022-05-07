@@ -63,13 +63,7 @@ export class RegisterPage implements OnInit {
       .subscribe(async res => {
         if (!res.data.isUserCreated && res.message && res.error) {
           // display an error message
-          const alert = await this.alertController.create({
-            message: res.message,
-            header: 'Registration Error',
-            buttons: ['OK']
-          });
-
-          await alert.present();
+          this.messageService.showErrorMessage(res.message);
           return;
         }
 
