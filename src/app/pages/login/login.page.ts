@@ -48,8 +48,7 @@ export class LoginPage implements OnInit {
 
   async login() {
     if (this.loginForm.valid) {
-      const deviceInfo = await this.deviceService.getDeviceId();
-      this.authenticationService.login(this.generateLoginDTO(this.loginForm.value, deviceInfo.uuid))
+      this.authenticationService.login(this.generateLoginDTO(this.loginForm.value))
         .subscribe(async (res) => {
           if (res.error && res.message) {
             this.messageService.showErrorMessage(res.message);
@@ -89,11 +88,10 @@ export class LoginPage implements OnInit {
     });
   }
 
-  private generateLoginDTO(value: any, uuid: string): LoginDTO {
+  private generateLoginDTO(value: any): LoginDTO {
     return {
       email: value.email,
-      password: value.password,
-      deviceUUID: uuid
+      password: value.password
     }
   }
 

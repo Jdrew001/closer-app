@@ -37,3 +37,15 @@ export interface ResetPasswordModel {
     userId: string;
     password: string;
 }
+
+export interface ValidationCodeModel {
+    code: string;
+    email: string;
+    validationType: 'NEW_ACCOUNT' | 'RESET_PASSWORD' | 'NEW_DEVICE_LOGIN'
+}
+
+export enum ValidationType {
+    NEW_ACCOUNT = 'NEW_ACCOUNT',
+    RESET_PASSWORD = 'RESET_PASSWORD',
+    NEW_DEVICE_LOGIN = 'NEW_DEVICE_LOGIN'
+}

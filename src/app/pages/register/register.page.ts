@@ -44,9 +44,7 @@ export class RegisterPage implements OnInit {
   constructor(
     private fb: FormBuilder,
     private navController: NavController,
-    private deviceService: DeviceService,
     private authenticationService: AuthenticationService,
-    private alertController: AlertController,
     private userService: UserService,
     private messageService: MessageService
   ) { }
@@ -56,13 +54,10 @@ export class RegisterPage implements OnInit {
   }
 
   async register() {
-    const deviceDTO = this.generateDeviceInfo((await this.deviceService.getDeviceInfo()), (await this.deviceService.getDeviceId()).uuid);
-
     if (this.registerForm.valid && this.passwordsMatch) {
-      this.authenticationService.register(this.generateRegisterDTO(this.registerForm.value, deviceDTO))
+      this.authenticationService.register(this.generateRegisterDTO(this.registerForm.value))
       .subscribe(async res => {
         if (!res.data.isUserCreated && res.message && res.error) {
-          // display an error message
           this.messageService.showErrorMessage(res.message);
           return;
         }
@@ -70,7 +65,6 @@ export class RegisterPage implements OnInit {
         this.successfulRegistration();
       });
     } else {
-      // display an error message
       this.messageService.showErrorMessage(AppConstants.FORM_VALIDATION_ERROR);
       this.registerForm.markAllAsTouched();
     }
@@ -89,7 +83,7 @@ export class RegisterPage implements OnInit {
     });
   }
 
-  private generateRegisterDTO(value: any, deviceInfo: DeviceInfo) {
+  private generateRegisterDTO(value: any) {
     let fullName = value.fullName?.split(" ");
     let firstName = fullName[0];
     let lastName = fullName.splice(-(fullName.length - 1));
@@ -97,24 +91,12 @@ export class RegisterPage implements OnInit {
       firstName: firstName,
       lastName: lastName.join(" "),
       email: value.email,
-      password: value.password,
-      ...deviceInfo
-    }
-  }
-
-  private generateDeviceInfo(value: DeviceInfoIonic, uuid: string): DeviceInfo {
-    return {
-      deviceGuid: uuid,
-      deviceModel: value.model,
-      deviceManufacture: value.manufacturer,
-      devicePlatform: value.platform
+      password: value.password
     }
   }
 
   private async successfulRegistration() {
-    // save the email of user for verification
     this.userService.setUserInfo({email: this.email.value, userId: null, firstName: null, lastName: null});
-    //navigate to the verification screen
     setTimeout(() => {this.navController.navigateRoot('/verify-account', { replaceUrl:true })}, 1000);
   }
 }
