@@ -29,9 +29,12 @@ export class ResetPasswordPage implements OnInit {
     return this.password.value === this.confirmPassword.value;
   }
 
-
   ngOnInit() {
     this.initForm();
+  }
+
+  ionViewWillLeave() {
+    this.passwordForm.reset();
   }
 
   initForm() {

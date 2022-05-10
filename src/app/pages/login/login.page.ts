@@ -3,7 +3,7 @@ import { MessageService } from './../../core/services/message.service';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { NavController } from '@ionic/angular';
+import { NavController, ViewWillLeave } from '@ionic/angular';
 import { AuthenticationService } from 'src/app/core/services/authentication.service';
 import { DeviceService } from 'src/app/core/services/device.service';
 import { LoginDTO } from './models/login.model';
@@ -18,7 +18,7 @@ import { AuthModel } from 'src/app/core/models/auth.model';
   templateUrl: './login.page.html',
   styleUrls: ['./login.page.scss'],
 })
-export class LoginPage implements OnInit {
+export class LoginPage implements OnInit, ViewWillLeave {
 
   loginForm: FormGroup;
 
@@ -35,15 +35,18 @@ export class LoginPage implements OnInit {
     private authenticationService: AuthenticationService,
     private authService: AuthService,
     private router: Router,
-    private deviceService: DeviceService,
     private tokenService: TokenService,
     private navController: NavController,
     private messageService: MessageService,
     private userService: UserService
   ) { }
-
+  
   ngOnInit() {
     this.initForm();
+  }
+
+  ionViewWillLeave(): void {
+    this.loginForm.reset();
   }
 
   async login() {

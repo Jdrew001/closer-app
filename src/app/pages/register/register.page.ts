@@ -1,7 +1,7 @@
 import { UserService } from 'src/app/core/services/user.service';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { AlertController, NavController } from '@ionic/angular';
+import { AlertController, NavController, ViewWillLeave } from '@ionic/angular';
 import { DeviceInfo } from 'src/app/core/models/device.model';
 import { DeviceInfo as DeviceInfoIonic }  from '@capacitor/device';
 import { DeviceService } from 'src/app/core/services/device.service';
@@ -17,7 +17,7 @@ import { AppConstants } from 'src/app/app.constants';
   templateUrl: './register.page.html',
   styleUrls: ['./register.page.scss'],
 })
-export class RegisterPage implements OnInit {
+export class RegisterPage implements OnInit, ViewWillLeave {
 
   registerForm: FormGroup;
 
@@ -52,6 +52,10 @@ export class RegisterPage implements OnInit {
 
   ngOnInit() {
     this.initForm();
+  }
+
+  ionViewWillLeave(): void {
+    this.registerForm.reset();
   }
 
   async register() {
