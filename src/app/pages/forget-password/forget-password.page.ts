@@ -46,7 +46,10 @@ export class ForgetPasswordPage implements OnInit {
           this.authService.isReset = true;
           // navigate to new page for code
           setTimeout(() => {this.navController.navigateRoot('/verify-account', { replaceUrl:true })}, 1000);
+          return;
         }
+
+        this.messageService.showErrorMessage(res.message);
       });
       return;
     }
