@@ -14,6 +14,8 @@ import { environment } from 'src/environments/environment';
 import { CoreConstants } from '../core.constant';
 import { AuthModel, ResetEmailModel, ValidationCodeModel, ValidationType } from '../models/auth.model';
 import { GenericReponse } from '../models/generic-response.model';
+import { Storage } from '@capacitor/storage';
+import { AppConstants } from 'src/app/app.constants';
 
 @Injectable({
   providedIn: 'root'
@@ -26,13 +28,22 @@ export class AuthService {
 
   constructor(
     private tokenService: TokenService,
-    private deviceService: DeviceService,
     private authService: AuthenticationService,
     private navController: NavController,
     private httpClient: HttpClient,
     private userService: UserService
   ) {
     this.baseUrl = `${environment.base_url}Authentication/`;
+  }
+
+  get validationType(): Promise<string> {
+    return (async () => {
+      return (await Storage.get({key: AppConstants.VALIDATION_TYPE})).value;
+    })();
+  }
+
+  async setValidationType(value: 'NEW_ACCOUNT' | 'RESET_PASSWORD' | 'NEW_DEVICE_LOGIN') {
+    await Storage.set({key: AppConstants.VALIDATION_TYPE, value: value});
   }
 
   async validateRefreshToken() {
@@ -64,12 +75,13 @@ export class AuthService {
     setTimeout(async () => {await SplashScreen.hide()}, 1000);
   }
 
-  async verifyAccountCode(code: string, validationType: 'NEW_ACCOUNT' | 'RESET_PASSWORD' | 'NEW_DEVICE_LOGIN'): Promise<Observable<GenericReponse<AuthModel>>> {
+  async verifyAccountCode(code: string): Promise<Observable<GenericReponse<AuthModel>>> {
     const userInfo = await this.userService.getUserInfo();
+    const validationType = await this.validationType;
     const body: ValidationCodeModel = {
       code: code,
       email: userInfo.email,
-      validationType: validationType
+      validationType: (validationType as 'NEW_ACCOUNT' | 'RESET_PASSWORD' | 'NEW_DEVICE_LOGIN')
     }
     return this.httpClient.post(`${this.baseUrl}${CoreConstants.VERIFY_URL}`, body) as Observable<GenericReponse<AuthModel>>;
   }

@@ -46,7 +46,8 @@ export class RegisterPage implements OnInit {
     private navController: NavController,
     private authenticationService: AuthenticationService,
     private userService: UserService,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private authService: AuthService
   ) { }
 
   ngOnInit() {
@@ -55,6 +56,7 @@ export class RegisterPage implements OnInit {
 
   async register() {
     if (this.registerForm.valid && this.passwordsMatch) {
+      this.authService.setValidationType('NEW_ACCOUNT');
       this.authenticationService.register(this.generateRegisterDTO(this.registerForm.value))
       .subscribe(async res => {
         if (!res.data.isUserCreated && res.message && res.error) {

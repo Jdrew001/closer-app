@@ -37,6 +37,7 @@ export class ForgetPasswordPage implements OnInit {
 
   submit() {
     if (this.emailForm.valid) {
+      this.authService.setValidationType('RESET_PASSWORD');
       this.authService.sendEmailForReset(this.email.value).subscribe(async res => {
         let data = res.data;
         if (!res.error && data.isUser && data.userId) {

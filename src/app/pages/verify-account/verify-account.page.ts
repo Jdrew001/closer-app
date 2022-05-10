@@ -49,12 +49,13 @@ export class VerifyAccountPage implements OnInit {
 
   async submit() {
     if (this.checkForEmpty()) {
-      (await this.authService.verifyAccountCode(this.extractCode(), 'NEW_ACCOUNT')).subscribe(async res => {
+      (await this.authService.verifyAccountCode(this.extractCode())).subscribe(async res => {
         if (res.error && res.message) {
           this.messageService.showErrorMessage(res.message);
           return;
         }
 
+        this.authService.setValidationType(null);
         this.successfulVerification(res.data);
       });
     }

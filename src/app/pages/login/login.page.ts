@@ -60,6 +60,14 @@ export class LoginPage implements OnInit {
             return;
           }
 
+          if (res.data.isNewDevice) {
+            this.messageService.showSuccessMessage(res.data.message); 
+            await this.userService.setUserInfo({email: res.data.email, userId: null, firstName: null, lastName: null});
+            this.authService.setValidationType('NEW_DEVICE_LOGIN');
+            this.navController.navigateForward('/verify-account');
+            return;
+          }
+
           this.successfulLogin(res);
       });
       return;
