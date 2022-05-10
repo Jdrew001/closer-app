@@ -55,6 +55,7 @@ export class VerifyAccountPage implements OnInit {
           return;
         }
 
+        this.authService.setValidationType(null);
         this.successfulVerification(res.data);
       });
     }

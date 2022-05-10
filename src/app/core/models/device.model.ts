@@ -1,8 +1,8 @@
 export interface DeviceInfo {
-    deviceGuid: string;
-    deviceModel: string;
-    devicePlatform: string;
-    deviceManufacture: string;
+    uuid: string;
+    model: string;
+    platform: string;
+    manufacturer: string;
 }
 
 export interface DeviceUUID {

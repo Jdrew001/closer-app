@@ -12,8 +12,10 @@ import { NavController } from '@ionic/angular';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { CoreConstants } from '../core.constant';
-import { AuthModel, ResetEmailModel } from '../models/auth.model';
+import { AuthModel, ResetEmailModel, ValidationCodeModel, ValidationType } from '../models/auth.model';
 import { GenericReponse } from '../models/generic-response.model';
+import { Storage } from '@capacitor/storage';
+import { AppConstants } from 'src/app/app.constants';
 
 @Injectable({
   providedIn: 'root'
@@ -26,7 +28,6 @@ export class AuthService {
 
   constructor(
     private tokenService: TokenService,
-    private deviceService: DeviceService,
     private authService: AuthenticationService,
     private navController: NavController,
     private httpClient: HttpClient,
@@ -35,11 +36,20 @@ export class AuthService {
     this.baseUrl = `${environment.base_url}Authentication/`;
   }
 
+  get validationType(): Promise<string> {
+    return (async () => {
+      return (await Storage.get({key: AppConstants.VALIDATION_TYPE})).value;
+    })();
+  }
+
+  async setValidationType(value: 'NEW_ACCOUNT' | 'RESET_PASSWORD' | 'NEW_DEVICE_LOGIN') {
+    await Storage.set({key: AppConstants.VALIDATION_TYPE, value: value});
+  }
+
   async validateRefreshToken() {
     const refreshToken = await this.tokenService.refreshToken;
-    const deviceUUID = await this.deviceService.getDeviceUUID();
     if (refreshToken) {
-      this.authService.refreshToken({token: refreshToken, deviceUUID}).subscribe(async res => {
+      this.authService.refreshToken({token: refreshToken}).subscribe(async res => {
         if (res.data.shouldRedirectToLogin) {
           this.navController.navigateRoot('/login', { replaceUrl:true });
           this.isAuthenticated$.next(false);
@@ -66,9 +76,14 @@ export class AuthService {
   }
 
   async verifyAccountCode(code: string): Promise<Observable<GenericReponse<AuthModel>>> {
-    const deviceUUID = await this.deviceService.getDeviceUUID();
     const userInfo = await this.userService.getUserInfo();
-    return this.httpClient.get(`${this.baseUrl}${CoreConstants.VERIFY_URL}/${code}/${userInfo.email}/${deviceUUID}/${this.isReset}`) as Observable<GenericReponse<AuthModel>>;
+    const validationType = await this.validationType;
+    const body: ValidationCodeModel = {
+      code: code,
+      email: userInfo.email,
+      validationType: (validationType as 'NEW_ACCOUNT' | 'RESET_PASSWORD' | 'NEW_DEVICE_LOGIN')
+    }
+    return this.httpClient.post(`${this.baseUrl}${CoreConstants.VERIFY_URL}`, body) as Observable<GenericReponse<AuthModel>>;
   }
 
   reissueCode(email: string): Observable<GenericReponse<AuthModel>> {
