@@ -26,8 +26,8 @@ export class RequestHeaderInterceptor implements HttpInterceptor {
             req = req.clone({
                 setHeaders: {
                     Authorization: `Bearer ${token}`
-                 }
-             });
+                }
+            });
         }
         Sentry.captureMessage(`Device Information: ${JSON.stringify(device)}`);
         req = req.clone({
@@ -35,6 +35,7 @@ export class RequestHeaderInterceptor implements HttpInterceptor {
                 Device: JSON.stringify(device)
             }
         });
+        Sentry.captureMessage(`Header info: ${JSON.stringify(req.headers.get('Device'))}`);
         return next.handle(req).toPromise();
     }
 
