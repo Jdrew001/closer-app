@@ -64,7 +64,7 @@ export class RegisterPage implements OnInit, ViewWillLeave {
       this.authenticationService.register(this.generateRegisterDTO(this.registerForm.value))
       .subscribe(async res => {
         if (!res.data.isUserCreated && res.message && res.error) {
-          this.messageService.showErrorMessage(res.message);
+          this.messageService.showErrorMessage(res.data.message);
           return;
         }
 

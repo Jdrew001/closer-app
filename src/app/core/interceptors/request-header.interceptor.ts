@@ -5,6 +5,8 @@ import { CoreConstants } from "../core.constant";
 import { DeviceService } from "../services/device.service";
 import { TokenService } from "../services/token.service";
 
+import * as Sentry from "@sentry/angular";
+
 @Injectable()
 export class RequestHeaderInterceptor implements HttpInterceptor {
     constructor(
@@ -27,7 +29,7 @@ export class RequestHeaderInterceptor implements HttpInterceptor {
                  }
              });
         }
-        
+        Sentry.captureMessage(`Device Information: ${JSON.stringify(device)}`);
         req = req.clone({
             setHeaders: {
                 Device: JSON.stringify(device)
