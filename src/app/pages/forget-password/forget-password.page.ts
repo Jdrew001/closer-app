@@ -49,7 +49,7 @@ export class ForgetPasswordPage implements OnInit {
           return;
         }
 
-        this.messageService.showErrorMessage(res.message);
+        this.messageService.showErrorMessage(null, res.message);
       });
       return;
     }

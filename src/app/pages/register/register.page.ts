@@ -64,7 +64,7 @@ export class RegisterPage implements OnInit, ViewWillLeave {
       this.authenticationService.register(this.generateRegisterDTO(this.registerForm.value))
       .subscribe(async res => {
         if (!res.data.isUserCreated && res.message && res.error) {
-          this.messageService.showErrorMessage(res.data.message);
+          this.messageService.showErrorMessage(null, res.data.message);
           return;
         }
 
@@ -103,6 +103,6 @@ export class RegisterPage implements OnInit, ViewWillLeave {
 
   private async successfulRegistration() {
     this.userService.setUserInfo({email: this.email.value, userId: null, firstName: null, lastName: null});
-    setTimeout(() => {this.navController.navigateRoot('/verify-account', { replaceUrl:true })}, 1000);
+    setTimeout(() => {this.navController.navigateForward('/verify-account', { replaceUrl:true })}, 1000);
   }
 }

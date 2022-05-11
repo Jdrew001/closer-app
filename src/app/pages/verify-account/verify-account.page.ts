@@ -51,7 +51,7 @@ export class VerifyAccountPage implements OnInit {
     if (this.checkForEmpty()) {
       (await this.authService.verifyAccountCode(this.extractCode())).subscribe(async res => {
         if (res.error && res.message) {
-          this.messageService.showErrorMessage(res.message);
+          this.messageService.showErrorMessage(null, res.message);
           return;
         }
 

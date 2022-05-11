@@ -54,7 +54,7 @@ export class LoginPage implements OnInit, ViewWillLeave {
       this.authenticationService.login(this.generateLoginDTO(this.loginForm.value))
         .subscribe(async (res) => {
           if (res.error && res.message) {
-            this.messageService.showErrorMessage(res.message);
+            this.messageService.showErrorMessage(null, res.message);
             return;
           }
 
