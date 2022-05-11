@@ -80,6 +80,11 @@ p.subtitle {
     margin-top: 5px;
 }
 
+ion-content {
+    --padding-start: 1rem;
+    --padding-end: 1rem;
+}
+
 div.heading-container {
     margin-bottom: 2rem;
 }
