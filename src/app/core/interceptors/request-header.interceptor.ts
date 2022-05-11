@@ -29,13 +29,14 @@ export class RequestHeaderInterceptor implements HttpInterceptor {
                 }
             });
         }
-        Sentry.captureMessage(`Device Information: ${JSON.stringify(device)}`);
         req = req.clone({
             setHeaders: {
-                Device: JSON.stringify(device)
+                Model: device.model,
+                Platform: device.platform,
+                UUID: device.uuid,
+                Manufacturer: device.manufacturer
             }
         });
-        Sentry.captureMessage(`Header info: ${JSON.stringify(req.headers.get('Device'))}`);
         return next.handle(req).toPromise();
     }
 
