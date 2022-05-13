@@ -43,7 +43,7 @@ jobs:
           certificate-password: ${{ secrets.CERT_PASSWORD }}
           team-id: ${{ secrets.TEAM_ID }}
           workspace-path: ios/App/App.xcworkspace
-          export-method: package
+          export-method: ad-hoc
           configuration: Release
           build-pods: true
           pods-path: ios/App/Podfile
