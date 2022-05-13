@@ -126,7 +126,7 @@ on:
           file: project/apk/app-debug.apk
           debug: false #this will show the verbose log
 
-  deployios:
+  deployIOS:
     name: Deploy IOS App - Firebase
     needs: [buildandroid, buildios]
     runs-on: ubuntu-latest
@@ -150,7 +150,7 @@ on:
     name: Success Notification Discord
     runs-on: ubuntu-latest
     if: ${{ success() }}
-    needs: [buildandroid, buildios, deployandroid, deployios]
+    needs: [buildandroid, buildios, deployandroid, deployIOS]
     steps:
       - name: Discord notification
         env:
@@ -163,7 +163,7 @@ on:
     name: Failure Notification Discord
     runs-on: ubuntu-latest
     if: ${{ failure() }}
-    needs: [buildandroid, buildios, deployandroid, deployios]
+    needs: [buildandroid, buildios, deployandroid, deployIOS]
     steps:
       - name: Discord notification
         env:
