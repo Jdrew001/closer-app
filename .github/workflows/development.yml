@@ -6,7 +6,7 @@ on:
 
 #### Run the android build and ios build concurrently ####
 #ANDROID BUILD
-  build-android:
+  buildandroid:
     name: Build Android
     runs-on: ubuntu-latest
     steps:
@@ -57,7 +57,7 @@ on:
           path: android/app/build/outputs/apk/debug/app-debug.apk
 
 #IOS BUILD
-  build-ios:
+  buildios:
     name: Build IOS
     runs-on: macos-12
     steps:
@@ -106,9 +106,9 @@ on:
           path: output.ipa
 
 #Deploy both Android and Ios if previous steps are successful
-  deploy-android:
+  deployandroid:
     name: Deploy Android App - Firebase
-    needs: [build-android, build-ios]
+    needs: [buildandroid, buildios]
     runs-on: ubuntu-latest
     steps:
       - name: Download Artifact
@@ -126,9 +126,9 @@ on:
           file: project/apk/app-debug.apk
           debug: false #this will show the verbose log
 
-  deploy-ios:
+  deployios:
     name: Deploy IOS App - Firebase
-    needs: [build-android, build-ios]
+    needs: [buildandroid, buildios]
     runs-on: ubuntu-latest
     steps:
       - name: Download Artifact
@@ -150,7 +150,7 @@ on:
     name: Success Notification Discord
     runs-on: ubuntu-latest
     if: ${{ success() }}
-    needs: [build,deploy]
+    needs: [buildandroid, buildios, deployandroid, deployios]
     steps:
       - name: Discord notification
         env:
@@ -163,7 +163,7 @@ on:
     name: Failure Notification Discord
     runs-on: ubuntu-latest
     if: ${{ failure() }}
-    needs: [build,publish_upload,deploy,db_deploy]
+    needs: [buildandroid, buildios, deployandroid, deployios]
     steps:
       - name: Discord notification
         env:
