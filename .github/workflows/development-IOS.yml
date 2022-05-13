@@ -72,4 +72,4 @@ jobs:
           token: ${{secrets.FIREBASE_TOKEN}}
           groups: developers-ios
           file: project/ios/output.ipa
-          debug: false #this will show the verbose log
+          debug: true #this will show the verbose log
