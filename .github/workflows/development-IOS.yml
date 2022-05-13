@@ -51,5 +51,5 @@ jobs:
       - name: Upload Development IPA
           uses: actions/upload-artifact@v1
           with:
-          name: ios-dev
-          path: closer-app/closer-app/output.ipa
+            name: ios-dev
+            path: closer-app/closer-app/output.ipa
