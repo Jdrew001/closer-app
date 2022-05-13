@@ -108,7 +108,7 @@ on:
 #Deploy both Android and Ios if previous steps are successful
   deploy-android:
     name: Deploy Android App - Firebase
-    needs: [build-android, Build IOS]
+    needs: [build-android, build-ios]
     runs-on: ubuntu-latest
     steps:
       - name: Download Artifact
@@ -128,7 +128,7 @@ on:
 
   deploy-ios:
     name: Deploy IOS App - Firebase
-    needs: [build-android, Build IOS]
+    needs: [build-android, build-ios]
     runs-on: ubuntu-latest
     steps:
       - name: Download Artifact
