@@ -4,9 +4,11 @@ on:
   push:
     branches: [ develop ]
 
+jobs:
+
 #### Run the android build and ios build concurrently ####
 #ANDROID BUILD
-  buildandroid:
+  build-android:
     name: Build Android
     runs-on: ubuntu-latest
     steps:
@@ -57,7 +59,7 @@ on:
           path: android/app/build/outputs/apk/debug/app-debug.apk
 
 #IOS BUILD
-  buildios:
+  build-ios:
     name: Build IOS
     runs-on: macos-12
     steps:
@@ -106,9 +108,9 @@ on:
           path: output.ipa
 
 #Deploy both Android and Ios if previous steps are successful
-  deployandroid:
+  deploy-android:
     name: Deploy Android App - Firebase
-    needs: [buildandroid, buildios]
+    needs: [build-android, build-ios]
     runs-on: ubuntu-latest
     steps:
       - name: Download Artifact
@@ -126,9 +128,9 @@ on:
           file: project/apk/app-debug.apk
           debug: false #this will show the verbose log
 
-  deployIOS:
+  deploy-ios:
     name: Deploy IOS App - Firebase
-    needs: [buildandroid, buildios]
+    needs: [build-android, build-ios]
     runs-on: ubuntu-latest
     steps:
       - name: Download Artifact
@@ -150,7 +152,7 @@ on:
     name: Success Notification Discord
     runs-on: ubuntu-latest
     if: ${{ success() }}
-    needs: [buildandroid, buildios, deployandroid, deployIOS]
+    needs: [build-android, build-ios, deploy-android, deploy-ios]
     steps:
       - name: Discord notification
         env:
@@ -163,7 +165,7 @@ on:
     name: Failure Notification Discord
     runs-on: ubuntu-latest
     if: ${{ failure() }}
-    needs: [buildandroid, buildios, deployandroid, deployIOS]
+    needs: [build-android, build-ios, deploy-android, deploy-ios]
     steps:
       - name: Discord notification
         env:
