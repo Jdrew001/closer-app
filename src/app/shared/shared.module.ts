@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NavigationBarComponent } from './component/navigation-bar/navigation-bar.component';
+import { IonicModule } from '@ionic/angular';
 
 
 
@@ -9,7 +10,8 @@ import { NavigationBarComponent } from './component/navigation-bar/navigation-ba
     NavigationBarComponent
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    IonicModule
   ],
   exports: [
     NavigationBarComponent
