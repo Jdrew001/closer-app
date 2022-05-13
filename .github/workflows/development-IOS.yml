@@ -1,0 +1,48 @@
+name: IOS Development
+
+on:
+  push:
+    branches: [ develop ]
+
+jobs: 
+
+  build:
+    name: Build IOS
+    runs-on: macos-12
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v2
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: 16.x
+
+      - name: Install Ionic
+        run: npm install -g @ionic/cli
+
+      - name: Install app dependencies
+        run: npm install
+
+      - name: Build Lib
+        run: npm run build-lib
+
+      - name: Build Ionic App
+        run: ionic build
+
+      - name: Copy IOS
+        run: ionic capacitor copy ios
+
+      - uses: sparkfabrik/ios-build-action@v1.2.0
+        with:
+          project-path: ios/App/App.xcodeproj
+          p12-key-base64: ${{ secrets.P12_KEY_BASE64 }}
+          p12-cer-base64: ${{ secrets.P12_CER_BASE64 }}
+          mobileprovision-base64: ${{ secrets.MOBILEPROVISION_BASE64 }}
+          code-signing-identity: ${{ secrets.CODE_SIGNING_IDENTITY }}
+          team-id: ${{ secrets.TEAM_ID }}
+          workspace-path: ios/App/App.xcworkspace
+          export-method: package
+          configuration: Release
+          build-pods: true
+          pods-path: ios/App/Podfile
