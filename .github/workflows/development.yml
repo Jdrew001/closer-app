@@ -35,7 +35,7 @@ jobs:
         run: npm run build-lib
 
       - name: Build Ionic App
-        run: ionic build
+        run: ionic build --prod
 
       - name: sync android
         run: ionic cap sync android
@@ -81,7 +81,7 @@ jobs:
         run: npm run build-lib
 
       - name: Build Ionic App
-        run: ionic build
+        run: ionic build --prod
 
       - name: sync ios
         run: ionic cap sync ios
@@ -140,7 +140,7 @@ jobs:
           path: project/ios
 
       - name: upload artifact to Firebase
-        uses: wzieba/Firebase-Distribution-Github-Action@v1
+        uses: 6
         with:
           appId: ${{secrets.FIREBASE_IOS_ID}}
           token: ${{secrets.FIREBASE_TOKEN}}
