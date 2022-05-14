@@ -34,6 +34,9 @@ jobs:
       - name: Build Lib
         run: npm run build-lib
 
+      - name: sync android
+        run: ionic cap sync android
+
       - name: Build Ionic App
         run: ionic build
 
@@ -79,6 +82,9 @@ jobs:
 
       - name: Build Lib
         run: npm run build-lib
+
+      - name: sync ios
+        run: ionic cap sync ios
 
       - name: Build Ionic App
         run: ionic build
