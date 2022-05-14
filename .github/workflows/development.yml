@@ -140,7 +140,7 @@ jobs:
           path: project/ios
 
       - name: upload artifact to Firebase
-        uses: 6
+        uses: wzieba/Firebase-Distribution-Github-Action@v1
         with:
           appId: ${{secrets.FIREBASE_IOS_ID}}
           token: ${{secrets.FIREBASE_TOKEN}}
