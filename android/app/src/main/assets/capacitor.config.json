@@ -1,5 +1,5 @@
 {
-	"appId": "io.ionic.starter",
+	"appId": "com.atkison.closer",
 	"appName": "Closer Everyday",
 	"webDir": "www",
 	"bundledWebRuntime": false,
@@ -13,8 +13,5 @@
 			"splashFullScreen": true,
 			"splashImmersive": true
 		}
-	},
-	"server": {
-		"url": "http://192.168.50.101:8100"
 	}
 }
