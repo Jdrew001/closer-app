@@ -34,11 +34,8 @@ jobs:
       - name: Build Lib
         run: npm run build-lib
 
-      - name: Build Ionic App
-        run: ionic build --prod
-
       - name: sync android
-        run: ionic cap sync android
+        run: ionic cap sync android --prod
 
       - name: Build Android Dev APK
         run: ionic capacitor build android --no-open
@@ -80,11 +77,8 @@ jobs:
       - name: Build Lib
         run: npm run build-lib
 
-      - name: Build Ionic App
-        run: ionic build --prod
-
       - name: sync ios
-        run: ionic cap sync ios
+        run: ionic cap sync ios --prod
 
       - uses: sparkfabrik/ios-build-action@v1.2.0
         with:
