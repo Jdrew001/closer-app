@@ -72,7 +72,7 @@ jobs:
         run: npm run build-lib
 
       - name: sync ios
-        run: ionic cap sync ios --prod
+        run: ionic cap sync ios -c=testing
 
       - uses: sparkfabrik/ios-build-action@v1.2.0
         with:
