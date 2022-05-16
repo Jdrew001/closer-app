@@ -35,13 +35,7 @@ jobs:
         run: npm run build-lib
 
       - name: sync android
-        run: ionic cap sync android --prod
-
-      - name: Build Android Dev APK
-        run: ionic capacitor build android --no-open
-
-      - name: Build Android Release APK
-        run: ionic capacitor build android --release --prod --no-open
+        run: ionic cap sync android -c=development
 
       - name: Generate the Android App Bundle
         working-directory: ./android/
