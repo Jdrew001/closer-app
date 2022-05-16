@@ -1,0 +1,163 @@
+name: Closer App QA Testing Pipeline
+
+on:
+  push:
+    branches: [ testing ]
+
+jobs:
+
+#### Run the android build and ios build concurrently ####
+#ANDROID BUILD
+  build-android:
+    name: Build Android
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v2
+
+      - name: Setup java
+        uses: actions/setup-java@v1
+        with:
+          java-version: 11
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: 16.x
+
+      - name: Install Ionic
+        run: npm install -g @ionic/cli
+
+      - name: Install app dependencies
+        run: npm install --force
+
+      - name: Build Lib
+        run: npm run build-lib
+
+      - name: sync android
+        run: ionic cap sync android -c=testing
+
+      - name: Generate the Android App Bundle
+        working-directory: ./android/
+        run: |
+          chmod +x gradlew
+          ./gradlew assembleDebug
+
+      - name: Upload dev APK
+        uses: actions/upload-artifact@v1
+        with:
+          name: app-dev
+          path: android/app/build/outputs/apk/debug/app-debug.apk
+
+#IOS BUILD
+  build-ios:
+    name: Build IOS
+    runs-on: macos-12
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v2
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: 16.x
+
+      - name: Install Ionic
+        run: npm install -g @ionic/cli
+
+      - name: Install app dependencies
+        run: npm install --force
+
+      - name: Build Lib
+        run: npm run build-lib
+
+      - name: sync ios
+        run: ionic cap sync ios -c=testing
+
+      - uses: sparkfabrik/ios-build-action@v1.2.0
+        with:
+          project-path: ios/App/App.xcodeproj
+          p12-key-base64: ${{ secrets.P12_KEY_BASE64 }}
+          p12-cer-base64: ${{ secrets.P12_CER_BASE64 }}
+          mobileprovision-base64: ${{ secrets.MOBILEPROVISION_BASE64 }}
+          code-signing-identity: ${{ secrets.CODE_SIGNING_IDENTITY }}
+          certificate-password: ${{ secrets.CERT_PASSWORD }}
+          team-id: ${{ secrets.TEAM_ID }}
+          workspace-path: ios/App/App.xcworkspace
+          export-method: ad-hoc
+          configuration: Release
+          build-pods: true
+          pods-path: ios/App/Podfile
+
+      - name: Upload Development IPA
+        uses: actions/upload-artifact@v1
+        with:
+          name: ios-dev
+          path: output.ipa
+
+#Deploy both Android and Ios if previous steps are successful
+  deploy-android:
+    name: Deploy Android App - Firebase
+    needs: [build-android, build-ios]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download Artifact
+        uses: actions/download-artifact@v2
+        with: 
+          name: app-dev
+          path: project/apk
+
+      - name: upload artifact to Firebase
+        uses: wzieba/Firebase-Distribution-Github-Action@v1
+        with:
+          appId: ${{secrets.FIREBASE_ANDROID_ID}}
+          token: ${{secrets.FIREBASE_TOKEN}}
+          groups: testers-android
+          file: project/apk/app-debug.apk
+          debug: false #this will show the verbose log
+
+  deploy-ios:
+    name: Deploy IOS App - Firebase
+    needs: [build-android, build-ios]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download Artifact
+        uses: actions/download-artifact@v2
+        with: 
+          name: ios-dev
+          path: project/ios
+
+      - name: upload artifact to Firebase
+        uses: wzieba/Firebase-Distribution-Github-Action@v1
+        with:
+          appId: ${{secrets.FIREBASE_IOS_ID}}
+          token: ${{secrets.FIREBASE_TOKEN}}
+          groups: testers-ios
+          file: project/ios/output.ipa
+          debug: false #this will show the verbose log
+
+  discord_success:
+    name: Success Notification Discord
+    runs-on: ubuntu-latest
+    if: ${{ success() }}
+    needs: [build-android, build-ios, deploy-android, deploy-ios]
+    steps:
+      - name: Discord notification
+        env:
+          DISCORD_WEBHOOK: ${{ secrets.DISCORD }}
+        uses: Ilshidur/action-discord@master
+        with:
+          args: 'BRANCH: TESTING - {{ EVENT_PAYLOAD.repository.full_name }} IOS and ANDROID apps have been deployed.'
+
+  discord_failure:
+    name: Failure Notification Discord
+    runs-on: ubuntu-latest
+    if: ${{ failure() }}
+    needs: [build-android, build-ios, deploy-android, deploy-ios]
+    steps:
+      - name: Discord notification
+        env:
+          DISCORD_WEBHOOK: ${{ secrets.DISCORD }}
+        uses: Ilshidur/action-discord@master
+        with:
+          args: 'BRANCH: TESTING - {{ EVENT_PAYLOAD.repository.full_name }} IOS and ANDROID apps have failed to deploy.'

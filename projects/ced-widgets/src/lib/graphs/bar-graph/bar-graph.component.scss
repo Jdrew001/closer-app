@@ -1,0 +1,54 @@
+// .graph-container {
+//     padding: 20px 0px;
+// }
+h2 {
+    margin-bottom: 2px !important;
+}
+
+p.subtitle {
+    margin: 0px !important;
+}
+
+ion-row.heading {
+    margin-bottom: 1.5rem;
+}
+
+.label-item {
+    display: flex;
+    align-items: stretch;
+}
+
+.bar-container {
+    height: 25vh;
+    position: relative;
+}
+
+.bar {
+    background-color: rgba(36, 56, 142, 1);
+    height: 100%;
+    border-radius: 50px;
+    margin: 0px 15%;//
+}
+
+.bar.active {
+    background-color: rgba(36, 56, 142, 1) !important;
+}
+
+:host {
+    ion-col.labels {
+        max-width: calc(calc(1 / var(--ion-grid-columns, 12)) * 50%) !important;
+    }
+}
+
+.labels p {
+    font-size: 10px;
+}
+
+span.day-label {
+    color: var(--ion-color-medium);
+}
+
+span.active {
+    color: rgba(36, 56, 142, 1);
+    font-weight: 800;
+}
