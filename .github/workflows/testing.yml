@@ -1,8 +1,8 @@
-name: Closer App Development Pipeline
+name: Closer App QA Testing Pipeline
 
 on:
   push:
-    branches: [ develop ]
+    branches: [ testing ]
 
 jobs:
 
@@ -35,7 +35,7 @@ jobs:
         run: npm run build-lib
 
       - name: sync android
-        run: ionic cap sync android -c=development
+        run: ionic cap sync android -c=testing
 
       - name: Generate the Android App Bundle
         working-directory: ./android/
@@ -72,7 +72,7 @@ jobs:
         run: npm run build-lib
 
       - name: sync ios
-        run: ionic cap sync ios -c=development
+        run: ionic cap sync ios -c=testing
 
       - uses: sparkfabrik/ios-build-action@v1.2.0
         with:
@@ -112,7 +112,7 @@ jobs:
         with:
           appId: ${{secrets.FIREBASE_ANDROID_ID}}
           token: ${{secrets.FIREBASE_TOKEN}}
-          groups: developers-android
+          groups: testers-android
           file: project/apk/app-debug.apk
           debug: false #this will show the verbose log
 
@@ -132,9 +132,9 @@ jobs:
         with:
           appId: ${{secrets.FIREBASE_IOS_ID}}
           token: ${{secrets.FIREBASE_TOKEN}}
-          groups: developers-ios
+          groups: testers-ios
           file: project/ios/output.ipa
-          debug: true #this will show the verbose log
+          debug: false #this will show the verbose log
 
   discord_success:
     name: Success Notification Discord
@@ -147,7 +147,7 @@ jobs:
           DISCORD_WEBHOOK: ${{ secrets.DISCORD }}
         uses: Ilshidur/action-discord@master
         with:
-          args: 'BRANCH: DEVELOP - {{ EVENT_PAYLOAD.repository.full_name }} IOS and ANDROID apps have been deployed.'
+          args: 'BRANCH: TESTING - {{ EVENT_PAYLOAD.repository.full_name }} IOS and ANDROID apps have been deployed.'
 
   discord_failure:
     name: Failure Notification Discord
@@ -160,4 +160,4 @@ jobs:
           DISCORD_WEBHOOK: ${{ secrets.DISCORD }}
         uses: Ilshidur/action-discord@master
         with:
-          args: 'BRANCH: DEVELOP - {{ EVENT_PAYLOAD.repository.full_name }} IOS and ANDROID apps have failed to deploy.'
+          args: 'BRANCH: TESTING - {{ EVENT_PAYLOAD.repository.full_name }} IOS and ANDROID apps have failed to deploy.'
