@@ -44,7 +44,8 @@ export class DashboardConstant {
                     },
                 ],
                 selected: false,
-                defaultSelected: "M"
+                defaultSelected: "M",
+                keys: ['S', 'M', 'T', 'W', 'T', 'F', 'S']
             },
             {
                 "subTitle": "Apr 1 - Apr 7",
@@ -88,7 +89,8 @@ export class DashboardConstant {
                     }
                 ],
                 selected: true,
-                defaultSelected: "W"
+                defaultSelected: "W",
+                keys: ['S', 'M', 'T', 'W', 'T', 'F', 'S']
             },
             {
                 "subTitle": "Apr 8 - Apr 14",
@@ -132,10 +134,10 @@ export class DashboardConstant {
                     }
                 ],
                 selected: false,
-                defaultSelected: "M"
+                defaultSelected: "M",
+                keys: ['S', 'M', 'T', 'W', 'T', 'F', 'S']
             }
         ],
-        keys: ['S', 'M', 'T', 'W', 'T', 'F', 'S'],
         animation: true,
         "total": 3
     }

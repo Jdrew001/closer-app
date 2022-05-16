@@ -1,5 +1,6 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { BarModel, GraphModel, KeyValue } from './bar-graph.model';
+import { BarGraphService } from './bar-graph.service';
 import { BarConstant } from './bar.constant';
 
 @Component({
@@ -9,36 +10,24 @@ import { BarConstant } from './bar.constant';
 })
 export class BarGraphComponent implements OnInit {
 
-  _configuration: BarModel;
-  @Input() set configuration(config: BarModel) {
-    console.log(config.keys)
-    this._configuration = config;
-  }
-  get configuration() { return this._configuration; }
+  @Input() animation: boolean = true;
+  @Input() data: GraphModel;
 
-  get defaultSelectedData(): GraphModel { return this.configuration.data.find(item => item.selected) }
   selectedDay: string = BarConstant.DAY_DEFINITION[new Date().getDay()];
 
-  constructor() { }
+  constructor(
+    private barGraphService: BarGraphService
+  ) { }
 
   ngOnInit() {
-    
   }
 
   getLineValue(key: string) {
-    return this.defaultSelectedData.graphData.find(data => data.key == key)?.value;
-  }
-
-  getWeeklyDate() {
-    return `${this.defaultSelectedData.startDate} - ${this.defaultSelectedData.endDate}`;
-  }
-
-  getConfigurationTitle() {
-    return this.configuration.title.split(" ");
+    return this.data.graphData.find(data => data.key == key)?.value;
   }
 
   getBarColor(key: string) {
-    let data = this.defaultSelectedData.graphData.find(data => data.key == key)?.value;
+    let data = this.data.graphData.find(data => data.key == key)?.value;
     if (data >= 0 && data <= 25) {
       return {'background-color': 'rgba(36, 56, 142, 0.25)'}//
     }
@@ -53,5 +42,4 @@ export class BarGraphComponent implements OnInit {
 
     return {'background-color': 'rgba(36, 56, 142, 1)'};
   }
-
 }

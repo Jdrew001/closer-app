@@ -9,6 +9,7 @@ import { DashboardPageRoutingModule } from './dashboard-routing.module';
 import { DashboardPage } from './dashboard.page';
 import { CedWidgetsModule } from 'ced-widgets';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { SwiperModule } from 'swiper/angular';
 
 @NgModule({
   imports: [
@@ -17,7 +18,8 @@ import { SharedModule } from 'src/app/shared/shared.module';
     IonicModule,
     DashboardPageRoutingModule,
     CedWidgetsModule,
-    SharedModule
+    SharedModule,
+    SwiperModule
   ],
   declarations: [DashboardPage]
 })

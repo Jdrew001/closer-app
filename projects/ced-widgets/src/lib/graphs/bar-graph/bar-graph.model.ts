@@ -1,7 +1,6 @@
 export interface BarModel {
     title: string;
     data: Array<GraphModel>;
-    keys: Array<string>;
     animation: boolean;
     total: number
 }
@@ -13,6 +12,7 @@ export interface GraphModel {
     graphData: Array<KeyValue>;
     selected: boolean;
     defaultSelected: string;
+    keys: Array<string>;
 }
 
 export interface KeyValue {

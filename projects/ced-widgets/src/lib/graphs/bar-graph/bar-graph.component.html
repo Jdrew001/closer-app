@@ -1,19 +1,9 @@
 <ion-grid>
-  <ion-row class="ion-justify-content-start heading">
-    <ion-col>
-      <h2>
-        <strong>{{ getConfigurationTitle()[0] }}</strong> {{ getConfigurationTitle()[1] }}
-      </h2>
-      <p class="subtitle light-text">
-        {{ getWeeklyDate() }}
-      </p>
-    </ion-col>
-  </ion-row>
   <ion-row>
     <ion-col>
       <ion-grid>
         <ion-row class="ion-justify-content-evenly ion-align-items-end bar-container">
-          <ion-col [ngStyle]="{'height': getLineValue(item) + '%'}" *ngFor="let item of configuration.keys">
+          <ion-col [ngStyle]="{'height': getLineValue(item) + '%'}" *ngFor="let item of data.keys">
             <div *ngIf="selectedDay !== item" class="bar" [ngStyle]="getBarColor(item)">
             </div>
 
@@ -22,7 +12,7 @@
           </ion-col>
         </ion-row>
         <ion-row class="ion-justify-content-evenly">
-          <ion-col class="text-center" *ngFor="let item of configuration.keys">
+          <ion-col class="text-center" *ngFor="let item of data.keys">
             <span [ngClass]="{'active': selectedDay === item}" class="day-label">{{ item }}</span>
           </ion-col>
         </ion-row>
