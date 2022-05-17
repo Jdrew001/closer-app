@@ -14,7 +14,13 @@ export class BarGraphComponent {
   @Input() data: GraphModel;
   @Input() selectedGraph: boolean = false;
   @Input() activeGraph: boolean = false;
-  @Input() selectedDay: string = null;
+
+  _selectedDay: string;
+  @Input() set selectedDay(val: string) {
+    this._selectedDay = val;
+  }
+  get selectedDay() { return this._selectedDay; }
+  @Output() daySelected$: EventEmitter<string> = new EventEmitter<string>();
 
   getLineValue(key: string) {
     return this.data.graphData.find(data => data.key == key)?.value;
@@ -39,5 +45,9 @@ export class BarGraphComponent {
 
   getFormatterKey(value): string {
     return BarConstant.DAY_DEFINITION[value];
+  }
+
+  tapEvent(e, item) {
+    this.daySelected$.emit(item);
   }
 }

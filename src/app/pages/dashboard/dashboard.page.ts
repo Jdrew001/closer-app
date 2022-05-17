@@ -72,4 +72,14 @@ export class DashboardPage implements OnInit {
   getSelectedData(index: number) {
     return this.graphData.data[index];
   }
+
+  selectedDayEmitted(day: string, item: GraphModel) {
+    // first make all data unselected
+    this.graphData.data.forEach(val => val.selected = false);
+
+    // excecute new selection logic
+    let dayOfTheWeekSelected: number = DashboardConstant.DAY_OF_WEEK[day];
+    item.selected = true;
+    this.selectedDay = DashboardConstant.DAY_DEFINITION[dayOfTheWeekSelected];
+  }
 }

@@ -28,7 +28,8 @@
             [animation]="true"
             [data]="item"
             [selectedGraph]="item?.selected"
-            [selectedDay]="selectedDay"></ced-bar-graph>
+            [selectedDay]="selectedDay"
+            (daySelected$)="selectedDayEmitted($event, item)"></ced-bar-graph>
         </div>
       </ng-template>
     </ng-container>
