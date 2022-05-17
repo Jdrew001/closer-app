@@ -8,19 +8,13 @@ import { BarConstant } from './bar.constant';
   templateUrl: './bar-graph.component.html',
   styleUrls: ['./bar-graph.component.scss'],
 })
-export class BarGraphComponent implements OnInit {
+export class BarGraphComponent {
 
   @Input() animation: boolean = true;
   @Input() data: GraphModel;
-
-  selectedDay: string = BarConstant.DAY_DEFINITION[new Date().getDay()];
-
-  constructor(
-    private barGraphService: BarGraphService
-  ) { }
-
-  ngOnInit() {
-  }
+  @Input() selectedGraph: boolean = false;
+  @Input() activeGraph: boolean = false;
+  @Input() selectedDay: string = null;
 
   getLineValue(key: string) {
     return this.data.graphData.find(data => data.key == key)?.value;
@@ -29,7 +23,7 @@ export class BarGraphComponent implements OnInit {
   getBarColor(key: string) {
     let data = this.data.graphData.find(data => data.key == key)?.value;
     if (data >= 0 && data <= 25) {
-      return {'background-color': 'rgba(36, 56, 142, 0.25)'}//
+      return {'background-color': 'rgba(36, 56, 142, 0.25)'}
     }
 
     if (data >= 26 && data <= 50) {
@@ -41,5 +35,9 @@ export class BarGraphComponent implements OnInit {
     }
 
     return {'background-color': 'rgba(36, 56, 142, 1)'};
+  }
+
+  getFormatterKey(value): string {
+    return BarConstant.DAY_DEFINITION[value];
   }
 }

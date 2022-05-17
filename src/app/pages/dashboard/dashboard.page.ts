@@ -5,7 +5,6 @@ import { AuthenticationService } from 'src/app/core/services/authentication.serv
 import { MessageService } from 'src/app/core/services/message.service';
 import { DashboardConstant } from './dashboard.constant';
 import SwiperCore, { SwiperOptions, Pagination } from 'swiper';
-import { EventsParams } from 'swiper/angular';
 
 SwiperCore.use([Pagination]);
 
@@ -28,6 +27,7 @@ export class DashboardPage implements OnInit {
   array = [1,2,3,4,5,6,7,8,9];
   activeIndex = this.getInitialSlide(); // set when integrating with service
   selectedWeek = this.graphData.data[this.activeIndex].subTitle;
+  selectedDay: string = DashboardConstant.DAY_DEFINITION[new Date().getDay()];
 
   get defaultSelectedData(): GraphModel { return this.graphData.data.find(item => item.selected) }
 
@@ -39,7 +39,6 @@ export class DashboardPage implements OnInit {
   ) { }
 
   ngOnInit() {
-    
   }
 
   // First slide to show when app loads

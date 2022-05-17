@@ -52,3 +52,35 @@ span.active {
     color: rgba(36, 56, 142, 1);
     font-weight: 800;
 }
+
+div.tooltip {
+    position: absolute;
+    bottom: 100%;
+    font-size: 10px;
+    text-align: center;
+    width: 80%;
+    /* margin: 0 19%; */
+    padding: 5px 0px;
+    background-color: #8F99C4;
+    color: white;
+    border-radius: 5px;
+}
+
+div span {
+    position: relative;
+    top: 3px;
+    font-weight: bolder;
+}
+
+.triangle_down {
+    width: 0;
+    height: 0;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 5px solid #8F99C4;
+    font-size: 0;
+    line-height: 0;
+    margin: auto;
+    position: relative;
+    top: 8px;
+  }

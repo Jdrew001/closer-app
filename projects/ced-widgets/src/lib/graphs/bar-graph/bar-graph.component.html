@@ -9,11 +9,17 @@
 
             <div *ngIf="selectedDay === item" class="bar active">
             </div>
+            <div *ngIf="selectedGraph && selectedDay === item" class="tooltip">
+              <span>{{ getLineValue(item) }}%</span>
+              <div class="triangle_down"></div>
+            </div>
           </ion-col>
         </ion-row>
         <ion-row class="ion-justify-content-evenly">
           <ion-col class="text-center" *ngFor="let item of data.keys">
-            <span [ngClass]="{'active': selectedDay === item}" class="day-label">{{ item }}</span>
+            <span
+            [ngClass]="{'active': selectedGraph && selectedDay === item}" 
+            class="day-label">{{ getFormatterKey(item) }}</span>
           </ion-col>
         </ion-row>
       </ion-grid>

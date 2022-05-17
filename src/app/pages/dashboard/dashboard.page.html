@@ -23,10 +23,12 @@
     >
     <ng-container *ngFor="let item of graphData?.data">
       <ng-template swiperSlide>
-        <div class="mb-1">
-          <ced-bar-graph 
+        <div class="mb-1" style="margin: 5% 0;">
+          <ced-bar-graph
             [animation]="true"
-            [data]="item"></ced-bar-graph>
+            [data]="item"
+            [selectedGraph]="item?.selected"
+            [selectedDay]="selectedDay"></ced-bar-graph>
         </div>
       </ng-template>
     </ng-container>
