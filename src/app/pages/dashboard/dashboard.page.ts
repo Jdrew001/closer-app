@@ -1,10 +1,12 @@
 import { AuthService } from './../../core/services/auth.service';
-import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { BarModel, GraphModel } from 'projects/ced-widgets/src/lib/graphs/bar-graph/bar-graph.model';
 import { AuthenticationService } from 'src/app/core/services/authentication.service';
 import { MessageService } from 'src/app/core/services/message.service';
 import { DashboardConstant } from './dashboard.constant';
 import SwiperCore, { SwiperOptions, Pagination } from 'swiper';
+import { CircleGaugeModel } from 'projects/ced-widgets/src/public-api';
+import { CircleGaugeComponent } from 'ced-widgets';
 
 SwiperCore.use([Pagination]);
 
@@ -13,9 +15,10 @@ SwiperCore.use([Pagination]);
   templateUrl: './dashboard.page.html',
   styleUrls: ['./dashboard.page.scss'],
 })
-export class DashboardPage implements OnInit {
+export class DashboardPage implements OnInit, AfterViewInit {
 
   @ViewChild('swiper') swiper: SwiperCore;
+  @ViewChild('gauge') gaugeComponent: CircleGaugeComponent;
 
   graphData: BarModel = DashboardConstant.DATA;
   config: SwiperOptions = {
@@ -24,12 +27,13 @@ export class DashboardPage implements OnInit {
     pagination: true,
     scrollbar: { draggable: true }
   };
-  array = [1,2,3,4,5,6,7,8,9];
+  gaugeConfig: CircleGaugeModel = DashboardConstant.CIRCLE_GAUGE_CONFIG;
+
   activeIndex = this.getInitialSlide(); // set when integrating with service
   selectedWeek = this.graphData.data[this.activeIndex].subTitle;
   selectedDay: string = DashboardConstant.DAY_DEFINITION[new Date().getDay()];
 
-  get defaultSelectedData(): GraphModel { return this.graphData.data.find(item => item.selected) }
+  get selectedData(): GraphModel { return this.graphData.data.find(item => item.selected) }
 
   constructor(
     private authService: AuthService,
@@ -38,7 +42,19 @@ export class DashboardPage implements OnInit {
     private cd: ChangeDetectorRef
   ) { }
 
+  ngAfterViewInit(): void {
+    this.updateCircleGuageValue();
+  }
+
   ngOnInit() {
+    console.log('selected day ', this.selectedDay, this.selectedData);
+    
+  }
+
+  async updateCircleGuageValue() {
+    let selValue = this.selectedData.graphData.find(o => o.key == this.selectedDay);
+    this.gaugeConfig.currentValue = selValue && selValue?.value ? selValue.value : 0;
+    await this.gaugeComponent.updateAnimations(this.gaugeConfig);
   }
 
   // First slide to show when app loads
@@ -67,6 +83,8 @@ export class DashboardPage implements OnInit {
     this.activeIndex = swiper.realIndex;
     this.setSelectedWeek(swiper.realIndex)
     this.cd.detectChanges();
+
+    // call service
   }
 
   getSelectedData(index: number) {
@@ -81,5 +99,6 @@ export class DashboardPage implements OnInit {
     let dayOfTheWeekSelected: number = DashboardConstant.DAY_OF_WEEK[day];
     item.selected = true;
     this.selectedDay = DashboardConstant.DAY_DEFINITION[dayOfTheWeekSelected];
+    this.updateCircleGuageValue();
   }
 }

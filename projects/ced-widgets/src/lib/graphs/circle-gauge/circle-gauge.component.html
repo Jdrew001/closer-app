@@ -1,0 +1,6 @@
+<div #gauge role="progressbar" 
+  [attr.aria-valuenow]="config?.currentValue"
+  attr.aria-valuemin="config?.minValue"
+  attr.aria-valuemax="config?.maxValue"
+  [style.--value]="config?.currentValue"
+  [ngClass]="animate ? 'should-animate': 'reset'"></div>

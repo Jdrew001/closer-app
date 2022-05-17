@@ -3,20 +3,22 @@
     <ion-col>
       <ion-grid>
         <ion-row class="ion-justify-content-evenly ion-align-items-end bar-container">
-          <ion-col (click)="tapEvent($event, item)" [ngStyle]="{'height': getLineValue(item) + '%'}" *ngFor="let item of data.keys">
-            <div *ngIf="selectedDay !== item" class="bar" [ngStyle]="getBarColor(item)">
-            </div>
-
-            <div *ngIf="selectedGraph && selectedDay === item" class="bar active">
-            </div>
-
-            <div *ngIf="!selectedGraph && selectedDay === item" class="bar" [ngStyle]="getBarColor(item)">
-            </div>
-            <div *ngIf="selectedGraph && selectedDay === item" class="tooltip">
-              <span>{{ getLineValue(item) }}%</span>
-              <div class="triangle_down"></div>
-            </div>
-          </ion-col>
+          <ng-container *ngFor="let item of data.keys">
+            <ion-col #bar (click)="tapEvent($event, item)">
+              <div *ngIf="selectedDay !== item" class="bar shadow" [ngStyle]="getBarColor(item)">
+              </div>
+  
+              <div *ngIf="selectedGraph && selectedDay === item" class="bar active shadow">
+              </div>
+  
+              <div *ngIf="!selectedGraph && selectedDay === item" class="bar shadow" [ngStyle]="getBarColor(item)">
+              </div>
+              <div *ngIf="selectedGraph && selectedDay === item" [ngClass]="{'fadein': selectedGraph && selectedDay === item}" class="tooltip shadow">
+                <span>{{ getLineValue(item) }}%</span>
+                <div class="triangle_down"></div>
+              </div>
+            </ion-col>
+          </ng-container>
         </ion-row>
         <ion-row class="ion-justify-content-evenly">
           <ion-col (click)="tapEvent($event, item)" class="text-center" *ngFor="let item of data.keys">

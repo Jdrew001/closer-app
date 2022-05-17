@@ -1,3 +1,5 @@
+import { CircleGaugeModel } from "ced-widgets"
+
 export class DashboardConstant {
     public static DAY_DEFINITION = {
         0: 'Sun',
@@ -18,6 +20,12 @@ export class DashboardConstant {
         'Fri': 5,
         'Sat': 6
     }
+
+    public static CIRCLE_GAUGE_CONFIG: CircleGaugeModel = {
+        minValue: 0,
+        maxValue: 100,
+        currentValue: 50
+    };
 
     public static DATA = {
         title: "Weekly Overview",
