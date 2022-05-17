@@ -51,7 +51,7 @@ export class AuthService {
     if (refreshToken) {
       this.authService.refreshToken({token: refreshToken}).subscribe(async res => {
         if (res.data.shouldRedirectToLogin) {
-          this.navController.navigateRoot('/login', { replaceUrl:true });
+          this.navController.navigateRoot('/tabs/dashboard', { replaceUrl:true });
           this.isAuthenticated$.next(false);
           return;
         }
@@ -71,7 +71,7 @@ export class AuthService {
       return;
     }
     this.isAuthenticated$.next(false);
-    this.navController.navigateRoot('/login', { replaceUrl:true });
+    this.navController.navigateRoot('/tabs/dashboard', { replaceUrl:true });
     setTimeout(async () => {await SplashScreen.hide()}, 1000);
   }
 

@@ -1,11 +1,20 @@
 export class BarConstant {
+    public static DAY_DEFINITION_MAIN = {
+        0: 'Sun',
+        1: 'Mon',
+        2: 'Tue',
+        3: 'Wed',
+        4: 'Thu',
+        5: 'Fri',
+        6: 'Sat'
+    }
     public static DAY_DEFINITION = {
-        0: 'S',
-        1: 'M',
-        2: 'T',
-        3: 'W',
-        4: 'T',
-        5: 'F',
-        6: 'S'
+        'Sun': 'S',
+        'Mon': 'M',
+        'Tue': 'T',
+        'Wed': 'W',
+        'Thu': 'T',
+        'Fri': 'F',
+        'Sat': 'S'
     }
 }

@@ -10,16 +10,19 @@ import { HttpClientModule } from '@angular/common/http';
 import { CoreModule } from './core/core.module';
 import { customAnimation } from './core/animations/custom-route.animation';
 import * as Sentry from "@sentry/angular";
+import { SwiperModule } from 'swiper/angular';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
   imports: [
-    BrowserModule, 
+    BrowserModule,
     IonicModule.forRoot({navAnimation: customAnimation}), 
     AppRoutingModule, 
     HttpClientModule,
-    CoreModule],
+    CoreModule,
+    SwiperModule],
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     {
