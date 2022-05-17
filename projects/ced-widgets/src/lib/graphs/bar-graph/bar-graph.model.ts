@@ -11,6 +11,7 @@ export interface GraphModel {
     endDate: string;
     graphData: Array<KeyValue>;
     selected: boolean;
+    current: boolean;
     defaultSelected: string;
     keys: Array<string>;
 }

@@ -23,7 +23,7 @@
         <ion-row class="ion-justify-content-evenly">
           <ion-col (click)="tapEvent($event, item)" class="text-center" *ngFor="let item of data.keys">
             <span
-            [ngClass]="{'active': selectedGraph && selectedDay === item}" 
+            [ngClass]="{'active': defaultGraph && currentDay === item}" 
             class="day-label">{{ getFormatterKey(item) }}</span>
           </ion-col>
         </ion-row>

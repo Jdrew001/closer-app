@@ -72,6 +72,7 @@ export class DashboardConstant {
                     }
                 ],
                 selected: false,
+                current: false,
                 defaultSelected: "M",
                 keys: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
             },
@@ -117,6 +118,7 @@ export class DashboardConstant {
                     }
                 ],
                 selected: true,
+                current: true,
                 defaultSelected: "W",
                 keys: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
             },
@@ -162,6 +164,7 @@ export class DashboardConstant {
                     }
                 ],
                 selected: false,
+                current: false,
                 defaultSelected: "M",
                 keys: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
             }

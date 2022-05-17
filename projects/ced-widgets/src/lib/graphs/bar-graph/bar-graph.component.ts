@@ -14,6 +14,7 @@ export class BarGraphComponent implements OnInit {
   @ViewChildren('bar', {read: ElementRef}) barChildren: QueryList<ElementRef>;
 
   @Input() animation: boolean = true;
+
   _data: GraphModel;
   @Input() set data(value: GraphModel) {
     this._data = value;
@@ -22,8 +23,10 @@ export class BarGraphComponent implements OnInit {
     }
   }
   get data() { return this._data; }
+
   @Input() selectedGraph: boolean = false;
   @Input() activeGraph: boolean = false;
+  @Input() defaultGraph: boolean = false;
 
   _selectedDay: string;
   @Input() set selectedDay(val: string) {
@@ -33,9 +36,12 @@ export class BarGraphComponent implements OnInit {
     }
   }
   get selectedDay() { return this._selectedDay; }
+
   @Output() daySelected$: EventEmitter<string> = new EventEmitter<string>();
 
   initAnimationCompleted = false;
+
+  currentDay: string = BarConstant.DAY_DEFINITION_MAIN[new Date().getDay()];
 
   constructor(
     private animationController: AnimationController,

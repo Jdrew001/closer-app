@@ -47,8 +47,6 @@ export class DashboardPage implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
-    console.log('selected day ', this.selectedDay, this.selectedData);
-    
   }
 
   async updateCircleGuageValue() {
