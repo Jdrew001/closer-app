@@ -1,0 +1,20 @@
+{
+	"appId": "com.atkison.closer",
+	"appName": "Closer Everyday",
+	"webDir": "www",
+	"bundledWebRuntime": false,
+	"plugins": {
+		"SplashScreen": {
+			"launchAutoHide": false,
+			"showSpinner": true,
+			"androidSpinnerStyle": "large",
+			"iosSpinnerStyle": "small",
+			"spinnerColor": "#999999",
+			"splashFullScreen": true,
+			"splashImmersive": true
+		}
+	},
+	"server": {
+		"url": "http://192.168.50.101:8100"
+	}
+}
