@@ -55,7 +55,7 @@ export class ForgetPasswordPage implements OnInit {
     }
 
     this.messageService.showErrorMessage(AppConstants.FORM_VALIDATION_ERROR);
-    this.emailForm.markAllAsTouched();
+    this.emailForm.markAsTouched();
   }
 
   back() {

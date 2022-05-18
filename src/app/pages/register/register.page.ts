@@ -72,7 +72,7 @@ export class RegisterPage implements OnInit, ViewWillLeave {
       });
     } else {
       this.messageService.showErrorMessage(AppConstants.FORM_VALIDATION_ERROR);
-      this.registerForm.markAllAsTouched();
+      this.registerForm.markAsTouched();
     }
   }
 
