@@ -17,6 +17,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
   declarations: [AppComponent],
   entryComponents: [],
   imports: [
+    BrowserModule,
     BrowserAnimationsModule,
     IonicModule.forRoot({navAnimation: customAnimation}), 
     AppRoutingModule, 
