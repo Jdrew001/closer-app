@@ -5,7 +5,7 @@
     </div>
     <div class="heading-container">
       <h1 class="bold-text title">Verification</h1>    
-      <p class="light-text subtitle">We have just sent a code to </p>
+      <p *ngIf="email" class="light-text subtitle">We have just sent a code to {{ email }}</p>
     </div>
   
     <div class="input-group">
