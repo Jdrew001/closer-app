@@ -14,6 +14,7 @@ import { AuthModel } from 'src/app/core/models/auth.model';
 })
 export class VerifyAccountPage implements OnInit {
 
+  email: string;
   reissue = false;
   verifyModel = {
     first: null,
@@ -44,7 +45,8 @@ export class VerifyAccountPage implements OnInit {
     return result;
   }
 
-  ngOnInit() {
+  async ngOnInit() {
+    this.email = (await this.userService.getUserInfo()).email;
   }
 
   async submit() {
@@ -62,7 +64,6 @@ export class VerifyAccountPage implements OnInit {
   }
 
   async resendCode(firstElement) {
-    const email = await this.userService.getUserInfo();
     const keys = Object.keys(this.verifyModel);
     keys.forEach(key => this.verifyModel[key] = null);
     if (firstElement == null) {
@@ -70,7 +71,7 @@ export class VerifyAccountPage implements OnInit {
     } else {
       firstElement.focus();
     }
-    this.authService.reissueCode(email.email).subscribe(res => {
+    this.authService.reissueCode(this.email).subscribe(res => {
       this.reissue = true;
     });
   }
