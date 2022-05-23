@@ -18,6 +18,10 @@
               <ion-icon *ngIf="(email.dirty || email.touched) && !email.errors" class="correct" name="checkmark-circle" item-right></ion-icon>
               <ion-icon *ngIf="(email.dirty || email.touched) && email.errors" class="incorrect" name="close-circle" item-right></ion-icon>
             </ion-input>
+            <div *ngIf="(email.dirty || email.touched) && email.errors" class="errors">
+              <span *ngIf="email.errors?.required">Email is required</span>
+              <span *ngIf="email.errors?.email">Email is invalid</span>
+            </div>
         </div>
   
         <div class="group">
@@ -26,6 +30,9 @@
               <ion-icon *ngIf="(password.dirty || password.touched) && !password.errors" class="correct" name="checkmark-circle"></ion-icon>
               <ion-icon *ngIf="(password.dirty || password.touched) && password.errors" class="incorrect" name="close-circle"></ion-icon>
             </ion-input>
+            <div *ngIf="(password.dirty || password.touched) && email.errors" class="errors">
+              <span *ngIf="password.errors?.required">Password is required</span>
+            </div>
           <ion-note class="forgot-password" color="primary" (click)="forgotPassword()">
             <p class="bold-text">Forgot Password?</p>
           </ion-note>
