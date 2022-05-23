@@ -63,17 +63,15 @@ export class VerifyAccountPage implements OnInit {
     }
   }
 
-  async resendCode(firstElement) {
-    const keys = Object.keys(this.verifyModel);
-    keys.forEach(key => this.verifyModel[key] = null);
-    if (firstElement == null) {
-      return;
-    } else {
-      firstElement.focus();
+  async resendCode() {
+    if (!this.reissue) {
+      const keys = Object.keys(this.verifyModel);
+      keys.forEach(key => this.verifyModel[key] = null);
+      this.authService.reissueCode(this.email).subscribe(res => {
+        this.reissue = true;
+        this.messageService.showSuccessMessage(null, 'A new code has been sent');      
+      });
     }
-    this.authService.reissueCode(this.email).subscribe(res => {
-      this.reissue = true;
-    });
   }
 
   async onDigitInput(e, nextElement, prevElement) {
