@@ -116,7 +116,7 @@ export class LoginPage implements OnInit, ViewWillLeave {
   }
 
   private formValidationError() {
-    this.loginForm.markAllAsTouched();
+    this.loginForm.markAsTouched();
     this.messageService.showErrorMessage("Validation Error", AppConstants.FORM_VALIDATION_ERROR);
   }
 }

@@ -3,38 +3,42 @@
 </ion-header>
 
 <ion-content>
-  <ion-row class="ion-justify-content-start heading">
-    <ion-col>
-      <h2>
-        <strong>{{ getConfigurationTitle()[0] }}</strong> {{ getConfigurationTitle()[1] }}
-      </h2>
-      <p class="subtitle light-text">
-        {{ selectedWeek }}
-      </p>
-    </ion-col>
-  </ion-row>
-  <swiper
-      #swiper
-      [slidesPerView]="1"
-      [spaceBetween]="50"
-      [pagination]="{dynamicBullets: true, dynamicMainBullets: 1}"
-      [initialSlide]="activeIndex"
-      (transitionEnd)="transitionEnd($event)"
-    >
-    <ng-container *ngFor="let item of graphData?.data; let i = index">
-      <ng-template swiperSlide>
-        <div class="mb-1" style="margin-top: 1%; margin-bottom: 5%;">
-          <ced-bar-graph
-            [animation]="true"
-            [data]="item"
-            [selectedGraph]="item?.selected"
-            [defaultGraph]="item?.current"
-            [selectedDay]="selectedDay"
-            (daySelected$)="selectedDayEmitted($event, item)"></ced-bar-graph>
-        </div>
-      </ng-template>
-    </ng-container>
+  <div *ngIf="dataLoaded">
+    <ion-row class="ion-justify-content-start heading">
+      <ion-col>
+        <h2>
+          <strong>{{ getConfigurationTitle()[0] }}</strong> {{ getConfigurationTitle()[1] }}
+        </h2>
+        <p class="subtitle light-text">
+          {{ selectedWeek }}
+        </p>
+      </ion-col>
+    </ion-row>
+    <swiper
+        #swiper
+        [slidesPerView]="1"
+        [spaceBetween]="50"
+        [pagination]="{dynamicBullets: true, dynamicMainBullets: 1}"
+        [initialSlide]="activeIndex"
+        (transitionEnd)="transitionEnd($event)"
+      >
+      <ng-container *ngFor="let item of graphData?.data; let i = index">
+        <ng-template swiperSlide>
+          <div class="mb-1" style="margin-top: 1%; margin-bottom: 5%;">
+            <ced-bar-graph
+              [animation]="true"
+              [data]="item"
+              [keys]="item?.keys"
+              [selectedGraph]="item?.selected"
+              [defaultGraph]="item?.current"
+              [selectedDay]="selectedDay"
+              (daySelected$)="selectedDayEmitted($event, item)"></ced-bar-graph>
+          </div>
+        </ng-template>
+      </ng-container>
     </swiper>
+  </div>
+  
 
     <hr>
 

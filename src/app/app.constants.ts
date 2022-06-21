@@ -8,4 +8,5 @@ export class AppConstants {
     public static VALIDATION_TYPE = 'validationType';
 
     public static FORM_VALIDATION_ERROR = 'The form is incorrect';
+    public static DEFAULT_DATE_FORMAT = "MM/DD/YYYY";
 }

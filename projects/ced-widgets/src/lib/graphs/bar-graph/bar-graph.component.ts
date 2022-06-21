@@ -15,12 +15,15 @@ export class BarGraphComponent implements OnInit {
 
   @Input() animation: boolean = true;
 
-  _data: GraphModel;
+  _keys: Array<string> = [];
+  get keys() { return this._keys; }
+  @Input() set keys(value: Array<string>) {
+    this._keys = value;
+  }
+
+  _data: GraphModel = new GraphModel();
   @Input() set data(value: GraphModel) {
     this._data = value;
-    if (value && value.graphData) {
-      console.log(this.barChildren);
-    }
   }
   get data() { return this._data; }
 
@@ -31,9 +34,6 @@ export class BarGraphComponent implements OnInit {
   _selectedDay: string;
   @Input() set selectedDay(val: string) {
     this._selectedDay = val;
-    if (val) {
-
-    }
   }
   get selectedDay() { return this._selectedDay; }
 
@@ -45,7 +45,7 @@ export class BarGraphComponent implements OnInit {
 
   constructor(
     private animationController: AnimationController,
-    private changeDetection: ChangeDetectorRef
+    public changeDetection: ChangeDetectorRef
   ) {}
 
   ngOnInit() {
@@ -56,7 +56,6 @@ export class BarGraphComponent implements OnInit {
     if (this.barChildren && !this.initAnimationCompleted) {
       let barAnimation = this.animateGraphInit();
       for (let i = 0; i < barAnimation.length; i++) {
-        console.log('playing??');
         barAnimation[i].play();
         await TimeoutHelpers.sleep(50);
 
@@ -73,7 +72,10 @@ export class BarGraphComponent implements OnInit {
 
   getBarColor(key: string) {
     let data = this.data.graphData.find(data => data.key == key)?.value;
-    if (data >= 0 && data <= 25) {
+    if (data == 0) {
+      return {'display': 'none'}
+    }
+    if (data > 0 && data <= 25) {
       return {'background-color': 'rgba(36, 56, 142, 0.25)'}
     }
 
@@ -88,6 +90,16 @@ export class BarGraphComponent implements OnInit {
     return {'background-color': 'rgba(36, 56, 142, 1)'};
   }
 
+  getColHeight(key: string) {
+    let data = this.data.graphData.find(data => data.key == key)?.value;
+    return data > 0 ? {'height': '0%'}: {'height': '90%'};
+  }
+
+  shouldShow(key: string) {
+    let data = this.data.graphData.find(data => data.key == key)?.value;
+    return data > 0;
+  }
+
   getFormatterKey(value): string {
     return BarConstant.DAY_DEFINITION[value];
   }
@@ -99,21 +111,22 @@ export class BarGraphComponent implements OnInit {
   animateGraphInit(): Array<Animation> {
     let animations: Array<Animation> = [];
     this.barChildren.forEach((item, index: number) => {
-      let barValue = this.data.graphData[index].value;
-      console.log(item.nativeElement);
-      let animation = this.animationController.create()
-        .addElement(item.nativeElement)
-        .duration(800)
-        .iterations(1)
-        .delay(100)
-        .keyframes([
-          { offset: 0, height: `${0}%` },
-          { offset: 0.3, height: `${barValue/4}%` },
-          { offset: 0.7, height: `${barValue}%` },
-          { offset: 1, height: `${barValue-8}%` }//
-        ]);
-
-        animations.push(animation);
+      if (this.data?.graphData[index]) {
+        let barValue = this.data.graphData[index].value;
+        let animation = this.animationController.create()
+          .addElement(item.nativeElement)
+          .duration(800)
+          .iterations(1)
+          .delay(100)
+          .keyframes([
+            { offset: 0, height: `${0}%` },
+            { offset: 0.3, height: `${barValue/4}%` },
+            { offset: 0.7, height: `${barValue}%` },
+            { offset: 1, height: `${barValue-8}%` }
+          ]);
+  
+          animations.push(animation);
+      }
     });
 
     return animations;
