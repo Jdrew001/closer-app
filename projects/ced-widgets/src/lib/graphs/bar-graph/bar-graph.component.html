@@ -3,15 +3,15 @@
     <ion-col>
       <ion-grid>
         <ion-row class="ion-justify-content-evenly ion-align-items-end bar-container">
-          <ng-container *ngFor="let item of data.keys">
-            <ion-col #bar (click)="tapEvent($event, item)">
-              <div *ngIf="selectedDay !== item" class="bar shadow" [ngStyle]="getBarColor(item)">
+          <ng-container *ngFor="let item of keys">
+            <ion-col [ngStyle]="getColHeight(item)" #bar (click)="tapEvent($event, item)">
+              <div *ngIf="selectedDay !== item && shouldShow(item)" class="bar shadow" [ngStyle]="getBarColor(item)">
               </div>
   
-              <div *ngIf="selectedGraph && selectedDay === item" class="bar active shadow">
+              <div *ngIf="selectedGraph && selectedDay === item && shouldShow(item)" class="bar active shadow">
               </div>
   
-              <div *ngIf="!selectedGraph && selectedDay === item" class="bar shadow" [ngStyle]="getBarColor(item)">
+              <div *ngIf="!selectedGraph && selectedDay === item && shouldShow(item)" class="bar shadow" [ngStyle]="getBarColor(item)">
               </div>
               <div *ngIf="selectedGraph && selectedDay === item" [ngClass]="{'fadein': selectedGraph && selectedDay === item}" class="tooltip shadow">
                 <span>{{ getLineValue(item) }}%</span>
@@ -21,7 +21,7 @@
           </ng-container>
         </ion-row>
         <ion-row class="ion-justify-content-evenly">
-          <ion-col (click)="tapEvent($event, item)" class="text-center" *ngFor="let item of data.keys">
+          <ion-col (click)="tapEvent($event, item)" class="text-center" *ngFor="let item of keys">
             <span
             [ngClass]="{'active': defaultGraph && currentDay === item}" 
             class="day-label">{{ getFormatterKey(item) }}</span>

@@ -1,6 +1,9 @@
 import { CircleGaugeModel } from "ced-widgets"
 
 export class DashboardConstant {
+    public static GET_SELECTED_DATA = 'getSelectedGraphData';
+    public static GET_SWIPED_DATA = 'getSwipedGraphData';
+
     public static DAY_DEFINITION = {
         0: 'Sun',
         1: 'Mon',
@@ -26,6 +29,9 @@ export class DashboardConstant {
         maxValue: 100,
         currentValue: 50
     };
+
+    public static START_BOUNDARY_KEY = "START";
+    public static END_BOUNDARY_KEY = "END";
 
     public static DATA = {
         title: "Weekly Overview",
@@ -170,6 +176,7 @@ export class DashboardConstant {
             }
         ],
         animation: true,
+        keys: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
         "total": 3
     }
 }

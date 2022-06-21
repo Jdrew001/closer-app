@@ -1,15 +1,15 @@
-export interface BarModel {
+export class BarModel {
     title: string;
     data: Array<GraphModel>;
     animation: boolean;
     total: number
 }
 
-export interface GraphModel {
+export class GraphModel {
     subTitle: string;
     startDate: string;
     endDate: string;
-    graphData: Array<KeyValue>;
+    graphData: Array<KeyValue> = [];
     selected: boolean;
     current: boolean;
     defaultSelected: string;

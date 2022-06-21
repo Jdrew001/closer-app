@@ -10,6 +10,7 @@ import { DashboardPage } from './dashboard.page';
 import { CedWidgetsModule } from 'ced-widgets';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { SwiperModule } from 'swiper/angular';
+import { DashboardService } from './dashboard.service';
 
 @NgModule({
   imports: [
@@ -21,6 +22,7 @@ import { SwiperModule } from 'swiper/angular';
     SharedModule,
     SwiperModule
   ],
-  declarations: [DashboardPage]
+  declarations: [DashboardPage],
+  providers: [DashboardService]
 })
 export class DashboardPageModule {}
