@@ -79,7 +79,9 @@ export class DashboardPage implements OnInit, AfterViewInit, ViewDidEnter {
    */
   fetchSwipedData(date, boundary) {
     let dto = new DashboardSwipeRequest(9, date, boundary);
+    this.swiper.swiperRef.disable();
     this.dashboardService.fetchGetSwipedGraphData(dto).subscribe(res => {
+      setTimeout(() => {this.swiper.swiperRef.enable();}, 800);
       this.updateGraphData(res, boundary);
       this.activeIndex = this.getInitialSlide();
       this.selectedWeek = this.graphData.data[this.activeIndex].subTitle;
@@ -131,6 +133,12 @@ export class DashboardPage implements OnInit, AfterViewInit, ViewDidEnter {
       const boundary = DashboardConstant.START_BOUNDARY_KEY;
       this.fetchSwipedData(date, boundary);
     }
+
+    if (this.activeIndex == this.graphData.data.length - 1) {
+      const date = this.getSelectedWeekDate(this.activeIndex).endDate;
+      const boundary = DashboardConstant.END_BOUNDARY_KEY;
+      this.fetchSwipedData(date, boundary);
+    }
   }
 
   getSelectedData(index: number) {
@@ -153,7 +161,7 @@ export class DashboardPage implements OnInit, AfterViewInit, ViewDidEnter {
 
   updateGraphData(res, boundary?) {
 
-    // Updates once service call completess
+    // Updates once service call completes
     this.graphData.animation = res.data.animation;
     this.graphData.title = res.data.title;
     this.graphData.total = res.data.total;

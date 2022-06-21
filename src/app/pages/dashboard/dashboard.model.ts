@@ -23,7 +23,7 @@ export class DashboardSwipeRequest {
 
     constructor(limit: number, dateSelected: string, boundary: string) {
         this.limit = limit;
-        this.dateSelected = moment(dateSelected).subtract(7).format(AppConstants.DEFAULT_DATE_FORMAT);
+        this.dateSelected = dateSelected;
         this.boundary = boundary;
     }
 }
